@@ -1,0 +1,46 @@
+{
+  "name": "@camomail/web",
+  "version": "1.0.0",
+  "description": "Camomail web interface",
+  "author": "Ramesh Nair <ram@hiddentao.com>",
+  "homepage": "https://cml.pw",
+  "license": "MIT",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiddentao/camomail.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/hiddentao/camomail/issues"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.0",
+    "@babel/node": "^7.8.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.0",
+    "@babel/plugin-proposal-export-default-from": "^7.8.0",
+    "@babel/preset-env": "^7.8.2",
+    "babel-eslint": "^10.0.3",
+    "core-js": "^3.6.3",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "eslint-plugin-standard": "^4.0.1"
+  }
+}

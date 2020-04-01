@@ -1,0 +1,37 @@
+{
+  "name": "@camomail/data",
+  "version": "1.0.0",
+  "description": "Camomail data",
+  "author": "Ramesh Nair <ram@hiddentao.com>",
+  "homepage": "https://cml.pw",
+  "license": "MIT",
+  "main": "index.js",
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiddentao/camomail.git"
+  },
+  "scripts": {
+    "db:migrate": "knex migrate:latest",
+    "db:rollback": "knex migrate:rollback",
+    "db:seed": "knex seed:run"
+  },
+  "bugs": {
+    "url": "https://github.com/hiddentao/camomail/issues"
+  },
+  "dependencies": {
+    "knex": "^0.20.13",
+    "lodash": "^4.17.15",
+    "pg": "^8.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
+  }
+}

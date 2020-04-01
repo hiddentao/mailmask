@@ -1,0 +1,26 @@
+{
+  "name": "@camomail/log",
+  "version": "1.0.0",
+  "description": "Logging utils",
+  "author": "Ramesh Nair <ram@hiddentao.com>",
+  "homepage": "https://cml.pw",
+  "license": "MIT",
+  "main": "index.js",
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiddentao/camomail.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/hiddentao/camomail/issues"
+  },
+  "dependencies": {
+    "bunyan": "^1.8.12",
+    "bunyan-format": "^0.2.1"
+  }
+}
