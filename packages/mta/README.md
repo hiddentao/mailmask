@@ -1,11 +1,9 @@
-# `mta`
+# mta
 
-> TODO: description
+To run locally:
 
-## Usage
-
+```shell
+yarn start
 ```
-const mta = require('mta');
 
-// TODO: DEMONSTRATE API
-```
+The server will be listening for SMTP connections on `localhost:25`.

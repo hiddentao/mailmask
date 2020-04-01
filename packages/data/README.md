@@ -1,11 +1,9 @@
-# `db`
+# data
 
-> TODO: description
+Db commands:
 
-## Usage
-
-```
-const db = require('db');
-
-// TODO: DEMONSTRATE API
+```shell
+yarn db:migrate   <- create schema
+yarn db:rollback  <- rollback schema
+yarn db:seed      <- seed initial data
 ```

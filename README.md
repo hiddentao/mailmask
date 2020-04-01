@@ -1,6 +1,13 @@
 # Camomail
 
-## Dev
+To run locally:
+
+* Setup postgres db (`data` pkg)
+* Start the MTA (`mta` pkg)
+* Start the web app (`web` pkg)
+* Enjoy!
+
+## Lerna dev
 
 Bootstrap the [monorepo](https://lerna.js.org/):
 
