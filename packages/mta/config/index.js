@@ -4,7 +4,7 @@ const { str, bool } = envalid
 
 const VARS = {
   DOMAIN: str({ default: 'cml.pw' }),
-  SIMULATED: bool({ default: false }),
+  TESTMODE: bool({ default: false }),
   MAILGUN_API_KEY: str(),
 }
 

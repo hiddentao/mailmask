@@ -5,7 +5,11 @@ const { str, bool } = envalid
 const VARS = {
   APP_MODE: str({ default: 'development' }),
   DOMAIN: str({ default: 'cml.pw' }),
-  SIMULATED: bool({ default: false }),
+  TESTMODE: bool({ default: false }),
+  LOG_LEVEL: str({ default: 'info' }),
+  MAILGUN_API_KEY: str(),
+  ENCRYPTION_KEY: str(),
+  ENCRYPTION_IV: str(),
 }
 
 const allEnv = envalid.cleanEnv(process.env, VARS, { dotEnvPath: '.env' })

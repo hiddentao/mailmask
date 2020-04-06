@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const { simpleParser } = require('mailparser')
-const Mailgun = require('mailgun-js')
 const Log = require('@camomail/log')
+const Mailgun = require('@camomail/mailgun')
 const { Db: { createDb } } = require('@camomail/data')
 
 const config = require('../../config')
@@ -24,19 +24,17 @@ exports.cml_setup = function (next) {
 
     logger.info('Setup mailgun ...')
 
-    mailgun = Mailgun({
+    mailgun = new Mailgun({
       apiKey: config.MAILGUN_API_KEY,
       domain: config.DOMAIN,
-      mute: true,
-      host: 'api.eu.mailgun.net',
-      testMode: !!config.SIMULATED,
+      testMode: !!config.TESTMODE,
     })
 
     logger.info('Setup db ...')
 
     db = createDb({ env: 'development', logger })
 
-    if (config.SIMULATED) {
+    if (config.TESTMODE) {
       logger.info('Simulation Mode!')
     }
 
@@ -61,13 +59,6 @@ const getUsers = async function (to, cc, bcc) {
   })
 
   return db.getUsersByUsernames(usernames)
-}
-
-const prepareAttachments = attachments => {
-  return attachments.map(({ filename, contentType, content: data, size: knownLength }, index) => {
-    filename = filename || `attachment${index}`
-    return new mailgun.Attachment({ filename, contentType, data, knownLength })
-  })
 }
 
 exports.cml_queue_handler = async (next, connection) => {
@@ -96,14 +87,16 @@ exports.cml_queue_handler = async (next, connection) => {
 
       const msg = {
         from: `"${senderStr}" <bot@${config.DOMAIN}>`,
-        to: users.map(u => u.email).join(','),
+        to: users.map(u => u.email),
         subject,
         text,
         html,
-        attachment: prepareAttachments(attachments),
+        attachments,
       }
 
-      await mailgun.messages().send(msg).then(() => logger.info(`... email sent`))
+      await mailgun.send(msg)
+
+      logger.info(`... email sent`)
     } else {
       logger.debug('(nothing to send since no matching users found)')
     }

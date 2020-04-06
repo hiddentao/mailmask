@@ -33,20 +33,17 @@ class Log {
   }
 }
 
-module.exports = (name, config = {}) => {
-  const inTestMode = ('test' === config.APP_MODE)
-
+module.exports = (name, { level = 'info' } = {}) => {
   return new Log({
     name,
-    streams: inTestMode ? [] : [
+    streams: [
       {
-        level: config.LOG,
+        level,
         stream: formattedOutput,
       },
     ],
     serializers: {
       err: bunyan.stdSerializers.err
     },
-    appMode: config.APP_MODE,
   })
 }

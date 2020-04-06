@@ -19,6 +19,7 @@
   "dependencies": {
     "@camomail/data": "^1.0.0",
     "@camomail/log": "^1.0.0",
+    "@camomail/mailgun": "^1.0.0",
     "Haraka": "^2.8.25",
     "envalid": "^6.0.1",
     "lodash": "^4.17.15",

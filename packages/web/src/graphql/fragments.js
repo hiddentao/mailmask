@@ -10,20 +10,20 @@ export const ErrorFragment = gql`
 `
 
 
-export const TestSuccessFragment = gql`
-  fragment TestSuccessFragment on TestSuccess {
-    msg
+export const RequestLoginLinkSuccessFragment = gql`
+  fragment RequestLoginLinkSuccessFragment on RequestLoginLinkSuccess {
+    success
   }
 `
 
 
-export const TestResultFragment = gql`
-  ${TestSuccessFragment}
+export const RequestLoginLinkResultFragment = gql`
+  ${RequestLoginLinkSuccessFragment}
   ${ErrorFragment}
 
-  fragment TestResultFragment on TestResult {
-    ...on TestSuccess {
-      ...TestSuccessFragment
+  fragment RequestLoginLinkResultFragment on RequestLoginLinkResult {
+    ...on RequestLoginLinkSuccess {
+      ...RequestLoginLinkSuccessFragment
     }
     ...on Error {
       ...ErrorFragment

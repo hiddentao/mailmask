@@ -47,6 +47,7 @@
     "@apollographql/graphql-playground-html": "^1.6.24",
     "@camomail/data": "^1.0.0",
     "@camomail/log": "^1.0.0",
+    "@camomail/mailgun": "^1.0.0",
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@fortawesome/fontawesome-svg-core": "^1.2.28",

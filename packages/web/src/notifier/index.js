@@ -1,5 +1,5 @@
 import url from 'url'
-// import mailgun from 'mailgun.js'
+import Mailgun from '@camomail/mailgun'
 
 import { obfuscate } from '../utils/string'
 import { LOGIN } from './types'
@@ -15,23 +15,27 @@ class Notifier {
       iv: config.ENCRYPTION_IV,
     }
 
-    this._domain = config.MAILGUN_DOMAIN
+    this._domain = config.DOMAIN
 
-    // this._mg = mailgun.client({
-    //   username: 'api',
-    //   key: config.MAILGUN_API_KEY,
-    // })
+    this._mg = new Mailgun({
+      apiKey: config.MAILGUN_API_KEY,
+      domain: this._domain,
+      testMode: !!config.TESTMODE,
+    })
 
     // this._db = db
     // this._db.on('notify', this.sendNotificationFromEvent.bind(this))
 
-    this._handlers = {
-      /* eslint-disable import/no-dynamic-require */
-      [LOGIN]: require(`./handlers/${LOGIN}`),
-      /* eslint-enable import/no-dynamic-require */
+    this.TYPES = {
+      LOGIN
     }
 
-    this._isSimulated = !!config.SIMULATED
+    this._handlers = Object.keys(this.TYPES).reduce((m, t) => {
+      /* eslint-disable import/no-dynamic-require */
+      m[t] = require(`./handlers/${t.toLowerCase()}`)
+      /* eslint-enable import/no-dynamic-require */
+      return m
+    }, {})
   }
 
   _getHandler (type) {
@@ -86,13 +90,9 @@ class Notifier {
         text,
       }
 
-      if (this._isSimulated) {
-        this._log.info(msg)
-        this._log.info('... email simulated')
-      } else {
-        await this._mg.messages.create(this._domain, msg)
-        this._log.debug(`... email sent`)
-      }
+      await this._mg.send(msg)
+
+      this._log.debug(`... email sent`)
     } catch (err) {
       const errStr = `Error sending email to ${obfuscate(email)}: ${err.message}`
       this._log.error(errStr, err)

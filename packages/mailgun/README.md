@@ -1,0 +1,3 @@
+# `mailgun`
+
+Mailgun API wrapper.

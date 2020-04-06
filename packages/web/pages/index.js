@@ -1,11 +1,8 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { useQuery } from '@apollo/react-hooks'
 import { flex, font } from 'emotion-styled-utils'
 
-import _ from '../src/utils/lodash'
 import { withApollo } from '../src/frontend/hoc'
-import { TestQuery } from '../src/graphql/queries'
 import { headerHeight } from '../src/frontend/components/Header'
 import Layout from '../src/frontend/components/Layout'
 import GetStartedForm from '../src/frontend/components/GetStartedForm'
@@ -33,16 +30,10 @@ const TagLine = styled.p`
 const StartBlock = styled(ContentWrapper)``
 
 const HomePage = () => {
-  const { loading, data } = useQuery(TestQuery)
-
   return (
     <Layout>
       <TopBlock>
         <Title>
-          <div>
-            <span>{loading ? 'loading' : 'not loading'}</span>
-            <span>{_.get(data, 'result.msg')}</span>
-          </div>
           <Prefix>no-more-spam</Prefix>@<User>YOU</User>.cml.pw
         </Title>
         <TagLine>

@@ -29,7 +29,7 @@ export async function handleLink ({ res }, v) {
 }
 
 export async function sendNotification ({ email, loginToken }) {
-  this._log.info(`Sending login email to ${obfuscate(email)} ...`)
+  this._log.info(`Sending login email to ${obfuscate(email)}`)
 
   return this._sendEmail(email, LOGIN, { email, loginToken })
 }

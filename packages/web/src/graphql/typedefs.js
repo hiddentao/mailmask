@@ -15,14 +15,18 @@ export const getTypeDefs = () => gql`
     error: ErrorDetails
   }
 
-  type TestSuccess {
-    msg: String!
+  type RequestLoginLinkSuccess {
+    success: Boolean
   }
 
-  union TestResult = TestSuccess | Error
+  union RequestLoginLinkResult = RequestLoginLinkSuccess | Error
+
+  type Mutation {
+    requestLoginLink (email: String!): RequestLoginLinkResult!
+  }
 
   type Query {
-    test: TestResult!
+    dummy: Boolean
   }
 `
 
@@ -31,10 +35,10 @@ export const getFragmentMatcherConfig = () => ({
     types: [
       {
         kind: 'UNION',
-        name: 'TestResult',
+        name: 'RequestLoginLinkResult',
         possibleTypes: [
           {
-            name: 'TestSuccess'
+            name: 'RequestLoginLinkSuccess'
           },
           {
             name: 'Error'
@@ -47,9 +51,9 @@ export const getFragmentMatcherConfig = () => ({
 
 
 export const getDefaultResolvers = () => ({
-  TestResult: {
+  RequestLoginLinkResult: {
     __resolveType: ({ error }) => {
-      return error ? 'Error' : 'TestSuccess'
+      return error ? 'Error' : 'RequestLoginLinkSuccess'
     }
   },
   DateTime: GraphQLDateTime,
