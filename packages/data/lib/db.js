@@ -1,15 +1,14 @@
-const _ = require('lodash')
+const { _ } = require('@camomail/utils')
 const knex = require('knex')
 
 const knexConfig = require('../knexfile')
 const userMethods = require('./users')
-
-exports.tsStr = () => new Date().toISOString()
+const maskMethods = require('./masks')
 
 const mapKeyMapper = (_ignore, key) => _.camelCase(key)
 
 class Db {
-  constructor ({ env, logger }) {
+  constructor ({ env, log }) {
     if (!knexConfig[env]) {
       throw new Error(`Invalid db env: ${env}`)
     }
@@ -20,9 +19,9 @@ class Db {
       wrapIdentifier: this._wrapDbIdentifier.bind(this)
     })
 
-    this._log = logger.create('db')
+    this._log = log.create('db')
 
-    ;[ userMethods ].forEach(methods => {
+    ;[ userMethods, maskMethods ].forEach(methods => {
       Object.entries(methods).forEach(([ methodName, fn ]) => {
         this[methodName] = fn.bind(this)
       })
@@ -31,6 +30,10 @@ class Db {
 
   async shutdown () {
     await this._knex.destroy()
+  }
+
+  tsStr () {
+    return new Date().toISOString()
   }
 
   _db () {
@@ -114,4 +117,4 @@ class Db {
   }
 }
 
-exports.createDb = ({ env, logger }) => new Db({ env, logger })
+exports.create = ({ env, log }) => new Db({ env, log })

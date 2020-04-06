@@ -22,8 +22,8 @@ exports.up = async function (knex) {
   await schema(knex).createTable('user', table => {
     table.uuid('id').notNullable().primary().defaultTo(knex.raw('uuid_generate_v4()'))
     table.string('username').notNullable().unique()
-    table.string('email').nullable()
-    table.boolean('email_confirmed').notNullable().defaultTo(false)
+    table.string('email').nullable().unique()
+    table.boolean('signed_up')
     addTimestampColumns(knex, table)
   })
 
@@ -37,9 +37,10 @@ exports.up = async function (knex) {
     table.foreign('legal_id').references('legal.id').onUpdate('RESTRICT').onDelete('RESTRICT')
   })
 
-  await schema(knex).createTable('login_token', table => {
-    table.uuid('id').notNullable().primary()
+  await schema(knex).createTable('login', table => {
+    table.uuid('id').notNullable().primary().defaultTo(knex.raw('uuid_generate_v4()'))
     table.uuid('user_id').notNullable()
+    table.string('token').notNullable()
     addTimestampColumns(knex, table)
     table.foreign('user_id').references('user.id').onUpdate('RESTRICT').onDelete('CASCADE')
   })
@@ -49,16 +50,15 @@ exports.up = async function (knex) {
     table.uuid('user_id').notNullable()
     table.string('name').notNullable()
     table.boolean('enabled')
-    table.integer('count')
     addTimestampColumns(knex, table)
-    table.unique([ 'user_id', 'name' ])
+    table.unique([ 'user_id', 'name' ], 'unique_mask')
     table.foreign('user_id').references('user.id').onUpdate('RESTRICT').onDelete('RESTRICT')
   })
 }
 
 exports.down = async function (knex) {
   await schema(knex).dropTableIfExists('mask')
-  await schema(knex).dropTableIfExists('login_token')
+  await schema(knex).dropTableIfExists('login')
   await schema(knex).dropTableIfExists('user_legal')
   await schema(knex).dropTableIfExists('user')
   await schema(knex).dropTableIfExists('legal')

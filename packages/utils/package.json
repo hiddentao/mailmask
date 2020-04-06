@@ -1,0 +1,39 @@
+{
+  "name": "@camomail/utils",
+  "version": "1.0.0",
+  "description": "Utilities.",
+  "keywords": [
+    "utils"
+  ],
+  "author": "Ramesh Nair <ram@hiddentao.com>",
+  "homepage": "https://cml.pw",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiddentao/camomail.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/hiddentao/camomail/issues"
+  },
+  "dependencies": {
+    "lodash.camelcase": "^4.3.0",
+    "lodash.compose": "^2.4.1",
+    "lodash.get": "^4.4.2",
+    "lodash.mapkeys": "^4.6.0",
+    "lodash.mapvalues": "^4.6.0",
+    "lodash.snakecase": "^4.1.1",
+    "slugify": "^1.4.0",
+    "uuidv4": "^6.0.7",
+    "validator": "^13.0.0"
+  }
+}

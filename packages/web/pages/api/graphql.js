@@ -1,16 +1,14 @@
 import { renderPlaygroundPage } from '@apollographql/graphql-playground-html'
 import { convertNodeHttpToRequest, runHttpQuery } from 'apollo-server-core'
+import { _ } from '@camomail/utils'
 
-import { middleware as ErrorWrapper } from '../../src/middleware/error'
 import { createSchema } from '../../src/graphql'
-import _ from '../../src/utils/lodash'
-import appConfig from '../../src/config'
 import { doBootstrap } from '../../src/bootstrap'
 
-const { log, notifier } = doBootstrap({ config: appConfig })
+const { wrapMiddleware, ...server } = doBootstrap()
 
 const graphqlOptions = {
-  schema: createSchema({ log, notifier, config: appConfig }),
+  schema: createSchema(server),
 }
 
 const endpoint = async (req, res) => {
@@ -36,7 +34,9 @@ const endpoint = async (req, res) => {
           method: req.method,
           options: {
             ...graphqlOptions,
-            context: req.state,
+            context: {
+              user: _.get(req, 'session.id') ? req.session : null,
+            },
           },
           query: req.body,
           request: convertNodeHttpToRequest(req),
@@ -79,4 +79,4 @@ export const config = {
   },
 }
 
-export default _.compose(ErrorWrapper({ log }))(endpoint)
+export default wrapMiddleware(endpoint)

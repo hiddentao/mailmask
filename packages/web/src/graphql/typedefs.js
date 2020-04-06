@@ -19,43 +19,60 @@ export const getTypeDefs = () => gql`
     success: Boolean
   }
 
+  type UserProfile {
+    id: ID!
+    email: String!
+    username: String!
+    createdAt: DateTime!
+  }
+
   union RequestLoginLinkResult = RequestLoginLinkSuccess | Error
+  union UserProfileResult = UserProfile | Error
 
   type Mutation {
     requestLoginLink (email: String!): RequestLoginLinkResult!
   }
 
   type Query {
-    dummy: Boolean
+    getMyProfile: UserProfileResult!
   }
 `
 
+const UNIONS = [
+  [ 'RequestLoginLinkResult', 'RequestLoginLinkSuccess' ],
+  [ 'UserProfileResult', 'UserProfile' ]
+]
+
 export const getFragmentMatcherConfig = () => ({
   __schema: {
-    types: [
-      {
-        kind: 'UNION',
-        name: 'RequestLoginLinkResult',
-        possibleTypes: [
-          {
-            name: 'RequestLoginLinkSuccess'
-          },
-          {
-            name: 'Error'
-          },
-        ]
-      },
-    ]
+    types: UNIONS.map(([ ResultTypeDef, SuccessTypeDef ]) => ({
+      kind: 'UNION',
+      name: ResultTypeDef,
+      possibleTypes: [
+        {
+          name: SuccessTypeDef
+        },
+        {
+          name: 'Error'
+        },
+      ]
+    }))
   }
 })
 
 
 export const getDefaultResolvers = () => ({
-  RequestLoginLinkResult: {
-    __resolveType: ({ error }) => {
-      return error ? 'Error' : 'RequestLoginLinkSuccess'
-    }
-  },
   DateTime: GraphQLDateTime,
   JSON: GraphQLJSON,
+  ...UNIONS.reduce((m, [ ResultTypeDef, SuccessTypeDef ]) => {
+    m[ResultTypeDef] = {
+      __resolveType: ({ error }) => {
+        return error ? 'Error' : SuccessTypeDef
+      }
+    }
+    return m
+  }, {}),
 })
+
+
+

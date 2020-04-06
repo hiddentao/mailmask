@@ -1,13 +1,13 @@
 import url from 'url'
 import Mailgun from '@camomail/mailgun'
+import { obfuscate } from '@camomail/utils'
 
-import { obfuscate } from '../utils/string'
 import { LOGIN } from './types'
 import { encrypt, decrypt } from '../utils/crypto'
 import { buildBackendUrl } from '../utils/url'
 
 class Notifier {
-  constructor ({ config, log }) {
+  constructor ({ config, log, db }) {
     this._log = log.create('notifier')
 
     this._cryptoParams = {
@@ -23,8 +23,7 @@ class Notifier {
       testMode: !!config.TESTMODE,
     })
 
-    // this._db = db
-    // this._db.on('notify', this.sendNotificationFromEvent.bind(this))
+    this._db = db
 
     this.TYPES = {
       LOGIN

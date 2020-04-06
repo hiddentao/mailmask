@@ -30,3 +30,28 @@ export const RequestLoginLinkResultFragment = gql`
     }
   }
 `
+
+
+export const UserProfileFragment = gql`
+  fragment UserProfileFragment on UserProfile {
+    id
+    email
+    username
+    createdAt
+  }
+`
+
+
+export const UserProfileResultFragment = gql`
+  ${UserProfileFragment}
+  ${ErrorFragment}
+
+  fragment UserProfileResultFragment on UserProfileResult {
+    ...on UserProfile {
+      ...UserProfileFragment
+    }
+    ...on Error {
+      ...ErrorFragment
+    }
+  }
+`

@@ -1,4 +1,4 @@
-import _ from '../utils/lodash'
+import { _ } from '@camomail/utils'
 
 import * as codes from './errorCodes'
 
@@ -7,7 +7,7 @@ export const ERROR_CODES = Object.keys(codes).reduce((m, v) => {
   return m
 }, {})
 
-export const createErrorResponse = (message, code = ERROR_CODES.UNKNOWN) => {
+export const createErrorResponse = (code = ERROR_CODES.UNKNOWN, message = '') => {
   return {
     error: {
       __typename: 'ErrorDetails',
@@ -43,7 +43,7 @@ export const stringifyError = err => {
   ]
 
   _.get(err, 'networkError.result.errors', []).forEach(e => {
-    str.push(exports.stringifyError(e))
+    str.push(stringifyError(e))
   })
 
   return str.join('\n')

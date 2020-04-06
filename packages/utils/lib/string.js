@@ -1,5 +1,6 @@
-import slug from 'slugify'
-import validator from 'validator'
+const slug = require('slugify')
+const validator = require('validator')
+const { uuid } = require('uuidv4')
 
 /**
  * Obfuscate given string.
@@ -16,11 +17,11 @@ import validator from 'validator'
  * @param  {String} str Input
  * @return {String}
  */
-export const obfuscate = str => {
+exports.obfuscate = str => {
   if (validator.isEmail(str)) {
     const [ name, at ] = str.split('@')
     const domain = at.split('.')
-    return `${obfuscate(name)}@${domain.map(obfuscate).join('.')}`
+    return `${exports.obfuscate(name)}@${domain.map(exports.obfuscate).join('.')}`
   } else {
     const strLen = str.length
     if (1 < strLen) {
@@ -31,5 +32,19 @@ export const obfuscate = str => {
   }
 }
 
-export const slugify = str => slug(str)
+exports.slugify = str => slug(str)
+
+
+exports.randStr = (numChars = 8) => {
+  return uuid().substr(0, numChars)
+}
+
+
+exports.parseEmailAddress = a => {
+  const atPos = a.indexOf('@')
+  const firstDotPos = a.substr(atPos).indexOf('.')
+  const username = a.substr(atPos + 1, firstDotPos - 1).toLowerCase()
+  const mask = a.substr(0, atPos).toLowerCase()
+  return { username, mask }
+}
 

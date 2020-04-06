@@ -20,6 +20,7 @@
     "@camomail/data": "^1.0.0",
     "@camomail/log": "^1.0.0",
     "@camomail/mailgun": "^1.0.0",
+    "@camomail/utils": "^1.0.0",
     "Haraka": "^2.8.25",
     "envalid": "^6.0.1",
     "lodash": "^4.17.15",
@@ -32,6 +33,7 @@
     "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1"
+    "eslint-plugin-standard": "^4.0.1",
+    "nodemon": "^2.0.2"
   }
 }

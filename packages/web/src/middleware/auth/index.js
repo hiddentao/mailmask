@@ -1,77 +1,60 @@
-import jwt from 'jsonwebtoken'
-import { _ } from '@solui/utils'
+import nookies from 'nookies'
+import { _ } from '@camomail/utils'
 
-import config from '../../config'
-import { encrypt, decrypt } from '../utils/crypto'
+import { encrypt, decrypt } from '../../utils/crypto'
 
-const SECRET = 'solui'
-const ALGORITHM = 'HS256'
+export const middleware = ({ db, config }) => next => async (req, res) => {
+  const CRYPTO_PARAMS = {
+    key: config.ENCRYPTION_KEY,
+    iv: config.ENCRYPTION_IV,
+  }
 
-const CRYPTO_PARAMS = {
-  key: config.ENCRYPTION_KEY,
-  iv: config.ENCRYPTION_IV,
-}
-
-export const generateAuthToken = async address => {
-  const expires = new Date(Date.now() + /* 1 month */ 2592000000)
-
-  const authBlob = await encrypt({ expires, address }, CRYPTO_PARAMS)
-
-  const token = jwt.sign({ authBlob }, SECRET, {
-    algorithm: ALGORITHM
-  })
-
-  return { token, expires }
-}
-
-const AUTH_PREFIX = 'Bearer '
-
-export const middleware = ({ db, log }) => next => async (req, res) => {
-  req.state = {}
-
-  let decoded
+  let session = {}
 
   try {
-    let authToken = _.get(req, 'headers.authorization')
+    const userCookie = _.get(nookies.get({ req }), 'user')
 
-    if (typeof authToken === 'string' && authToken.startsWith(AUTH_PREFIX)) {
-      authToken = authToken.substr(AUTH_PREFIX.length)
+    if (userCookie) {
+      let expires
+      let id
+
+      try {
+        ({ expires, id } = await decrypt(userCookie, CRYPTO_PARAMS))
+      } catch (err) {
+        throw new Error('Auth cookie is corrupted!')
+      }
+
+      if (new Date(expires).getTime() < Date.now()) {
+        throw new Error('Auth cookie token has expired!')
+      }
+
+      const user = await db.getUserById(id)
+      if (!user) {
+        throw new Error('Auth cookie token is invalid!')
+      }
+
+      session = {
+        ...user
+      }
     }
-
-    decoded = jwt.verify(authToken, SECRET, {
-      algorithm: ALGORITHM
-    })
   } catch (err) {
     // not authenticated!
   }
 
-  if (decoded) {
-    try {
-      const { authBlob } = decoded
+  req.session = Object.freeze({ ...session })
 
-      let expires
-      let address
+  res.setUser = async ({ id }) => {
+    const expires = new Date(Date.now() + /* 1 month */ 2592000000)
 
-      try {
-        ({ expires, address } = await decrypt(authBlob, CRYPTO_PARAMS))
-      } catch (err) {
-        throw new Error('Authentication token is corrupted!')
-      }
+    const val = await encrypt({ expires, id }, CRYPTO_PARAMS)
 
-      if (new Date(expires).getTime() < Date.now()) {
-        throw new Error('Authentication token has expired!')
-      }
-
-      const user = await db.getUser({ address })
-
-      if (!user) {
-        throw new Error('Authentication token is invalid!')
-      }
-
-      req.state.user = { address, id: user.id }
-    } catch (err) {
-      log.debug(err.message)
-    }
+    nookies.set({ res }, 'user', val, {
+      maxAge: Number.MAX_SAFE_INTEGER, // never expires
+      path: '/',
+      httpOnly: true,
+      // on live site we want to enforce HTTPS for logged-in sessions
+      secure: (config.APP_MODE === 'live'),
+    })
   }
 
   await next(req, res)
