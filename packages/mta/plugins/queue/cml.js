@@ -91,8 +91,12 @@ const getUsers = async function (to, cc, bcc) {
 
       const finalMasks = {}
 
+      let atleastOneMaskEnabled = false
+
       // save to final list
       masksAndTheirStatuses.forEach(({ name, enabled }) => {
+        atleastOneMaskEnabled = atleastOneMaskEnabled || enabled
+
         finalMasks[name] = {
           enabled
         }
@@ -102,6 +106,8 @@ const getUsers = async function (to, cc, bcc) {
       // so that we remember to save them later on!)
       maskNames.forEach(mask => {
         if (!finalMasks[mask]) {
+          atleastOneMaskEnabled = true
+
           finalMasks[mask] = {
             enabled: true,
             isNew: true,
@@ -110,10 +116,14 @@ const getUsers = async function (to, cc, bcc) {
       })
 
       // finalize
-      finalUsers[username] = {
-        id: userObj.id,
-        email: userObj.email,
-        masks: finalMasks,
+      if (atleastOneMaskEnabled) {
+        finalUsers[username] = {
+          id: userObj.id,
+          email: userObj.email,
+          masks: finalMasks,
+        }
+      } else {
+        log.debug(`No masks enabled for user: ${username} :'(`)
       }
     }
   }))
