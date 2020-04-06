@@ -1,13 +1,13 @@
 import url from 'url'
-import mailgun from 'mailgun.js'
-import { obfuscate } from '@solui/utils'
+// import mailgun from 'mailgun.js'
 
+import { obfuscate } from '../utils/string'
 import { LOGIN } from './types'
 import { encrypt, decrypt } from '../utils/crypto'
 import { buildBackendUrl } from '../utils/url'
 
 class Notifier {
-  constructor ({ config, db, log }) {
+  constructor ({ config, log }) {
     this._log = log.create('notifier')
 
     this._cryptoParams = {
@@ -17,13 +17,13 @@ class Notifier {
 
     this._domain = config.MAILGUN_DOMAIN
 
-    this._mg = mailgun.client({
-      username: 'api',
-      key: config.MAILGUN_API_KEY,
-    })
+    // this._mg = mailgun.client({
+    //   username: 'api',
+    //   key: config.MAILGUN_API_KEY,
+    // })
 
-    this._db = db
-    this._db.on('notify', this.sendNotificationFromEvent.bind(this))
+    // this._db = db
+    // this._db.on('notify', this.sendNotificationFromEvent.bind(this))
 
     this._handlers = {
       /* eslint-disable import/no-dynamic-require */
@@ -31,7 +31,7 @@ class Notifier {
       /* eslint-enable import/no-dynamic-require */
     }
 
-    this._isSimulated = !!config.MAIL_SIMULATED
+    this._isSimulated = !!config.SIMULATED
   }
 
   _getHandler (type) {
@@ -80,7 +80,7 @@ class Notifier {
       this._log.debug(`Sending email to ${obfuscate(email)} ...`)
 
       const msg = {
-        from: `solUI <hello@${this._domain}>`,
+        from: `Camomail <support@${this._domain}>`,
         to: [ email ],
         subject,
         text,

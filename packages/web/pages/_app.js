@@ -1,11 +1,10 @@
 import App from 'next/app'
 import React from 'react'
 import { ThemeProvider } from 'emotion-theming'
-import { loadFonts, media } from 'emotion-styled-utils'
+import { loadFonts } from 'emotion-styled-utils'
 
-import GlobalStyles from '../frontend/components/GlobalStyles'
-import { setupThemes } from '../frontend/theme'
-import { GlobalProvider } from '../frontend/providers'
+import GlobalStyles from '../src/frontend/components/GlobalStyles'
+import { setupThemes } from '../src/frontend/theme'
 
 const themes = setupThemes({
   width: {
@@ -47,12 +46,10 @@ export default class MyApp extends App {
     const { Component, pageProps } = this.props
 
     return (
-      <GlobalProvider>
-        <ThemeProvider theme={themes.get('light')}>
-          <GlobalStyles />
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </GlobalProvider>
+      <ThemeProvider theme={themes.get('light')}>
+        <GlobalStyles />
+        <Component {...pageProps} />
+      </ThemeProvider>
     )
   }
 }

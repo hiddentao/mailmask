@@ -1,18 +1,61 @@
 import React from 'react'
+import styled from '@emotion/styled'
+import { useQuery } from '@apollo/react-hooks'
+import { flex, font } from 'emotion-styled-utils'
 
-import { getInitialPageProps } from '../frontend/utils/pageProps'
-import Layout from '../frontend/components/Layout'
+import _ from '../src/utils/lodash'
+import { withApollo } from '../src/frontend/hoc'
+import { TestQuery } from '../src/graphql/queries'
+import { headerHeight } from '../src/frontend/components/Header'
+import Layout from '../src/frontend/components/Layout'
+import GetStartedForm from '../src/frontend/components/GetStartedForm'
+import ContentWrapper from '../src/frontend/components/ContentWrapper'
+
+const TopBlock = styled.div`
+  height: calc(100vh - ${headerHeight});
+  ${flex({ direction: 'column', justify: 'center', align: 'center' })};
+`
+
+const Title = styled.h1`
+  ${font('header')};
+  font-size: 4rem;
+  margin: 0;
+`
+
+const Prefix = styled.span``
+const User = styled.span``
+
+const TagLine = styled.p`
+  font-size: 2rem;
+  margin-top: 2rem;
+`
+
+const StartBlock = styled(ContentWrapper)``
 
 const HomePage = () => {
+  const { loading, data } = useQuery(TestQuery)
+
   return (
     <Layout>
-      Hello world!
+      <TopBlock>
+        <Title>
+          <div>
+            <span>{loading ? 'loading' : 'not loading'}</span>
+            <span>{_.get(data, 'result.msg')}</span>
+          </div>
+          <Prefix>no-more-spam</Prefix>@<User>YOU</User>.cml.pw
+        </Title>
+        <TagLine>
+          Beat Spam. Protect Your Privacy.
+        </TagLine>
+      </TopBlock>
+      <StartBlock>
+        <GetStartedForm />
+      </StartBlock>
     </Layout>
   )
 }
 
-HomePage.getInitialProps = getInitialPageProps
-
-export default HomePage
+export default withApollo(HomePage)
 
 

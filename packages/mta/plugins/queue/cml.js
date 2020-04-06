@@ -29,14 +29,14 @@ exports.cml_setup = function (next) {
       domain: config.DOMAIN,
       mute: true,
       host: 'api.eu.mailgun.net',
-      testMode: !!config.SIM,
+      testMode: !!config.SIMULATED,
     })
 
     logger.info('Setup db ...')
 
     db = createDb({ env: 'development', logger })
 
-    if (config.SIM) {
+    if (config.SIMULATED) {
       logger.info('Simulation Mode!')
     }
 

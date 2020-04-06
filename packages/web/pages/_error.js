@@ -2,8 +2,8 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { font } from 'emotion-styled-utils'
 
-import ErrorBox from '../frontend/components/ErrorBox'
-import Layout from '../frontend/components/Layout'
+import ErrorBox from '../src/frontend/components/ErrorBox'
+import Layout from '../src/frontend/components/Layout'
 
 const Heading = styled.h1`
   ${font('header')}

@@ -11,3 +11,4 @@ export const GlobalProvider = ({ children }) => {
 }
 
 export const GlobalConsumer = GlobalContext.Consumer
+

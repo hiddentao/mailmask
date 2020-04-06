@@ -1,6 +1,6 @@
 import Document, { Main, Head, NextScript } from 'next/document'
 
-import { getInitialPageProps } from '../frontend/utils/pageProps'
+import { getAppConfig } from '../src/frontend/appConfig'
 
 export default class MyDocument extends Document {
   static async getInitialProps (ctx) {
@@ -8,7 +8,7 @@ export default class MyDocument extends Document {
 
     const ret = {
       ...initialProps,
-      ...getInitialPageProps()
+      appConfig: getAppConfig(),
     }
 
     return ret

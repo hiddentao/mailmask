@@ -1,5 +1,4 @@
-import { obfuscate } from '@solui/utils'
-
+import { obfuscate } from '../../utils/string'
 import { buildUrlPath } from '../../utils/url'
 import { LOGIN } from '../types'
 

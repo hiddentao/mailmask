@@ -135,24 +135,23 @@ const Header = ({ className, onClickHome, children }) => {
 
   const toggleMobileMenu = useCallback(() => setMobileNavOpen(!mobileNavOpen), [ mobileNavOpen ])
 
-    // < NavLi > <Link href='/support'>Support</Link></NavLi>
-    //   <DashboardLi>
-    //     <Authenticated
-    //       yes={() => <Link href='/dashboard'>My dashboard</Link>}
-    //       no={() => <Link href='/login'>Login</Link>}
-    //     />
-    //   </DashboardLi>
   const navLinks = (
     <React.Fragment>
-
+      <NavLi><Link href='/pricing'>Pricing</Link></NavLi>
+      <DashboardLi>
+        <Authenticated
+          yes={() => <Link href='/dashboard'>My dashboard</Link>}
+          no={() => <Link href='/login'>Login</Link>}
+        />
+      </DashboardLi>
     </React.Fragment>
   )
 
-    // < Link href = '/' >
-    //   <Brand onClick={onClickHome}>camomail</Brand>
-    //   </Link >
   return (
     <Container className={className}>
+      <Link href='/'>
+        <Brand onClick={onClickHome}>camomail</Brand>
+      </Link>
       {children}
       <DesktopNav>{navLinks}</DesktopNav>
       <MobileNavButton onClick={toggleMobileMenu}><Icon name='bars' /></MobileNavButton>

@@ -1,5 +1,5 @@
 import url from 'url'
-import config from '../../config'
+import config from '../config'
 
 export const buildUrlPath = (pathname, query) => url.format({ pathname, query })
 
