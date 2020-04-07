@@ -1,26 +1,29 @@
 import React, { useState, useCallback } from 'react'
 import styled from '@emotion/styled'
-import validator from 'validator'
+import { isValidEmail } from '@camomail/utils'
 
 import { useSafeMutation } from '../hooks'
 import { RequestLoginLinkMutation } from '../../graphql/mutations'
 import Button from './Button'
+import QueryResult from './QueryResult'
 
-const Container = styled.div``
+const Form = styled.form``
 
 const GetStartedForm = ({ className }) => {
   const [ email, setEmail ] = useState('')
   const [ isValid, setIsValid ] = useState(false)
-  const [ doRequest, { loading, error } ] = useSafeMutation(RequestLoginLinkMutation)
+  const [ doRequest, result ] = useSafeMutation(RequestLoginLinkMutation)
 
   const updateEmail = useCallback(({ currentTarget: { value: inputValue } }) => {
     if (inputValue !== email) {
       setEmail(inputValue)
-      setIsValid(validator.isEmail(inputValue))
+      setIsValid(isValidEmail(inputValue))
     }
   }, [ email ])
 
-  const submitEmail = useCallback(async () => {
+  const submitEmail = useCallback(async e => {
+    e.preventDefault()
+
     if (!isValid) {
       return
     }
@@ -33,13 +36,14 @@ const GetStartedForm = ({ className }) => {
   }, [ email, isValid, doRequest ])
 
   return (
-    <Container className={className}>
+    <Form className={className} onSubmit={submitEmail}>
       <p>Enter your email to get started!</p>
       <input type="email" value={email} onChange={updateEmail} />
       <Button disabled={!isValid} onClick={submitEmail}>Go</Button>
-      {loading ? <div>Loading...</div> : null}
-      {error ? <div>Error: {error.toString()}</div> : null}
-    </Container>
+      <QueryResult {...result}>
+        <div>Email sent!</div>
+      </QueryResult>
+    </Form>
   )
 }
 

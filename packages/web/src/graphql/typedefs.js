@@ -15,7 +15,7 @@ export const getTypeDefs = () => gql`
     error: ErrorDetails
   }
 
-  type RequestLoginLinkSuccess {
+  type Success {
     success: Boolean
   }
 
@@ -23,24 +23,35 @@ export const getTypeDefs = () => gql`
     id: ID!
     email: String!
     username: String!
+    signedUp: Boolean!
     createdAt: DateTime!
   }
 
-  union RequestLoginLinkResult = RequestLoginLinkSuccess | Error
+  type UsernameAvailability {
+    available: Boolean
+  }
+
+  union RequestLoginLinkResult = Success | Error
+  union SetUsernameResult = Success | Error
   union UserProfileResult = UserProfile | Error
+  union UsernameAvailabilityResult = UsernameAvailability | Error
 
   type Mutation {
     requestLoginLink (email: String!): RequestLoginLinkResult!
+    setUsername (username: String!): SetUsernameResult!
   }
 
   type Query {
     getMyProfile: UserProfileResult!
+    getUsernameAvailability (username: String!): UsernameAvailabilityResult!
   }
 `
 
 const UNIONS = [
-  [ 'RequestLoginLinkResult', 'RequestLoginLinkSuccess' ],
-  [ 'UserProfileResult', 'UserProfile' ]
+  [ 'RequestLoginLinkResult', 'Success' ],
+  [ 'SetUsernameResult', 'Success' ],
+  [ 'UserProfileResult', 'UserProfile' ],
+  [ 'UsernameAvailabilityResult', 'UsernameAvailability' ]
 ]
 
 export const getFragmentMatcherConfig = () => ({

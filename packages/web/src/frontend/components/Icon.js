@@ -5,14 +5,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import {
   faBars,
-  faSnowflake
+  faCheckCircle,
+  faExclamation,
+  faSnowflake,
+  faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons'
 
 config.autoAddCss = false
 
 const ICONS = {
   bars: faBars,
-  snowflake: faSnowflake
+  'check-circle': faCheckCircle,
+  exclamation: faExclamation,
+  snowflake: faSnowflake,
+  'times-circle': faTimesCircle,
 }
 
 library.add(...(Object.values(ICONS)))

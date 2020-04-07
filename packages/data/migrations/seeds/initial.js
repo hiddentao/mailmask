@@ -1,7 +1,7 @@
 exports.seed = async knex => {
   await knex('user').del()
 
-  const [ user1Id, user2Id ] = await knex('user')
+  const [ user1Id, user2Id, user3Id ] = await knex('user')
     .insert([
       { username: 'test', email: 'camomail1@hiddentao.com', signed_up: true },
       { username: 'test2', email: 'camomail2@hiddentao.com', signed_up: true },
@@ -14,5 +14,6 @@ exports.seed = async knex => {
       { user_id: user1Id, name: 'camo1', enabled: false },
       { user_id: user1Id, name: 'camo2', enabled: true },
       { user_id: user2Id, name: 'camo2', enabled: true },
+      { user_id: user3Id, name: 'camo1', enabled: false },
     ])
 }

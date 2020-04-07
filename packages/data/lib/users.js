@@ -1,15 +1,6 @@
 /* eslint-disable func-names */
 const { _, obfuscate } = require('@camomail/utils')
 
-exports._extractUserFromResultRow = function (row) {
-  return {
-    id: row.uId,
-    username: row.uUsername,
-    email: row.uEmail,
-    createdAt: row.uCreatedAt,
-  }
-}
-
 
 exports._createUserOrFetchExisting = async function (email, trx) {
   email = email.toLowerCase()
@@ -39,6 +30,24 @@ exports._createUserOrFetchExisting = async function (email, trx) {
 
   return id
 }
+
+
+
+exports.isUsernameAvailable = async function (username) {
+  this._log.debug(`Get if username is available for registration: ${username} ...`)
+
+  username = username.toLowerCase()
+
+  const ret = await this._db()
+    .table('user')
+    .select('id')
+    .where('username', username)
+    .limit(1)
+
+  return !ret.length
+}
+
+
 
 
 
@@ -109,26 +118,17 @@ exports.saveUserLogin = async function (email, token) {
 }
 
 
-exports.updateUserPrefixCounts = async function (userPrefixesMap) {
-  this._log.debug(`Update user prefixes counts (${Object.keys(userPrefixesMap).length} users) ...`)
 
-  // transaction
-  return this._dbTrans(async trx => {
-    await Promise.all()
-    // create or fetch user id
-    const id = await this._createUserOrFetchExisting(email, trx)
+exports.finalizeSignUp = async function (userId, username) {
+  this._log.debug(`Finalize sign-up for user: ${userId} ...`)
 
-    await this._db().raw(`
-      INSERT INTO mask (user_id, name, enabled)
-      VALUES ()
-    `)
-      .table('login')
-      .insert({
-        user_id: id,
-        token,
-      })
-      .transacting(trx)
+  username = username.toLowerCase()
 
-    return id
-  })
+  await this._db()
+    .table('user')
+    .update({
+      username,
+      signedUp: true,
+    })
+    .where('id', userId)
 }

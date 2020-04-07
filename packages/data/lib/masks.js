@@ -17,12 +17,16 @@ exports.getMaskStatuses = async function (username, masks) {
 exports.saveNewMasks = async function (userId, newMasks) {
   this._log.debug(`Save ${newMasks.length} new masks for user ${userId} ...`)
 
-  return this._db()
-    .table('mask')
-    .insert(newMasks.map(m => [
-      { user_id: userId, name: m, enabled: true },
-    ]))
-    .on// TODO: on conflict do nothing!!!
+  return this._db().raw(`
+    insert into mask (user_id, name, enabled)
+    values
+      ${newMasks.map(() => '(?,?,?) ')}
+    on conflict do nothing
+  `,
+  newMasks.reduce((m, v) => {
+    m = m.concat([ userId, v, true ])
+    return m
+  }, []))
 }
 
 

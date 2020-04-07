@@ -16,7 +16,8 @@
   "scripts": {
     "db:migrate": "knex migrate:latest",
     "db:rollback": "knex migrate:rollback",
-    "db:seed": "knex seed:run"
+    "db:seed": "knex seed:run",
+    "db:reset": "yarn db:rollback && yarn db:migrate && yarn db:seed"
   },
   "bugs": {
     "url": "https://github.com/hiddentao/camomail/issues"

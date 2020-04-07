@@ -10,20 +10,20 @@ export const ErrorFragment = gql`
 `
 
 
-export const RequestLoginLinkSuccessFragment = gql`
-  fragment RequestLoginLinkSuccessFragment on RequestLoginLinkSuccess {
+export const SuccessFragment = gql`
+  fragment SuccessFragment on Success {
     success
   }
 `
 
 
 export const RequestLoginLinkResultFragment = gql`
-  ${RequestLoginLinkSuccessFragment}
+  ${SuccessFragment}
   ${ErrorFragment}
 
   fragment RequestLoginLinkResultFragment on RequestLoginLinkResult {
-    ...on RequestLoginLinkSuccess {
-      ...RequestLoginLinkSuccessFragment
+    ...on Success {
+      ...SuccessFragment
     }
     ...on Error {
       ...ErrorFragment
@@ -32,11 +32,28 @@ export const RequestLoginLinkResultFragment = gql`
 `
 
 
+export const SetUsernameResultFragment = gql`
+  ${SuccessFragment}
+  ${ErrorFragment}
+
+  fragment SetUsernameResultFragment on SetUsernameResult {
+    ...on Success {
+      ...SuccessFragment
+    }
+    ...on Error {
+      ...ErrorFragment
+    }
+  }
+`
+
+
+
 export const UserProfileFragment = gql`
   fragment UserProfileFragment on UserProfile {
     id
     email
     username
+    signedUp
     createdAt
   }
 `
@@ -49,6 +66,29 @@ export const UserProfileResultFragment = gql`
   fragment UserProfileResultFragment on UserProfileResult {
     ...on UserProfile {
       ...UserProfileFragment
+    }
+    ...on Error {
+      ...ErrorFragment
+    }
+  }
+`
+
+
+
+export const UsernameAvailabilityFragment = gql`
+  fragment UsernameAvailabilityFragment on UsernameAvailability {
+    available
+  }
+`
+
+
+export const UsernameAvailabilityResultFragment = gql`
+  ${UsernameAvailabilityFragment}
+  ${ErrorFragment}
+
+  fragment UsernameAvailabilityResultFragment on UsernameAvailabilityResult {
+    ...on UsernameAvailability {
+      ...UsernameAvailabilityFragment
     }
     ...on Error {
       ...ErrorFragment

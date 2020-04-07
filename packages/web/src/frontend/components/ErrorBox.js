@@ -52,7 +52,7 @@ const SubMsg = styled.p`
  */
 const ErrorBox = ({ className, error }) => {
   if (!Array.isArray(error)) {
-    error = [error]
+    error = [ error ]
   }
 
   return (

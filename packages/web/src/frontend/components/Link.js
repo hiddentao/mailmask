@@ -29,3 +29,10 @@ export const Link = ({ href, as, query = {}, children }) => {
     </DefaultLink>
   )
 }
+
+
+export const AccountLink = ({ children }) => (
+  <DefaultLink href='/account' scroll={true}>
+    {wrapInAnchor(children)}
+  </DefaultLink>
+)

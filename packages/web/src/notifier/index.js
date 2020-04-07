@@ -2,7 +2,7 @@ import url from 'url'
 import Mailgun from '@camomail/mailgun'
 import { obfuscate } from '@camomail/utils'
 
-import { LOGIN } from './types'
+import TYPES from './types'
 import { encrypt, decrypt } from '../utils/crypto'
 import { buildBackendUrl } from '../utils/url'
 
@@ -25,11 +25,9 @@ class Notifier {
 
     this._db = db
 
-    this.TYPES = {
-      LOGIN
-    }
+    this.TYPES = TYPES
 
-    this._handlers = Object.keys(this.TYPES).reduce((m, t) => {
+    this._handlers = Object.keys(TYPES).reduce((m, t) => {
       /* eslint-disable import/no-dynamic-require */
       m[t] = require(`./handlers/${t.toLowerCase()}`)
       /* eslint-enable import/no-dynamic-require */

@@ -48,3 +48,10 @@ exports.parseEmailAddress = a => {
   return { username, mask }
 }
 
+
+exports.isValidEmail = a => validator.isEmail(a)
+
+
+const USERNAME_REGEX = /^[A-Za-z0-9\-]{3,16}$/
+
+exports.isValidUsername = n => n && !!n.match(USERNAME_REGEX)

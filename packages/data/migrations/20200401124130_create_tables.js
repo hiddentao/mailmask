@@ -22,8 +22,8 @@ exports.up = async function (knex) {
   await schema(knex).createTable('user', table => {
     table.uuid('id').notNullable().primary().defaultTo(knex.raw('uuid_generate_v4()'))
     table.string('username').notNullable().unique()
-    table.string('email').nullable().unique()
-    table.boolean('signed_up')
+    table.string('email').notNullable().unique()
+    table.boolean('signed_up').notNullable().defaultTo(false)
     addTimestampColumns(knex, table)
   })
 
@@ -49,7 +49,7 @@ exports.up = async function (knex) {
     table.uuid('id').notNullable().primary().defaultTo(knex.raw('uuid_generate_v4()'))
     table.uuid('user_id').notNullable()
     table.string('name').notNullable()
-    table.boolean('enabled')
+    table.boolean('enabled').notNullable().defaultTo(false)
     addTimestampColumns(knex, table)
     table.unique([ 'user_id', 'name' ], 'unique_mask')
     table.foreign('user_id').references('user.id').onUpdate('RESTRICT').onDelete('RESTRICT')

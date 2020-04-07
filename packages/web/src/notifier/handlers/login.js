@@ -14,7 +14,7 @@ ${url}
 
 thanks,
 
-The friendly solUI bot
+Team Camomail
 `
   }
 }

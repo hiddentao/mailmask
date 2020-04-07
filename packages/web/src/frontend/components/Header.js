@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from 'react'
 import styled from '@emotion/styled'
-import { flex, font, childAnchors, media, boxShadow } from 'emotion-styled-utils'
+import { flex, font, childAnchors, boxShadow } from 'emotion-styled-utils'
 
-import { Link } from './Link'
+import { Link, AccountLink } from './Link'
 import Authenticated from './Authenticated'
 import Button from './Button'
 import Icon from './Icon'
@@ -139,10 +139,9 @@ const Header = ({ className, onClickHome, children }) => {
     <React.Fragment>
       <NavLi><Link href='/pricing'>Pricing</Link></NavLi>
       <DashboardLi>
-        <Authenticated
-          yes={() => <Link href='/dashboard'>My dashboard</Link>}
-          no={() => <Link href='/login'>Login</Link>}
-        />
+        <Authenticated no={() => <Link href='/login'>Login</Link>}>
+          {() => <AccountLink>My account</AccountLink>}
+        </Authenticated>
       </DashboardLi>
     </React.Fragment>
   )

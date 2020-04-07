@@ -1,19 +1,28 @@
 import React from 'react'
 
-import { useSafeQuery } from '../src/frontend/hooks'
 import { withApollo } from '../src/frontend/hoc'
-import { GetMyProfileQuery } from '../src/graphql/queries'
 import Layout from '../src/frontend/components/Layout'
+import { AccountLink } from '../src/frontend/components/Link'
+import Authenticated from '../src/frontend/components/Authenticated'
+import SetUsernameForm from '../src/frontend/components/SetUsernameForm'
+import Button from '../src/frontend/components/Button'
 
 const LoggedInPage = () => {
-  const { loading, data, error } = useSafeQuery(GetMyProfileQuery)
-
   return (
     <Layout>
-      You are logged in!
-      <div>{loading ? 'Loading ...' : null}</div>
-      <div>{data ? JSON.stringify(data, null, 2) : null}</div>
-      <div>{error ? `Error ${error.message}` : null}</div>
+      <Authenticated>
+        {({ signedUp }) => (signedUp ? (
+          <div>
+            <p>You are now logged in.</p>
+            <AccountLink><Button>Goto my account</Button></AccountLink>
+          </div>
+        ) : (
+          <div>
+            <p>Thanks for signing up.</p>
+            <SetUsernameForm />
+          </div>
+        ))}
+      </Authenticated>
     </Layout>
   )
 }
