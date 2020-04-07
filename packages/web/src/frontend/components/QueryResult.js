@@ -15,7 +15,6 @@ const QueryResult = ({ className, error, loading, data, children }) => {
     <Container className={className}>
       {loading ? <LoadingIcon /> : null}
       {error ? <ErrorBox error={error} /> : null}
-      { /* eslint-disable-next-line no-nested-ternary */ }
       {data ? renderChildWithArgs(children, data) : null}
     </Container>
   )

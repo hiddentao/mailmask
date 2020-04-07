@@ -132,3 +132,17 @@ exports.finalizeSignUp = async function (userId, username) {
     })
     .where('id', userId)
 }
+
+
+
+
+exports.deleteUser = async function (userId) {
+  this._log.debug(`Deleting user: ${userId} ...`)
+
+  await this._dbTrans(async trx => {
+    await this._db().raw(`delete from user_legal where user_id = ?`, [ userId ]).transacting(trx)
+    await this._db().raw(`delete from login where user_id = ?`, [ userId ]).transacting(trx)
+    await this._db().raw(`delete from mask where user_id = ?`, [ userId ]).transacting(trx)
+    await this._db().raw(`delete from "user" where id = ?`, [ userId ]).transacting(trx)
+  })
+}

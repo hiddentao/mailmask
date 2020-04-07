@@ -41,14 +41,14 @@ const SetUsernameForm = ({ className }) => {
     }
   }, [ username, usernameCheckQuery ])
 
-  const submitUsername = useCallback(async e => {
+  const submitUsername = useCallback(e => {
     e.preventDefault()
 
     if (!canSubmit) {
       return
     }
 
-    await doRequest({
+    doRequest({
       variables: {
         username,
       }

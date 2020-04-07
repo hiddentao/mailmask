@@ -36,3 +36,16 @@ export const AccountLink = ({ children }) => (
     {wrapInAnchor(children)}
   </DefaultLink>
 )
+
+
+export const LoginLink = ({ children }) => (
+  <DefaultLink href='/login' scroll={true}>
+    {wrapInAnchor(children)}
+  </DefaultLink>
+)
+
+export const LogoutLink = ({ children }) => (
+  <DefaultLink href='/api/logout' scroll={true}>
+    {wrapInAnchor(children)}
+  </DefaultLink>
+)

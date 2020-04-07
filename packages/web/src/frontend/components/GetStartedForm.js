@@ -22,14 +22,14 @@ const GetStartedForm = ({ className }) => {
     }
   }, [ email ])
 
-  const submitEmail = useCallback(async e => {
+  const submitEmail = useCallback(e => {
     e.preventDefault()
 
     if (!isValid) {
       return
     }
 
-    await doRequest({
+    doRequest({
       variables: {
         email,
       }

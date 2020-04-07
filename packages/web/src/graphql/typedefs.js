@@ -6,6 +6,12 @@ export const getTypeDefs = () => gql`
   scalar DateTime
   scalar JSON
 
+  type PagedResult {
+    page: Int!
+    totalResults: Int!
+    numPages: Int!
+  }
+
   type ErrorDetails {
     code: String
     message: String
@@ -31,18 +37,39 @@ export const getTypeDefs = () => gql`
     available: Boolean
   }
 
+  type Mask {
+    name: String!
+    enabled: Boolean!
+  }
+
+  type MaskList {
+    items: [Mask]!
+    paging: PagedResult!
+  }
+
+  input PagingInput {
+    page: Int
+    resultsPerPage: Int
+  }
+
   union RequestLoginLinkResult = Success | Error
   union SetUsernameResult = Success | Error
+  union UpdateMaskStatusResult = Success | Error
+  union DeleteAccountResult = Success | Error
   union UserProfileResult = UserProfile | Error
   union UsernameAvailabilityResult = UsernameAvailability | Error
+  union MaskListResult = MaskList | Error
 
   type Mutation {
     requestLoginLink (email: String!): RequestLoginLinkResult!
     setUsername (username: String!): SetUsernameResult!
+    updateMaskStatus (name: String!, enabled: Boolean!): UpdateMaskStatusResult!
+    deleteAccount: DeleteAccountResult!
   }
 
   type Query {
     getMyProfile: UserProfileResult!
+    getMyMasks (paging: PagingInput!): MaskListResult!
     getUsernameAvailability (username: String!): UsernameAvailabilityResult!
   }
 `
@@ -50,8 +77,11 @@ export const getTypeDefs = () => gql`
 const UNIONS = [
   [ 'RequestLoginLinkResult', 'Success' ],
   [ 'SetUsernameResult', 'Success' ],
+  [ 'UpdateMaskStatusResult', 'Success' ],
+  [ 'DeleteAccountResult', 'Success' ],
   [ 'UserProfileResult', 'UserProfile' ],
-  [ 'UsernameAvailabilityResult', 'UsernameAvailability' ]
+  [ 'UsernameAvailabilityResult', 'UsernameAvailability' ],
+  [ 'MaskListResult', 'MaskList' ],
 ]
 
 export const getFragmentMatcherConfig = () => ({

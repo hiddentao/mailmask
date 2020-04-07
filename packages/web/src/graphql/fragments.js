@@ -48,6 +48,38 @@ export const SetUsernameResultFragment = gql`
 
 
 
+export const UpdateMaskStatusResultFragment = gql`
+  ${SuccessFragment}
+  ${ErrorFragment}
+
+  fragment UpdateMaskStatusResultFragment on UpdateMaskStatusResult {
+    ...on Success {
+      ...SuccessFragment
+    }
+    ...on Error {
+      ...ErrorFragment
+    }
+  }
+`
+
+
+
+export const DeleteAccountResultFragment = gql`
+  ${SuccessFragment}
+  ${ErrorFragment}
+
+  fragment DeleteAccountResultFragment on DeleteAccountResult {
+    ...on Success {
+      ...SuccessFragment
+    }
+    ...on Error {
+      ...ErrorFragment
+    }
+  }
+`
+
+
+
 export const UserProfileFragment = gql`
   fragment UserProfileFragment on UserProfile {
     id
@@ -89,6 +121,53 @@ export const UsernameAvailabilityResultFragment = gql`
   fragment UsernameAvailabilityResultFragment on UsernameAvailabilityResult {
     ...on UsernameAvailability {
       ...UsernameAvailabilityFragment
+    }
+    ...on Error {
+      ...ErrorFragment
+    }
+  }
+`
+
+
+export const PagedResultFragment = gql`
+  fragment PagedResultFragment on PagedResult {
+    page
+    totalResults
+    numPages
+  }
+`
+
+
+export const MaskFragment = gql`
+  fragment MaskFragment on Mask {
+    name
+    enabled
+  }
+`
+
+
+export const MaskListFragment = gql`
+  ${PagedResultFragment}
+  ${MaskFragment}
+
+  fragment MaskListFragment on MaskList {
+    items {
+      ...MaskFragment
+    }
+    paging {
+      ...PagedResultFragment
+    }
+  }
+`
+
+
+export const MaskListResultFragment = gql`
+  ${MaskListFragment}
+  ${ErrorFragment}
+
+  fragment MaskListResultFragment on MaskListResult {
+    ...on MaskList {
+      ...MaskListFragment
     }
     ...on Error {
       ...ErrorFragment

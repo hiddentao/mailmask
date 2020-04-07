@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react'
 import styled from '@emotion/styled'
 import { flex, font, childAnchors, boxShadow } from 'emotion-styled-utils'
 
-import { Link, AccountLink } from './Link'
+import { Link, AccountLink, LoginLink } from './Link'
 import Authenticated from './Authenticated'
 import Button from './Button'
 import Icon from './Icon'
@@ -139,7 +139,7 @@ const Header = ({ className, onClickHome, children }) => {
     <React.Fragment>
       <NavLi><Link href='/pricing'>Pricing</Link></NavLi>
       <DashboardLi>
-        <Authenticated renderNotAuthenticated={() => <Link href='/login'>Login</Link>}>
+        <Authenticated renderNotAuthenticated={() => <LoginLink>Login</LoginLink>}>
           {() => <AccountLink>My account</AccountLink>}
         </Authenticated>
       </DashboardLi>

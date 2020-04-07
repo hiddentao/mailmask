@@ -35,6 +35,7 @@ const endpoint = async (req, res) => {
           options: {
             ...graphqlOptions,
             context: {
+              setUser: res.setUser,
               user: _.get(req, 'session.id') ? req.session : null,
             },
           },

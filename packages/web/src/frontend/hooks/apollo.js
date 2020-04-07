@@ -34,12 +34,14 @@ export const useSafeMutation = (mutation, opts) => {
 
       e.code = error.code
 
-      setResult({
+      ret = {
         error: e,
-      })
-    } else {
-      setResult(ret)
+      }
     }
+
+    setResult(ret)
+
+    return ret
   }, [ mutation, opts, client ])
 
   return [ fn, result ]
@@ -47,7 +49,10 @@ export const useSafeMutation = (mutation, opts) => {
 
 
 export const useSafeQuery = (query, opts) => {
-  const { loading, error, data, ...props } = useQuery(query, opts)
+  const { loading, error, data, ...props } = useQuery(query, {
+    fetchPolicy: 'cache-and-network',
+    ...opts,
+  })
 
   if ((data || error) && !loading) {
     const resolvedError = resolveError({ error, data })

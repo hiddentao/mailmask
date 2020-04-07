@@ -22,6 +22,9 @@
     "deploy": "npm run build && npm run now-cli -- --prod -f --public",
     "clean-old-deploys": "npm run now-cli rm camomail-web --safe --yes"
   },
+  "scarfSettings": {
+    "enabled": false
+  },
   "bugs": {
     "url": "https://github.com/hiddentao/camomail/issues"
   },
@@ -75,6 +78,7 @@
     "react-apollo": "^3.1.4",
     "react-dom": "^16.13.1",
     "react-headroom": "^3.0.0",
+    "react-table": "^7.0.4",
     "url": "^0.11.0"
   }
 }

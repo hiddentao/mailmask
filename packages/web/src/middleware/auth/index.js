@@ -44,17 +44,24 @@ export const middleware = ({ db, config }) => next => async (req, res) => {
   req.session = Object.freeze({ ...session })
 
   res.setUser = async ({ id }) => {
-    const expires = new Date(Date.now() + /* 1 month */ 2592000000)
+    if (!id) {
+      nookies.destroy({ res }, 'user', { path: '/' })
+    } else {
+      const expires = new Date(Date.now() + /* 1 month */ 2592000000)
 
-    const val = await encrypt({ expires, id }, CRYPTO_PARAMS)
+      const val = await encrypt({ expires, id }, CRYPTO_PARAMS)
 
-    nookies.set({ res }, 'user', val, {
-      maxAge: Number.MAX_SAFE_INTEGER, // never expires
-      path: '/',
-      httpOnly: true,
-      // on live site we want to enforce HTTPS for logged-in sessions
-      secure: (config.APP_MODE === 'live'),
-    })
+      nookies.set({ res }, 'user', val, {
+        maxAge: Number.MAX_SAFE_INTEGER, // never expires
+        path: '/',
+        // security: no JS access to cookie
+        httpOnly: true,
+        // security: prevent CSRF
+        sameSite: true,
+        // on live site we want to enforce HTTPS for logged-in sessions
+        secure: (config.APP_MODE === 'live'),
+      })
+    }
   }
 
   await next(req, res)

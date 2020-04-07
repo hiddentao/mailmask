@@ -3,6 +3,8 @@ import gql from 'graphql-tag'
 import {
   RequestLoginLinkResultFragment,
   SetUsernameResultFragment,
+  UpdateMaskStatusResultFragment,
+  DeleteAccountResultFragment,
 } from './fragments'
 
 
@@ -27,3 +29,28 @@ export const SetUsernameMutation = gql`
     }
   }
 `
+
+
+
+export const UpdateMaskStatusMutation = gql`
+  ${UpdateMaskStatusResultFragment}
+
+  mutation UpdateMaskStatus ($name: String!, $enabled: Boolean!) {
+    result: updateMaskStatus (name: $name, enabled: $enabled) {
+      ...UpdateMaskStatusResultFragment
+    }
+  }
+`
+
+
+
+export const DeleteAccountMutation = gql`
+  ${DeleteAccountResultFragment}
+
+  mutation DeleteAccount {
+    result: deleteAccount {
+      ...DeleteAccountResultFragment
+    }
+  }
+`
+

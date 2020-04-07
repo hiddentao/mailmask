@@ -19,7 +19,7 @@ Team Camomail
   }
 }
 
-export async function handleLink ({ res }, v) {
+export async function handleLink ({ req, res }, v) {
   const { email, loginToken } = await this._decodePayload(v)
 
   // record the login
