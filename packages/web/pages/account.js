@@ -2,11 +2,14 @@ import React from 'react'
 
 import { withApollo } from '../src/frontend/hoc'
 import Layout from '../src/frontend/components/Layout'
+import AuthenticatedAndFullySignedUp from '../src/frontend/components/AuthenticatedAndFullySignedUp'
 
 const AccountPage = () => {
   return (
     <Layout>
-      My account!
+      <AuthenticatedAndFullySignedUp>
+        My account!
+      </AuthenticatedAndFullySignedUp>
     </Layout>
   )
 }

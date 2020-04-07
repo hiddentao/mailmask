@@ -139,7 +139,7 @@ const Header = ({ className, onClickHome, children }) => {
     <React.Fragment>
       <NavLi><Link href='/pricing'>Pricing</Link></NavLi>
       <DashboardLi>
-        <Authenticated no={() => <Link href='/login'>Login</Link>}>
+        <Authenticated renderNotAuthenticated={() => <Link href='/login'>Login</Link>}>
           {() => <AccountLink>My account</AccountLink>}
         </Authenticated>
       </DashboardLi>

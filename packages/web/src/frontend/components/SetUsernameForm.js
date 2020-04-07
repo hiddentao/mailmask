@@ -2,6 +2,7 @@ import React, { useState, useCallback, useMemo } from 'react'
 import styled from '@emotion/styled'
 import { _, isValidUsername } from '@camomail/utils'
 
+import { withApollo } from '../hoc'
 import { useSafeMutation, useSafeQuery } from '../hooks'
 import { SetUsernameMutation } from '../../graphql/mutations'
 import { GetUsernameAvailabilityQuery } from '../../graphql/queries'
@@ -82,4 +83,4 @@ const SetUsernameForm = ({ className }) => {
   )
 }
 
-export default SetUsernameForm
+export default withApollo(SetUsernameForm)

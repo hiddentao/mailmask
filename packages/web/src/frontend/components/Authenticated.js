@@ -2,6 +2,8 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { flex } from 'emotion-styled-utils'
 
+import { withApollo } from '../hoc'
+import { renderChildWithArgs } from '../utils/functions'
 import { NOT_LOGGED_IN } from '../../graphql/errorCodes'
 import { useSafeQuery } from '../hooks'
 import LoadingIcon from './LoadingIcon'
@@ -14,16 +16,19 @@ const LoadingContainer = styled.div`
   ${flex({ justify: 'center' })};
 `
 
-const Authenticated = ({ children, no }) => {
+const Authenticated = ({
+  children,
+  renderNotAuthenticated,
+}) => {
   const { data, loading, error } = useSafeQuery(GetMyProfileQuery)
 
   if (data) {
-    return children(data)
+    return renderChildWithArgs(children, data.result)
   } else if (loading) {
     return <LoadingContainer><LoadingIcon /></LoadingContainer>
   } else if (error) {
     if (error.code === NOT_LOGGED_IN) {
-      return no ? no() : (
+      return renderNotAuthenticated ? renderChildWithArgs(renderNotAuthenticated) : (
         <div>
           <p>Please login to view this page!</p>
           <GetStartedForm />
@@ -37,6 +42,6 @@ const Authenticated = ({ children, no }) => {
   return null
 }
 
-export default Authenticated
+export default withApollo(Authenticated)
 
 

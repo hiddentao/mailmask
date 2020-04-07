@@ -72,6 +72,7 @@
     "node-fetch": "^2.6.0",
     "nookies": "^2.2.2",
     "react": "^16.13.1",
+    "react-apollo": "^3.1.4",
     "react-dom": "^16.13.1",
     "react-headroom": "^3.0.0",
     "url": "^0.11.0"

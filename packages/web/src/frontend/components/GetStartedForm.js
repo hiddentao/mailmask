@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react'
 import styled from '@emotion/styled'
 import { isValidEmail } from '@camomail/utils'
 
+import { withApollo } from '../hoc'
 import { useSafeMutation } from '../hooks'
 import { RequestLoginLinkMutation } from '../../graphql/mutations'
 import Button from './Button'
@@ -47,4 +48,4 @@ const GetStartedForm = ({ className }) => {
   )
 }
 
-export default GetStartedForm
+export default withApollo(GetStartedForm)

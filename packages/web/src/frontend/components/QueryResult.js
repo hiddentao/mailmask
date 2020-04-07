@@ -2,6 +2,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
+import { renderChildWithArgs } from '../utils/functions'
 import LoadingIcon from './LoadingIcon'
 import ErrorBox from './ErrorBox'
 
@@ -15,7 +16,7 @@ const QueryResult = ({ className, error, loading, data, children }) => {
       {loading ? <LoadingIcon /> : null}
       {error ? <ErrorBox error={error} /> : null}
       { /* eslint-disable-next-line no-nested-ternary */ }
-      {data ? ((typeof children === 'function') ? children(data) : children) : null}
+      {data ? renderChildWithArgs(children, data) : null}
     </Container>
   )
 }
