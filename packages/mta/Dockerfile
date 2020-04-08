@@ -3,23 +3,35 @@
 # First stage
 FROM node:12-alpine AS build
 
-ARG NPM_TOKEN
-
 WORKDIR /usr/src/app
+
+ARG NPM_TOKEN
 RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+
 COPY package.json .
-RUN npm install --production
-RUN rm -f .npmrc
+COPY package-lock.json .
+
+# From: https://github.com/nodejs/docker-node/issues/384#issuecomment-305208112
+RUN apk --no-cache add --virtual native-deps \
+  g++ gcc libgcc libstdc++ linux-headers make python && \
+  npm install --quiet node-gyp -g && \
+  npm install --quiet --production && \
+  apk del native-deps
+
 COPY . .
+RUN rm -f .npmrc
 
 # Second stage
 FROM node:12-alpine
 
 WORKDIR /usr/src/app
 
+# in case we need a shell
+RUN apk add --no-cache bash
+
 COPY --from=build /usr/src/app /usr/src/app
 
 EXPOSE 50025
-CMD [ "npm", "start" ]
+ENTRYPOINT [ "/usr/local/bin/npm", "start" ]
 
 

@@ -37,12 +37,25 @@ To build the image, first ensure the `NPM_TOKEN` env var is set correctly. Then 
 docker build --build-arg NPM_TOKEN=$NPM_TOKEN --tag camomail:latest .
 ```
 
+### Run: terminal
+
+```shell
+docker run --publish 25:50025 -it --entrypoint /bin/bash camomail:latest
+```
+
+
 ### Run: development (Mac)
 
 `Db: postgresql://postgres:postgres@127.0.0.1:5432/camomail-local`
 
 ```shell
-docker run --publish 25:50025 --env DB_HOST=host.docker.internal --env MAILGUN_API_KEY=... --detach name camomail camomail:latest
+docker run --publish 25:50025 --env DB_HOST=host.docker.internal --env MAILGUN_API_KEY=... --detach camomail camomail:latest
+```
+
+To tail the log:
+
+```shell
+docker logs -f <id>
 ```
 
 ### Run: production
@@ -50,7 +63,7 @@ docker run --publish 25:50025 --env DB_HOST=host.docker.internal --env MAILGUN_A
 `Db: postgresql://<user>:<password>@<host>:<port>/camomail-live`
 
 ```shell
-docker run --publish 25:50025 --env APP_MODE=live --env DB_HOST=... --env DB_PORT=... --env DB_USERNAME=... --env DB_PASSWORD=... --env MAILGUN_API_KEY=... --detach name camomail camomail:latest
+docker run --publish 25:50025 --env APP_MODE=live --env DB_HOST=... --env DB_PORT=... --env DB_USERNAME=... --env DB_PASSWORD=... --env MAILGUN_API_KEY=... --detach camomail camomail:latest
 ```
 
 To delete the container:
@@ -64,4 +77,12 @@ To delete the image:
 ```shell
 docker rmi camomail:latest
 ```
+
+To delete all dangling containers and images:
+
+```shell
+docker rm --force $(docker ps -aq)
+docker rmi $(docker images -f "dangling=true" -q)
+```
+
 
