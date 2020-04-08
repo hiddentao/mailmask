@@ -36,8 +36,8 @@ npm run bootstrap
 _Ensure you're on master branch_
 
 ```shell
-npm run prepare-release
-npm run release
+yarn pre-release
+yarn release
 ```
 
 ## License

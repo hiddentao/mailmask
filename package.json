@@ -33,7 +33,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap --hoist",
     "commitmsg": "commitlint -e $GIT_PARAMS",
-    "prepare-release": "lerna version --conventional-commits",
+    "pre-release": "lerna version --conventional-commits",
     "release": "lerna publish from-git"
   },
   "commitlint": {
