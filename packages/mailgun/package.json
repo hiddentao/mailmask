@@ -24,5 +24,6 @@
   },
   "dependencies": {
     "mailgun-js": "^0.22.0"
-  }
+  },
+  "gitHead": "b08553aad8140ac74d96b86e349f4944b6fecef4"
 }

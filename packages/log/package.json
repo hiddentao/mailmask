@@ -22,5 +22,6 @@
   "dependencies": {
     "bunyan": "^1.8.12",
     "bunyan-format": "^0.2.1"
-  }
+  },
+  "gitHead": "b08553aad8140ac74d96b86e349f4944b6fecef4"
 }

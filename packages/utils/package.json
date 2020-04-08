@@ -35,5 +35,6 @@
     "slugify": "^1.4.0",
     "uuidv4": "^6.0.7",
     "validator": "^13.0.0"
-  }
+  },
+  "gitHead": "b08553aad8140ac74d96b86e349f4944b6fecef4"
 }

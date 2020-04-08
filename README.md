@@ -31,6 +31,15 @@ node_modules/.bin/lerna add <npm pkg name> --scope=@camomail/<pkg>
 npm run bootstrap
 ```
 
+## Publishing packages
+
+_Ensure you're on master branch_
+
+```shell
+npm run prepare-release
+npm run release
+```
+
 ## License
 
 All Rights Reserved.
