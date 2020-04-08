@@ -1,0 +1,28 @@
+{
+  "name": "@camomail/mailgun",
+  "version": "1.0.0",
+  "description": "Mailgun wrapper",
+  "keywords": [
+    "mailgun"
+  ],
+  "author": "Ramesh Nair <ram@hiddentao.com>",
+  "homepage": "https://cml.pw",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiddentao/camomail.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hiddentao/camomail/issues"
+  },
+  "dependencies": {
+    "mailgun-js": "^0.22.0"
+  }
+}

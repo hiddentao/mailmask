@@ -1,78 +1,168 @@
+/* eslint-disable func-names */
 const _ = require('lodash')
 const { simpleParser } = require('mailparser')
-const Mailgun = require('mailgun-js')
 const Log = require('@camomail/log')
-const { Db: { createDb } } = require('@camomail/data')
+const Mailgun = require('@camomail/mailgun')
+const { DB } = require('@camomail/data')
+const { parseEmailAddress } = require('@camomail/utils')
 
 const config = require('../../config')
 
 let mailgun
-let logger
+let log
 let db
 
-// eslint-disable-next-line func-names
+
 exports.register = function () {
   this.register_hook('init_master', 'cml_setup')
   this.register_hook('init_child', 'cml_setup')
   this.register_hook('queue', 'cml_queue_handler')
 }
 
-// eslint-disable-next-line func-names
 exports.cml_setup = function (next) {
   try {
-    logger = Log('mta').create('cml')
+    log = Log('mta', { level: config.LOG_LEVEL }).create('cml')
 
-    logger.info('Setup mailgun ...')
+    log.info('Setup mailgun ...')
 
-    mailgun = Mailgun({
+    mailgun = new Mailgun({
       apiKey: config.MAILGUN_API_KEY,
       domain: config.DOMAIN,
-      mute: true,
-      host: 'api.eu.mailgun.net',
-      testMode: !!config.SIM,
+      testMode: !!config.TESTMODE,
     })
 
-    logger.info('Setup db ...')
+    log.info('Setup db ...')
 
-    db = createDb({ env: 'development', logger })
+    db = DB.create({ env: config.APP_MODE, log })
 
-    if (config.SIM) {
-      logger.info('Simulation Mode!')
+    if (config.TESTMODE) {
+      log.info('Simulation Mode!')
     }
 
     next(CONT)
   } catch (err) {
-    logger.error('Setup error', err)
+    log.error('Setup error', err)
     next(DENY)
   }
 }
 
-// eslint-disable-next-line func-names
 const getUsers = async function (to, cc, bcc) {
   const toValues = _.get(to, 'value', [])
   const ccValues = _.get(cc, 'value', [])
   const bccValues = _.get(bcc, 'value', [])
   const addresses = [].concat(toValues, ccValues, bccValues).map(({ address }) => address)
 
-  const usernames = addresses.map(a => {
-    const atPos = a.indexOf('@')
-    const firstDotPos = a.substr(atPos).indexOf('.')
-    return a.substr(atPos + 1, firstDotPos - 1)
+  // we use hashmap to ensure we avoid duplicate users
+  const users = {}
+
+  addresses.forEach(a => {
+    // parse format: mask@username.cml.pw
+    const { username, mask } = parseEmailAddress(a)
+
+    users[username] = users[username] || {
+      masks: {},
+      maskCount: 0,
+    }
+    users[username].masks[mask] = true
+    users[username].maskCount += 1
+
+    if (users[username].maskCount > 5) {
+      throw new Error('Too many masks in use at once, possible spam')
+    }
   })
 
-  return db.getUsersByUsernames(usernames)
+  // for the final list
+  const finalUsers = {}
+
+  // now get status of each mask
+  await Promise.all(Object.keys(users).map(async username => {
+    const { masks } = users[username]
+    const maskNames = Object.keys(masks)
+
+    // check that user exists
+    log.debug(`Check that user exists: ${username} ...`)
+
+    const userObj = await db.getUserByUsername(username)
+
+    if (userObj) {
+      log.debug(`Get mask statuses for: ${username}, ${maskNames.length} masks ...`)
+
+      const masksAndTheirStatuses = await db.getMaskStatuses(username, maskNames)
+
+      const finalMasks = {}
+
+      let atleastOneMaskEnabled = false
+
+      // save to final list
+      masksAndTheirStatuses.forEach(({ name, enabled }) => {
+        atleastOneMaskEnabled = atleastOneMaskEnabled || enabled
+
+        finalMasks[name] = {
+          enabled
+        }
+      })
+
+      // add missing masks (and these ones wil be marked as "new"
+      // so that we remember to save them later on!)
+      maskNames.forEach(mask => {
+        if (!finalMasks[mask]) {
+          atleastOneMaskEnabled = true
+
+          finalMasks[mask] = {
+            enabled: true,
+            isNew: true,
+          }
+        }
+      })
+
+      // finalize
+      if (atleastOneMaskEnabled) {
+        finalUsers[username] = {
+          id: userObj.id,
+          email: userObj.email,
+          masks: finalMasks,
+        }
+      } else {
+        log.debug(`No masks enabled for user: ${username} :'(`)
+      }
+    }
+  }))
+
+  log.debug('Final list of users and masks', JSON.stringify(finalUsers, null, 2))
+
+  return finalUsers
 }
 
-const prepareAttachments = attachments => {
-  return attachments.map(({ filename, contentType, content: data, size: knownLength }, index) => {
-    filename = filename || `attachment${index}`
-    return new mailgun.Attachment({ filename, contentType, data, knownLength })
+const addNewMasksToDb = async users => {
+  const finalToAdd = {}
+
+  Object.keys(users).forEach(username => {
+    const { id, masks } = users[username]
+
+    const newMasks = Object.keys(masks).filter(m => {
+      return masks[m].isNew
+    })
+
+    if (newMasks.length) {
+      finalToAdd[username] = {
+        id,
+        masks: newMasks
+      }
+    }
   })
+
+  await Promise.all(Object.keys(finalToAdd).map(async username => {
+    const { id, masks } = finalToAdd[username]
+
+    log.debug(`Saving ${masks.length} new masks for user ${username}`)
+
+    return db.saveNewMasks(id, masks)
+  }))
 }
 
 exports.cml_queue_handler = async (next, connection) => {
   try {
-    logger.debug('Processing incoming msg...')
+    log.debug('Processing incoming msg...')
 
     const txFrom = _.get(connection, 'transaction.mail_from.user')
     const incomingMsg = _.get(connection, 'transaction.message_stream.write_ce.bufs')
@@ -90,29 +180,35 @@ exports.cml_queue_handler = async (next, connection) => {
 
     // get matching users
     const users = await getUsers(to, cc, bcc)
+    const userData = Object.values(users)
 
-    if (users.length) {
-      logger.info(`Sending to ${users.length} users (${users[0].username}, etc)...`)
+    if (userData.length) {
+      log.info(`Sending to ${userData.length} users ...`)
 
       const msg = {
         from: `"${senderStr}" <bot@${config.DOMAIN}>`,
-        to: users.map(u => u.email).join(','),
+        to: userData.map(u => u.email),
         subject,
         text,
         html,
-        attachment: prepareAttachments(attachments),
+        attachments,
       }
 
-      await mailgun.messages().send(msg).then(() => logger.info(`... email sent`))
+      await mailgun.send(msg)
+
+      log.info(`... emails sent`)
+
+      await addNewMasksToDb(users)
+
     } else {
-      logger.debug('(nothing to send since no matching users found)')
+      log.debug('(nothing to send since no matching users found)')
     }
 
-    logger.debug('...processed')
+    log.debug('...processed')
 
     next(OK)
   } catch (err) {
-    logger.error('Processing error', err)
-    next(DENY, 'Error queueing message, see logs.')
+    log.error('Processing error', err)
+    next(DENY, `Error queueing message: ${err.message}`)
   }
 }
