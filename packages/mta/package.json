@@ -1,5 +1,6 @@
 {
   "name": "@camomail/mta",
+  "private": true,
   "version": "1.0.0",
   "description": "Camomail MTA",
   "main": "index.js",

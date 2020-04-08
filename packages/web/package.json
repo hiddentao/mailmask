@@ -1,5 +1,6 @@
 {
   "name": "@camomail/web",
+  "private": true,
   "version": "1.0.0",
   "description": "Camomail web interface",
   "author": "Ramesh Nair <ram@hiddentao.com>",
