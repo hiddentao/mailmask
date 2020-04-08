@@ -63,7 +63,6 @@
     "apollo-server-core": "^2.11.0",
     "emotion-styled-utils": "^1.1.0",
     "emotion-theming": "^10.0.27",
-    "envalid": "^6.0.1",
     "graphql": "^15.0.0",
     "graphql-iso-date": "^3.6.1",
     "graphql-tag": "^2.10.3",
