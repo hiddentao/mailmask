@@ -3,6 +3,9 @@ import React from 'react'
 import { ThemeProvider } from 'emotion-theming'
 import { loadFonts } from 'emotion-styled-utils'
 
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 import GlobalStyles from '../src/frontend/components/GlobalStyles'
 import { setupThemes } from '../src/frontend/theme'
 
@@ -48,6 +51,15 @@ export default class MyApp extends App {
     return (
       <ThemeProvider theme={themes.get('light')}>
         <GlobalStyles />
+        <ToastContainer
+          autoClose={3000}
+          closeButton={false}
+          draggable={false}
+          hideProgressBar={true}
+          pauseOnFocusLoss={false}
+          newestOnTop={true}
+          closeOnClick={true}
+        />
         <Component {...pageProps} />
       </ThemeProvider>
     )
