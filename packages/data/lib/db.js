@@ -1,20 +1,24 @@
 const { _ } = require('@camomail/utils')
 const knex = require('knex')
 
-const knexConfig = require('../knexfile')
+const getKnexConfig = require('../knexfile')
 const userMethods = require('./users')
 const maskMethods = require('./masks')
 
 const mapKeyMapper = (_ignore, key) => _.camelCase(key)
 
 class Db {
-  constructor ({ env, log }) {
-    if (!knexConfig[env]) {
+  constructor ({ config, log }) {
+    const env = config.APP_MODE
+
+    const knexConfig = getKnexConfig({ env, config })
+
+    if (!knexConfig) {
       throw new Error(`Invalid db env: ${env}`)
     }
 
     this._knex = knex({
-      ...knexConfig[env],
+      ...knexConfig,
       postProcessResponse: this._postProcessDbResponse.bind(this),
       wrapIdentifier: this._wrapDbIdentifier.bind(this)
     })
@@ -117,4 +121,4 @@ class Db {
   }
 }
 
-exports.create = ({ env, log }) => new Db({ env, log })
+exports.create = ({ config, log }) => new Db({ config, log })

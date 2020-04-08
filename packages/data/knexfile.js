@@ -15,29 +15,40 @@ const buildConfig = ({ connection, ...props }) => ({
   ...props,
 })
 
-module.exports = {
-  development: buildConfig({
-    connection: {
-      database: 'camomail-local',
-    },
-    seeds: {
-      directory: './migrations/seeds'
-    }
-  }),
-  test: buildConfig({
-    connection: {
-      database: 'camomail-test',
-    }
-  }),
-  live: buildConfig({
-    connection: {
-      database: 'camomail-live',
-      host: process.env.DB_HOST,
-      user: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      port: process.env.DB_PORT,
-      ssl: true,
-    }
-  })
+module.exports = ({ env, config }) => {
+  const connProps = {
+    host: config.DB_HOST,
+    user: config.DB_USERNAME,
+    password: config.DB_PASSWORD,
+    port: config.DB_PORT,
+  }
+
+  const envs = {
+    development: buildConfig({
+      connection: {
+        database: 'camomail-local',
+        ...connProps,
+      },
+      seeds: {
+        directory: './migrations/seeds',
+        ...connProps,
+      }
+    }),
+    test: buildConfig({
+      connection: {
+        database: 'camomail-test',
+        ...connProps,
+      }
+    }),
+    live: buildConfig({
+      connection: {
+        database: 'camomail-live',
+        ssl: true,
+        ...connProps,
+      }
+    })
+  }
+
+  return envs[env]
 }
 

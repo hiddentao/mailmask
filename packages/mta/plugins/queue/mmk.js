@@ -14,14 +14,14 @@ let db
 
 
 exports.register = function () {
-  this.register_hook('init_master', 'cml_setup')
-  this.register_hook('init_child', 'cml_setup')
-  this.register_hook('queue', 'cml_queue_handler')
+  this.register_hook('init_master', 'mmk_setup')
+  this.register_hook('init_child', 'mmk_setup')
+  this.register_hook('queue', 'mmk_queue_handler')
 }
 
-exports.cml_setup = function (next) {
+exports.mmk_setup = function (next) {
   try {
-    log = Log('mta', { level: config.LOG_LEVEL }).create('cml')
+    log = Log('mta', { level: config.LOG_LEVEL }).create('mmk')
 
     log.info('Setup mailgun ...')
 
@@ -33,7 +33,7 @@ exports.cml_setup = function (next) {
 
     log.info('Setup db ...')
 
-    db = DB.create({ env: config.APP_MODE, log })
+    db = DB.create({ config, log })
 
     if (config.TESTMODE) {
       log.info('Simulation Mode!')
@@ -160,7 +160,7 @@ const addNewMasksToDb = async users => {
   }))
 }
 
-exports.cml_queue_handler = async (next, connection) => {
+exports.mmk_queue_handler = async (next, connection) => {
   try {
     log.debug('Processing incoming msg...')
 

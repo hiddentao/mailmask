@@ -7,7 +7,7 @@ import { createMiddlewareWrwapper } from './middleware'
 
 export const doBootstrap = () => {
   const log = createLog('api', { level: config.LOG_LEVEL })
-  const db = DB.create({ log, env: config.APP_MODE })
+  const db = DB.create({ log, config })
   const notifier = createNotifier({ config, log, db })
   const wrapMiddleware = createMiddlewareWrwapper({ config, log, db, notifier })
 

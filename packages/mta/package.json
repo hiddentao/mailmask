@@ -5,7 +5,8 @@
   "description": "MailMask MTA",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon node_modules/.bin/haraka -c ."
+    "dev": "nodemon node_modules/.bin/haraka -c .",
+    "start": "haraka -c ."
   },
   "repository": {
     "type": "git",

@@ -11,7 +11,7 @@ export const withApollo = withApolloBase(
   ({ initialState }) => {
     return createApolloClient({
       endpoint: `${BASE_URL}/api/graphql`,
-      name: isBrowser ? 'cml-browser' : 'cml-server',
+      name: isBrowser ? 'mmk-browser' : 'mmk-server',
       initialState,
     })
   },
