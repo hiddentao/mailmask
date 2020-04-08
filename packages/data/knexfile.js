@@ -1,10 +1,6 @@
 const buildConfig = ({ connection, ...props }) => ({
   client: 'pg',
   connection: {
-    host: 'localhost',
-    user: 'postgres',
-    password: 'postgres',
-    port: 5432,
     ...connection,
   },
   migrations: {
@@ -17,10 +13,10 @@ const buildConfig = ({ connection, ...props }) => ({
 
 module.exports = ({ env, config }) => {
   const connProps = {
-    host: config.DB_HOST,
-    user: config.DB_USERNAME,
-    password: config.DB_PASSWORD,
-    port: config.DB_PORT,
+    host: config.DB_HOST || 'localhost',
+    user: config.DB_USERNAME || 'postgres',
+    password: config.DB_PASSWORD || 'postgres',
+    port: config.DB_PORT || 5432,
   }
 
   const envs = {

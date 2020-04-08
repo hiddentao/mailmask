@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/hiddentao/camomail#readme",
   "dependencies": {
+    "@camomail/config": "^1.1.5",
     "@camomail/data": "^1.1.5",
     "@camomail/log": "^1.1.5",
     "@camomail/mailgun": "^1.1.5",

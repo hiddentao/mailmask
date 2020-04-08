@@ -1,22 +1,5 @@
-const envalid = require('envalid')
+const { getConfig } = require('@camomail/config')
 
-const { str, bool } = envalid
+module.exports = getConfig()
 
-const VARS = {
-  DOMAIN: str({ default: 'mmk.vc' }),
-  TESTMODE: bool({ default: false }),
-  APP_MODE: str({ devDefault: 'development' }),
-  LOG_LEVEL: str({ devDefault: 'DEBUG' }),
-  MAILGUN_API_KEY: str(),
-}
 
-const allEnv = envalid.cleanEnv(process.env, VARS, { dotEnvPath: '.env' })
-
-const env = Object.keys(VARS).reduce((m, k) => {
-  m[k] = allEnv[k]
-  return m
-}, {})
-
-module.exports = Object.freeze({
-  ...env,
-})

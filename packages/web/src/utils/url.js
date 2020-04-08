@@ -3,6 +3,6 @@ import config from '../config'
 
 export const buildUrlPath = (pathname, query) => url.format({ pathname, query })
 
-export const buildBackendUrl = urlPath => url.resolve(config.BASE_URL, urlPath)
+export const buildBackendUrl = urlPath => url.resolve(config.WEB_URL, urlPath)
 
 export const buildCamoUrl = (prefix, username) => `${prefix}@${username}.${config.DOMAIN}`

@@ -20,7 +20,7 @@ class Notifier {
     this._mg = new Mailgun({
       apiKey: config.MAILGUN_API_KEY,
       domain: this._domain,
-      testMode: !!config.TESTMODE,
+      testMode: !!config.SMTP_TESTMODE,
     })
 
     this._db = db

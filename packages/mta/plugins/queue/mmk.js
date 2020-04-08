@@ -28,14 +28,14 @@ exports.mmk_setup = function (next) {
     mailgun = new Mailgun({
       apiKey: config.MAILGUN_API_KEY,
       domain: config.DOMAIN,
-      testMode: !!config.TESTMODE,
+      testMode: !!config.SMTP_TESTMODE,
     })
 
     log.info('Setup db ...')
 
     db = DB.create({ config, log })
 
-    if (config.TESTMODE) {
+    if (config.SMTP_TESTMODE) {
       log.info('Simulation Mode!')
     }
 
