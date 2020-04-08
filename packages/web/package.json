@@ -7,9 +7,6 @@
   "homepage": "https://cml.pw",
   "license": "MIT",
   "main": "index.js",
-  "publishConfig": {
-    "registry": "https://registry.yarnpkg.com"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hiddentao/camomail.git"
