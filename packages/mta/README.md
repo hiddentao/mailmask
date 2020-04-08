@@ -56,6 +56,12 @@ docker run --publish 25:50025 --env APP_MODE=live --env DB_HOST=... --env DB_POR
 To delete the container:
 
 ```shell
-docker rm --force mmk_mta
+docker rm --force camomail
+```
+
+To delete the image:
+
+```shell
+docker rmi camomail:latest
 ```
 
