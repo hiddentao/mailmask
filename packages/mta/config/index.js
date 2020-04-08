@@ -3,7 +3,7 @@ const envalid = require('envalid')
 const { str, bool } = envalid
 
 const VARS = {
-  DOMAIN: str({ default: 'cml.pw' }),
+  DOMAIN: str({ default: 'mmk.vc' }),
   TESTMODE: bool({ default: true }),
   APP_MODE: str({ devDefault: 'development' }),
   LOG_LEVEL: str({ devDefault: 'DEBUG' }),

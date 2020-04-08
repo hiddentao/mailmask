@@ -4,7 +4,7 @@ const { str, bool } = envalid
 
 const VARS = {
   APP_MODE: str({ devDefault: 'development' }),
-  DOMAIN: str({ default: 'cml.pw' }),
+  DOMAIN: str({ default: 'mmk.vc' }),
   TESTMODE: bool({ default: false }),
   LOG_LEVEL: str({ default: 'info' }),
   MAILGUN_API_KEY: str(),

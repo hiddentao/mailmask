@@ -14,7 +14,7 @@ ${url}
 
 thanks,
 
-Team Camomail
+Team MailMask
 `
   }
 }

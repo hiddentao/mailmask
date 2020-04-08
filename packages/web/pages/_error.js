@@ -63,7 +63,7 @@ export default class ErrorPage extends React.Component {
         <Explanation>
           If you keep seeing this
           error please get in touch with us at
-          <a href="mailto:support@cml.pw">support@cml.pw</a>
+          <a href="mailto:support@mmk.vc">support@mmk.vc</a>
         </Explanation>
       </Layout>
     )

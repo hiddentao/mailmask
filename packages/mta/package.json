@@ -2,7 +2,7 @@
   "name": "@camomail/mta",
   "private": true,
   "version": "1.1.2",
-  "description": "Camomail MTA",
+  "description": "MailMask MTA",
   "main": "index.js",
   "scripts": {
     "start": "nodemon node_modules/.bin/haraka -c ."

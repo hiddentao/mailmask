@@ -34,7 +34,7 @@ const HomePage = () => {
     <Layout>
       <TopBlock>
         <Title>
-          <Prefix>no-more-spam</Prefix>@<User>YOU</User>.cml.pw
+          <Prefix>no-more-spam</Prefix>@<User>YOU</User>.mmk.vc
         </Title>
         <TagLine>
           Beat Spam. Protect Your Privacy.

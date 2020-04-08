@@ -7,5 +7,5 @@
 # camo1@invaliduser -> should be ignored because user does not exist (and no email should thus get sent to this user)
 # camo2@invaliduser -> should be ignored because user does not exist (and no email should thus get sent to this user)
 
-swaks --to camo1@test.cml.pw,camo2@test.cml.pw,camo3@test.cml.pw,camo1@test3.cml.pw,camo1@invaliduser.cml.pw,camo2@invaliduser.cml.pw --server 127.0.0.1
+swaks --to camo1@test.mmk.vc,camo2@test.mmk.vc,camo3@test.mmk.vc,camo1@test3.mmk.vc,camo1@invaliduser.mmk.vc,camo2@invaliduser.mmk.vc --server 127.0.0.1
 

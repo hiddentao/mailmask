@@ -6,7 +6,7 @@ export function render ({ email, username, dashboardUrl }) {
     subject: 'Congratulations! your camomail account is ready to go',
     body: `Hi ${username},
 
-You have successfully signed up for Camomail.
+You have successfully signed up for MailMask.
 
 This is a test email sent to ${email} to ensure that email forwarding works.
 
@@ -18,13 +18,13 @@ ${dashboardUrl}
 
 thanks,
 
-Team Camomail
+Team MailMask
 `
   }
 }
 
 export async function sendNotification ({ username }) {
-  const email = `root@cml.pw`//buildCamoUrl(`congrats@`, username)
+  const email = `root@mmk.vc`//buildCamoUrl(`congrats@`, username)
 
   this._log.info(`Sending signed-up email to ${username} via ${email}`)
 

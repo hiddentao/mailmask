@@ -81,7 +81,7 @@ class Notifier {
       this._log.debug(`Sending email to ${obfuscate(email)} ...`)
 
       const msg = {
-        from: `Camomail <support@${this._domain}>`,
+        from: `MailMask <support@${this._domain}>`,
         to: [ email ],
         subject,
         text,

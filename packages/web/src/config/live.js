@@ -1,3 +1,3 @@
 module.exports = {
-  BASE_URL: 'https://cml.pw',
+  BASE_URL: 'https://mmk.vc',
 }
