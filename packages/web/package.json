@@ -1,7 +1,7 @@
 {
   "name": "@camomail/web",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Camomail web interface",
   "author": "Ramesh Nair <ram@hiddentao.com>",
   "homepage": "https://cml.pw",
@@ -49,10 +49,10 @@
   "dependencies": {
     "@apollo/react-hooks": "^3.1.4",
     "@apollographql/graphql-playground-html": "^1.6.24",
-    "@camomail/data": "^1.0.0",
-    "@camomail/log": "^1.0.0",
-    "@camomail/mailgun": "^1.0.0",
-    "@camomail/utils": "^1.0.0",
+    "@camomail/data": "^1.1.0",
+    "@camomail/log": "^1.1.0",
+    "@camomail/mailgun": "^1.1.0",
+    "@camomail/utils": "^1.1.0",
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
