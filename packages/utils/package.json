@@ -2,9 +2,6 @@
   "name": "@camomail/utils",
   "version": "1.1.4",
   "description": "Utilities.",
-  "keywords": [
-    "utils"
-  ],
   "author": "Ramesh Nair <ram@hiddentao.com>",
   "homepage": "https://mmk.vc",
   "license": "MIT",
@@ -12,15 +9,9 @@
   "files": [
     "lib"
   ],
-  "publishConfig": {
-    "registry": "https://registry.yarnpkg.com"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hiddentao/camomail.git"
-  },
-  "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
     "url": "https://github.com/hiddentao/camomail/issues"
@@ -35,6 +26,5 @@
     "slugify": "^1.4.0",
     "uuidv4": "^6.0.7",
     "validator": "^13.0.0"
-  },
-  "gitHead": "b8c12220e025fb15c911bb35cd1125417802f6ab"
+  }
 }

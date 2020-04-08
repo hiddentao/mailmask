@@ -22,5 +22,5 @@
   "dependencies": {
     "mailgun-js": "^0.22.0"
   },
-  "gitHead": "b8c12220e025fb15c911bb35cd1125417802f6ab"
+  "gitHead": "139e31f4278cba700c5f4dcb4ee9ba5d13f95532"
 }

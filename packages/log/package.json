@@ -1,7 +1,7 @@
 {
   "name": "@camomail/log",
   "version": "1.1.4",
-  "description": "Logging utils",
+  "description": "Logging",
   "author": "Ramesh Nair <ram@hiddentao.com>",
   "homepage": "https://mmk.vc",
   "license": "MIT",
@@ -20,5 +20,5 @@
     "bunyan": "^1.8.12",
     "bunyan-format": "^0.2.1"
   },
-  "gitHead": "b8c12220e025fb15c911bb35cd1125417802f6ab"
+  "gitHead": "139e31f4278cba700c5f4dcb4ee9ba5d13f95532"
 }
