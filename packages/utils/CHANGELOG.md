@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.5](https://github.com/hiddentao/camomail/compare/v1.1.4...v1.1.5) (2020-04-08)
+
+
+### Bug Fixes
+
+* publishing ([0349b45](https://github.com/hiddentao/camomail/commit/0349b45459b7a42740fc885d0f8c4798f7311248))
+
+
+
+
+
 ## [1.1.4](https://github.com/hiddentao/camomail/compare/v1.1.3...v1.1.4) (2020-04-08)
 
 **Note:** Version bump only for package @camomail/utils

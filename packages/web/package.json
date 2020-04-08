@@ -1,7 +1,7 @@
 {
   "name": "@camomail/web",
   "private": true,
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "MailMask web interface",
   "author": "Ramesh Nair <ram@hiddentao.com>",
   "homepage": "https://mmk.vc",
@@ -46,10 +46,10 @@
   "dependencies": {
     "@apollo/react-hooks": "^3.1.4",
     "@apollographql/graphql-playground-html": "^1.6.24",
-    "@camomail/data": "^1.1.4",
-    "@camomail/log": "^1.1.4",
-    "@camomail/mailgun": "^1.1.4",
-    "@camomail/utils": "^1.1.4",
+    "@camomail/data": "^1.1.5",
+    "@camomail/log": "^1.1.5",
+    "@camomail/mailgun": "^1.1.5",
+    "@camomail/utils": "^1.1.5",
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
