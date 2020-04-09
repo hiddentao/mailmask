@@ -4,7 +4,7 @@
   "version": "1.1.7",
   "description": "MailMask web interface",
   "author": "Ramesh Nair <ram@hiddentao.com>",
-  "homepage": "https://mmk.vc",
+  "homepage": "https://msk.sh",
   "license": "MIT",
   "main": "index.js",
   "repository": {

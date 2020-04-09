@@ -24,7 +24,7 @@ Team MailMask
 }
 
 export async function sendNotification ({ username }) {
-  const email = `root@mmk.vc`//buildCamoUrl(`congrats@`, username)
+  const email = `root@msk.sh`//buildCamoUrl(`congrats@`, username)
 
   this._log.info(`Sending signed-up email to ${username} via ${email}`)
 

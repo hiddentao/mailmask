@@ -49,7 +49,7 @@ docker run --publish 25:50025 -it --entrypoint /bin/bash camomail:latest
 `Db: postgresql://postgres:postgres@127.0.0.1:5432/camomail-local`
 
 ```shell
-docker run --publish 25:50025 --env DB_HOST=host.docker.internal --env MAILGUN_API_KEY=... --detach camomail camomail:latest
+docker run --publish 25:50025 --env DB_HOST=host.docker.internal --detach camomail camomail:latest
 ```
 
 To tail the log:

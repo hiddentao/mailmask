@@ -3,7 +3,7 @@ const envalid = require('envalid')
 const { str, num, bool } = envalid
 
 const VARS = {
-  DOMAIN: str({ default: 'mmk.vc' }),
+  DOMAIN: str({ default: 'msk.sh' }),
   APP_MODE: str({ default: 'development' }),
   SMTP_TESTMODE: bool({ default: false }),
   LOG_LEVEL: str({ default: 'DEBUG' }),
@@ -37,3 +37,9 @@ exports.getConfig = ({ vars, dotEnvPath = '.env' } = {}) => {
     ...env,
   })
 }
+
+
+
+msk.sh
+msk.ac
+

@@ -56,7 +56,7 @@ const getUsers = async function (to, cc, bcc) {
   const users = {}
 
   addresses.forEach(a => {
-    // parse format: mask@username.mmk.vc
+    // parse format: mask@username.msk.sh
     const { username, mask } = parseEmailAddress(a)
 
     users[username] = users[username] || {

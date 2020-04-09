@@ -6,7 +6,7 @@
     "mailgun"
   ],
   "author": "Ramesh Nair <ram@hiddentao.com>",
-  "homepage": "https://mmk.vc",
+  "homepage": "https://msk.sh",
   "license": "MIT",
   "main": "lib/index.js",
   "directories": {

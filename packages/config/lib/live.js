@@ -1,3 +1,3 @@
 module.exports = {
-  WEB_URL: 'https://mmk.vc',
+  WEB_URL: 'https://msk.sh',
 }
