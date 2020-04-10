@@ -25,7 +25,7 @@ exports.register = function () {
 }
 
 exports.msk_setup = function (next) {
-  const span = tracer.startTrace('msk_setup')
+  const span = tracer.startTrace('msk_setup', { type: 'setup' })
 
   try {
     span.recordEvent('setup mailgun')
@@ -37,8 +37,6 @@ exports.msk_setup = function (next) {
     })
 
     span.recordEvent('setup db')
-
-    span.withSpan('test', () => {})
 
     db = DB.create({ config, tracer })
 

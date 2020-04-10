@@ -19,6 +19,7 @@
   "dependencies": {
     "@opentelemetry/api": "^0.6.1",
     "@opentelemetry/exporter-jaeger": "^0.6.1",
+    "@opentelemetry/exporter-zipkin": "^0.6.1",
     "@opentelemetry/tracing": "^0.6.1"
   },
   "gitHead": "139e31f4278cba700c5f4dcb4ee9ba5d13f95532"

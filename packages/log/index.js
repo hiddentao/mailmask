@@ -1,10 +1,13 @@
 const opentelemetry = require('@opentelemetry/api')
+
 const {
   BasicTracerProvider,
   ConsoleSpanExporter,
-  SimpleSpanProcessor
+  SimpleSpanProcessor,
+  BatchSpanProcessor,
 } = require('@opentelemetry/tracing')
-const { JaegerExporter } = require('@opentelemetry/exporter-jaeger')
+
+const { ZipkinExporter } = require('@opentelemetry/exporter-zipkin')
 
 class Span {
   constructor (tracer, span) {
@@ -101,8 +104,10 @@ class Tracer {
     }
 
     if (opts.sendToCloud) {
-      this._exporter = new JaegerExporter({ serviceName: opts.serviceName })
-      this._provider.addSpanProcessor(new SimpleSpanProcessor(this._exporter))
+      this._provider.addSpanProcessor(new BatchSpanProcessor(new ZipkinExporter({
+        url: opts.cloudEndpont,
+        serviceName: opts.serviceName
+      })))
     }
 
     this._provider.register()
@@ -120,7 +125,7 @@ class Tracer {
 
     const t = opentelemetry.trace.getTracer(name)
 
-    const span = new Span(t, t.startSpan('trace', { attributes }))
+    const span = new Span(t, t.startSpan(name, { attributes }))
 
     return span
   }
@@ -130,7 +135,8 @@ class Tracer {
 exports.createTracer = (serviceName, { config }) => {
   return new Tracer({
     serviceName,
-    sendToConsole: config.TRACE_CONSOLE,
-    sendToCloud: config.TRACE_CLOUD,
+    cloudEndpoint: config.TRACE_CLOUD_ENDPOINT,
+    sendToConsole: config.TRACE_CONSOLE_ENABLED,
+    sendToCloud: config.TRACE_CLOUD_ENABLED,
   })
 }
