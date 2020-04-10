@@ -1,4 +1,4 @@
-import createLog from '@camomail/log'
+import { createTracer } from '@camomail/log'
 import { DB } from '@camomail/data'
 
 import config from './config'
@@ -6,18 +6,18 @@ import { createNotifier } from './notifier'
 import { createMiddlewareWrwapper } from './middleware'
 
 export const doBootstrap = () => {
-  const log = createLog('api', { level: config.LOG_LEVEL })
-  const db = DB.create({ log, config })
-  const notifier = createNotifier({ config, log, db })
-  const wrapMiddleware = createMiddlewareWrwapper({ config, log, db, notifier })
+  const tracer = createTracer('camomail-api', { config })
+  const db = DB.create({ config })
+  const notifier = createNotifier({ config, db })
+  const wrapMiddleware = createMiddlewareWrwapper({ config, tracer, db, notifier })
 
-  process.on('uncaughtExceptions', e => {
-    log.error('Uncaught exception', e)
+  process.on('uncaughtExceptions', error => {
+    tracer.recordGlobalError('Uncaught exception', { error })
   })
 
-  process.on('unhandledRejection', (reason, p) => {
-    log.error('Unhandled Rejection at:', p, 'reason:', reason)
+  process.on('unhandledRejection', (reason, location) => {
+    tracer.recordGlobalError(`Unhandled Rejection`, { reason, location })
   })
 
-  return { config, log, notifier, db, wrapMiddleware }
+  return { config, tracer, notifier, db, wrapMiddleware }
 }

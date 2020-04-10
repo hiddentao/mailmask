@@ -2,8 +2,6 @@
 
 
 exports.getMaskStatuses = async function (username, masks) {
-  this._log.debug(`Get status for given masks for given user ...`)
-
   return this._db()
     .table('mask')
     .column('name', 'enabled')
@@ -16,8 +14,6 @@ exports.getMaskStatuses = async function (username, masks) {
 
 
 exports.saveNewMasks = async function (userId, newMasks) {
-  this._log.debug(`Save ${newMasks.length} new masks for user ${userId} ...`)
-
   return this._db().raw(`
     insert into mask (user_id, name, enabled)
     values
@@ -33,8 +29,6 @@ exports.saveNewMasks = async function (userId, newMasks) {
 
 
 exports.updateMaskStatus = async function (userId, name, enabled) {
-  this._log.debug(`Update status of mask ${name} for user ${userId} to enabled=${enabled} ...`)
-
   return this._db().raw(`
     update mask
     set
@@ -46,8 +40,6 @@ exports.updateMaskStatus = async function (userId, name, enabled) {
 
 
 exports.getMasks = async function (userId, { page = 1, resultsPerPage = 1000000 }) {
-  this._log.debug(`Get masks for user ${userId} (page ${page}, ${resultsPerPage} results per page)...`)
-
   const [ { count: totalResults } ] = await this._db().raw(`
     select
       count(distinct(m.id))

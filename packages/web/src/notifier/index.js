@@ -7,9 +7,7 @@ import { encrypt, decrypt } from '../utils/crypto'
 import { buildBackendUrl } from '../utils/url'
 
 class Notifier {
-  constructor ({ config, log, db }) {
-    this._log = log.create('notifier')
-
+  constructor ({ config, db }) {
     this._cryptoParams = {
       key: config.ENCRYPTION_KEY,
       iv: config.ENCRYPTION_IV,
@@ -46,7 +44,13 @@ class Notifier {
   async handleLink ({ req, res }) {
     const { type, v } = req.query
 
-    return this._getHandler(type).handleLink.call(this, { req, res }, v)
+    return req.span.withAsyncSpan(
+      'notifierHandleLink', {
+        notifier: true,
+        type,
+      },
+      ({ span }) => this._getHandler(type).handleLink.call(this, { span, req, res }, v)
+    )
   }
 
   async sendNotification (type, params) {
@@ -78,8 +82,6 @@ class Notifier {
     })
 
     try {
-      this._log.debug(`Sending email to ${obfuscate(email)} ...`)
-
       const msg = {
         from: `MailMask <support@${this._domain}>`,
         to: [ email ],
@@ -88,11 +90,8 @@ class Notifier {
       }
 
       await this._mg.send(msg)
-
-      this._log.debug(`... email sent`)
     } catch (err) {
       const errStr = `Error sending email to ${obfuscate(email)}: ${err.message}`
-      this._log.error(errStr, err)
       throw new Error(errStr)
     }
   }

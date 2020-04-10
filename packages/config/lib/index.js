@@ -6,11 +6,12 @@ const VARS = {
   DOMAIN: str({ default: 'msk.sh' }),
   APP_MODE: str({ default: 'development' }),
   SMTP_TESTMODE: bool({ default: false }),
-  LOG_LEVEL: str({ default: 'DEBUG' }),
   DB_HOST: str({ default: '' }),
   DB_PORT: num({ default: 0 }),
   DB_USERNAME: str({ default: '' }),
   DB_PASSWORD: str({ default: '' }),
+  TRACE_CLOUD: bool({ default: true }),
+  TRACE_CONSOLE: bool({ default: true }),
   MAILGUN_API_KEY: str(),
 }
 
@@ -39,7 +40,4 @@ exports.getConfig = ({ vars, dotEnvPath = '.env' } = {}) => {
 }
 
 
-
-msk.sh
-msk.ac
 

@@ -5,7 +5,10 @@ const { wrapMiddleware, notifier } = doBootstrap()
 const endpoint = async (req, res) => {
   switch (req.method) {
     case 'GET': {
+      req.span.recordEvent('handle notifier link')
+
       await notifier.handleLink({ req, res })
+
       break
     }
     default: {

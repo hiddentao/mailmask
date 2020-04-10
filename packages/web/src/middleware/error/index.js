@@ -1,8 +1,9 @@
-export const middleware = ({ log }) => next => async (req, res) => {
+export const middleware = () => next => async (req, res) => {
   try {
     await next(req, res)
+    req.span.finish()
   } catch (err) {
-    log.error(err)
+    req.span.finishWithError(err)
     res.status(500)
     res.json({ error: err.message })
   }

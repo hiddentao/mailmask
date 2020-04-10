@@ -8,7 +8,7 @@ const maskMethods = require('./masks')
 const mapKeyMapper = (_ignore, key) => _.camelCase(key)
 
 class Db {
-  constructor ({ config, log }) {
+  constructor ({ config }) {
     const env = config.APP_MODE
 
     const knexConfig = getKnexConfig({ env, config })
@@ -22,8 +22,6 @@ class Db {
       postProcessResponse: this._postProcessDbResponse.bind(this),
       wrapIdentifier: this._wrapDbIdentifier.bind(this)
     })
-
-    this._log = log.create('db')
 
     ;[ userMethods, maskMethods ].forEach(methods => {
       Object.entries(methods).forEach(([ methodName, fn ]) => {
@@ -44,57 +42,17 @@ class Db {
     return this._knex
   }
 
-  async _dbTransSerialized (cb) {
-    return new Promise((resolve, reject) => {
-      const __tryTransaction = async () => {
-        try {
-          this._log.debug('BEGIN TRANSACTION ...')
-
-          const ret = await this._db().transaction(async trx => {
-            await this._db()
-              .raw('SET TRANSACTION ISOLATION LEVEL SERIALIZABLE')
-              .transacting(trx)
-
-            try {
-              const result = await cb(trx)
-              this._log.debug('... COMMIT :)')
-              await trx.commit(result)
-            } catch (err) {
-              this._log.warn(err)
-              this._log.debug('... ROLLBACK :/')
-              await trx.rollback(err)
-            }
-          })
-
-          resolve(ret)
-        } catch (err) {
-          // if it was due to transaction serialization error then retry the transaction
-          // see https://www.postgresql.org/docs/9.5/transaction-iso.html
-          if (err.toString().includes('could not serialize access')) {
-            this._log.debug('... AUTO-RETRY TRANSACTION ....')
-            __tryTransaction()
-          } else {
-            reject(err)
-          }
-        }
-      }
-
-      // kick things off
-      __tryTransaction()
-    })
-  }
-
   async _dbTrans (cb) {
-    this._log.debug('BEGIN TRANSACTION ...')
+    // this._log.debug('BEGIN TRANSACTION ...')
 
     return this._db().transaction(async trx => {
       try {
         const result = await cb(trx)
-        this._log.debug('... COMMIT :)')
+        // this._log.debug('... COMMIT :)')
         await trx.commit(result)
       } catch (err) {
-        this._log.warn(err)
-        this._log.debug('... ROLLBACK :/')
+        // this._log.warn(err)
+        // this._log.debug('... ROLLBACK :/')
         await trx.rollback(err)
       }
     })
@@ -121,4 +79,4 @@ class Db {
   }
 }
 
-exports.create = ({ config, log }) => new Db({ config, log })
+exports.create = ({ config }) => new Db({ config })

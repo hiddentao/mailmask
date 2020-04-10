@@ -1,5 +1,5 @@
 /* eslint-disable func-names */
-const { _, obfuscate } = require('@camomail/utils')
+const { _ } = require('@camomail/utils')
 
 
 exports._createUserOrFetchExisting = async function (email, trx) {
@@ -14,8 +14,6 @@ exports._createUserOrFetchExisting = async function (email, trx) {
   let id = _.get(ret, '0.id')
 
   if (!id) {
-    this._log.debug(`Create user: ${obfuscate(email)}`)
-
     ret = await this._db().table('user')
       .insert({
         email,
@@ -34,8 +32,6 @@ exports._createUserOrFetchExisting = async function (email, trx) {
 
 
 exports.isUsernameAvailable = async function (username) {
-  this._log.debug(`Get if username is available for registration: ${username} ...`)
-
   username = username.toLowerCase()
 
   const ret = await this._db()
@@ -52,8 +48,6 @@ exports.isUsernameAvailable = async function (username) {
 
 
 exports.getUserByEmail = async function (email) {
-  this._log.debug(`Get user by email (${obfuscate(email)}) ...`)
-
   email = email.toLowerCase()
 
   const ret = await this._db()
@@ -69,8 +63,6 @@ exports.getUserByEmail = async function (email) {
 
 
 exports.getUserById = async function (id) {
-  this._log.debug(`Get user by id (${id}) ...`)
-
   const ret = await this._db()
     .table('user')
     .select('*')
@@ -83,8 +75,6 @@ exports.getUserById = async function (id) {
 
 
 exports.getUserByUsername = async function (username) {
-  this._log.debug(`Get user by username (${username}) ...`)
-
   username = username.toLowerCase()
 
   const ret = await this._db()
@@ -98,8 +88,6 @@ exports.getUserByUsername = async function (username) {
 
 
 exports.saveUserLogin = async function (email, token) {
-  this._log.debug(`Record user as logged-in (${obfuscate(email)}, token: ${token}) ...`)
-
   // transaction
   return this._dbTrans(async trx => {
     // create or fetch user id
@@ -120,8 +108,6 @@ exports.saveUserLogin = async function (email, token) {
 
 
 exports.finalizeSignUp = async function (userId, username) {
-  this._log.debug(`Finalize sign-up for user: ${userId} ...`)
-
   username = username.toLowerCase()
 
   await this._db()
@@ -137,8 +123,6 @@ exports.finalizeSignUp = async function (userId, username) {
 
 
 exports.deleteUser = async function (userId) {
-  this._log.debug(`Deleting user: ${userId} ...`)
-
   await this._dbTrans(async trx => {
     await this._db().raw(`delete from user_legal where user_id = ?`, [ userId ]).transacting(trx)
     await this._db().raw(`delete from login where user_id = ?`, [ userId ]).transacting(trx)

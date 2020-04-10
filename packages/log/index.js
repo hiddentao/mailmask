@@ -1,49 +1,136 @@
-const bunyan = require('bunyan')
-const bformat = require('bunyan-format')
+const opentelemetry = require('@opentelemetry/api')
+const {
+  BasicTracerProvider,
+  ConsoleSpanExporter,
+  SimpleSpanProcessor
+} = require('@opentelemetry/tracing')
+const { JaegerExporter } = require('@opentelemetry/exporter-jaeger')
 
-const formattedOutput = bformat({
-  outputMode: 'short',
-  color: true,
-  colorFromLevel: true
-})
-
-class Log {
-  constructor (opts) {
-    this._opts = opts
-    this._name = opts.name
-    this._log = bunyan(opts)
-
-    ;[ 'trace', 'debug', 'info', 'warn', 'error' ].forEach(fn => {
-      this[fn] = (...args) => {
-        const obj = {}
-
-        // an error object should get passed through specially
-        obj.err = args.find(a => a.stack && a.message)
-
-        this._log[fn].call(this._log, ...([ obj ].concat(args)))
-      }
-    })
+class Span {
+  constructor (tracer, span) {
+    this.tracer = tracer
+    this.span = span
+    this.childSpans = []
   }
 
-  create (name) {
-    return new Log({
-      ...this._opts,
-      name: `${this._name}/${name}`,
-    })
+  recordEvent (name, attributes) {
+    this.span.addEvent(name, attributes)
+  }
+
+  addFields (attributes) {
+    this.span.setAttributes(attributes)
+  }
+
+  startSpan (task, attributes) {
+    const span = new Span(
+      this.tracer,
+      this.tracer.startSpan(task, { attributes, parent: this.span })
+    )
+
+    this.childSpans.push(span)
+
+    return span
+  }
+
+  withSpan (task, attributes, fn) {
+    if (!fn) {
+      fn = attributes
+    }
+
+    const s = this.startSpan(task, attributes)
+
+    try {
+      const ret = fn({ span: s })
+      s.finish()
+      return ret
+    } catch (err) {
+      s.finishWithError(err)
+      throw err
+    }
+  }
+
+  async withAsyncSpan (task, attributes, asyncFn) {
+    if (!asyncFn) {
+      asyncFn = attributes
+    }
+
+    const s = this.startSpan(task, attributes)
+
+    try {
+      const ret = await asyncFn({ span: s })
+      s.finish()
+      return ret
+    } catch (err) {
+      s.finishWithError(err)
+      throw err
+    }
+  }
+
+  finish () {
+    if (!this.finished) {
+      // spans work like a stack, and must be closed in reverse order
+      // to how they were created, so we do our
+      // children first just in case they haven't yet been closed!
+      this.childSpans.forEach(childSpan => {
+        childSpan.finish()
+      })
+
+      this.span.end()
+
+      this.finished = true
+    }
+  }
+
+  finishWithError (error) {
+    if (!this.finished) {
+      this.recordEvent('error', { error })
+      this.span.setStatus(opentelemetry.CanonicalCode.INTERNAL)
+      this.finish()
+    }
   }
 }
 
-module.exports = (name, { level = 'info' } = {}) => {
-  return new Log({
-    name,
-    streams: [
-      {
-        level,
-        stream: formattedOutput,
-      },
-    ],
-    serializers: {
-      err: bunyan.stdSerializers.err
-    },
+
+class Tracer {
+  constructor (opts) {
+    this._provider = new BasicTracerProvider()
+
+    // Configure span processor to send spans to the exporter
+    if (opts.sendToConsole) {
+      this._provider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()))
+    }
+
+    if (opts.sendToCloud) {
+      this._exporter = new JaegerExporter({ serviceName: opts.serviceName })
+      this._provider.addSpanProcessor(new SimpleSpanProcessor(this._exporter))
+    }
+
+    this._provider.register()
+  }
+
+  recordGlobalError (name, attributes) {
+    const s = opentelemetry.trace.getTracer('globalError').startSpan(name, { attributes })
+    s.end()
+  }
+
+  startTrace (name, attributes) {
+    if (!attributes.type) {
+      throw new Error('"type" attribute must be set for trace')
+    }
+
+    const t = opentelemetry.trace.getTracer(name)
+
+    const span = new Span(t, t.startSpan('trace', { attributes }))
+
+    return span
+  }
+}
+
+
+exports.createTracer = (serviceName, { config }) => {
+  return new Tracer({
+    serviceName,
+    sendToConsole: config.TRACE_CONSOLE,
+    sendToCloud: config.TRACE_CLOUD,
   })
 }

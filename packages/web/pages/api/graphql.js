@@ -28,41 +28,63 @@ const endpoint = async (req, res) => {
       break
     }
     case 'POST': {
-      // Code based on https://github.com/apollographql/apollo-server/blob/master/packages/apollo-server-koa/src/koaApollo.ts
-      try {
-        const { graphqlResponse, responseInit } = await runHttpQuery([ req, res ], {
-          method: req.method,
-          options: {
-            ...graphqlOptions,
-            context: {
-              setUser: res.setUser,
-              user: _.get(req, 'session.id') ? req.session : null,
-            },
-          },
-          query: req.body,
-          request: convertNodeHttpToRequest(req),
-        })
+      const user = _.get(req, 'session.id') ? req.session : null
 
-        Object.keys(responseInit.headers).forEach(key => {
-          res.setHeader(key, responseInit.headers[key])
-        })
+      await req.span.withAsyncSpan(
+        'run query',
+        {
+          user: _.get(user, 'id', 'not logged in'),
+        },
+        async ({ span }) => {
+          // Code based on https://github.com/apollographql/apollo-server/blob/master/packages/apollo-server-koa/src/koaApollo.ts
+          try {
+            const { operationName, variables } = req.body
 
-        res.end(graphqlResponse)
-      } catch (error) {
-        if ('HttpQueryError' !== error.name) {
-          throw error
+            span.addFields({
+              operationName,
+              variables: JSON.stringify(variables, null, 2)
+            })
+
+            const { graphqlResponse, responseInit } = await runHttpQuery([ req, res ], {
+              method: req.method,
+              options: {
+                ...graphqlOptions,
+                context: {
+                  setUser: res.setUser,
+                  span,
+                  user,
+                },
+              },
+              query: req.body,
+              request: convertNodeHttpToRequest(req),
+            })
+
+            Object.keys(responseInit.headers).forEach(key => {
+              res.setHeader(key, responseInit.headers[key])
+            })
+
+            res.end(graphqlResponse)
+
+            span.finish()
+          } catch (error) {
+            span.finishWithError(error)
+
+            if ('HttpQueryError' !== error.name) {
+              throw error
+            }
+
+            if (error.headers) {
+              Object.keys(error.headers).forEach(key => {
+                res.setHeader(key, error.headers[key])
+              })
+            }
+
+            res.status(error.statusCode)
+
+            res.end(error.message)
+          }
         }
-
-        if (error.headers) {
-          Object.keys(error.headers).forEach(key => {
-            res.setHeader(key, error.headers[key])
-          })
-        }
-
-        res.status(error.statusCode)
-
-        res.end(error.message)
-      }
+      )
       break
     }
     default: {
