@@ -105,7 +105,7 @@ class Tracer {
 
     if (opts.sendToCloud) {
       this._provider.addSpanProcessor(new BatchSpanProcessor(new ZipkinExporter({
-        url: opts.cloudEndpont,
+        url: opts.cloudEndpoint,
         serviceName: opts.serviceName
       })))
     }
