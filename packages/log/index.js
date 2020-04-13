@@ -16,15 +16,15 @@ class Span {
     this.childSpans = []
   }
 
-  recordEvent (name, attributes) {
+  recordEvent (name, attributes = {}) {
     this.span.addEvent(name, attributes)
   }
 
-  addFields (attributes) {
+  addFields (attributes = {}) {
     this.span.setAttributes(attributes)
   }
 
-  startSpan (task, attributes) {
+  startSpan (task, attributes = {}) {
     const span = new Span(
       this.tracer,
       this.tracer.startSpan(task, { attributes, parent: this.span })
@@ -35,7 +35,7 @@ class Span {
     return span
   }
 
-  withSpan (task, attributes, fn) {
+  withSpan (task, attributes = {}, fn) {
     if (!fn) {
       fn = attributes
     }
@@ -52,7 +52,7 @@ class Span {
     }
   }
 
-  async withAsyncSpan (task, attributes, asyncFn) {
+  async withAsyncSpan (task, attributes = {}, asyncFn) {
     if (!asyncFn) {
       asyncFn = attributes
     }
@@ -86,6 +86,7 @@ class Span {
 
   finishWithError (error) {
     if (!this.finished) {
+      console.error(error)
       this.recordEvent('error', { error })
       this.span.setStatus(opentelemetry.CanonicalCode.INTERNAL)
       this.finish()
@@ -113,12 +114,12 @@ class Tracer {
     this._provider.register()
   }
 
-  recordGlobalError (name, attributes) {
+  recordGlobalError (name, attributes = {}) {
     const s = opentelemetry.trace.getTracer('globalError').startSpan(name, { attributes })
     s.end()
   }
 
-  startTrace (name, attributes) {
+  startTrace (name, attributes = {}) {
     if (!attributes.type) {
       throw new Error('"type" attribute must be set for trace')
     }

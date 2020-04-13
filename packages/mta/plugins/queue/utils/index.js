@@ -141,8 +141,6 @@ exports.saveNewMasks = async ({ span: rootSpan, db }, users) => {
       return span.withAsyncSpan('save masks for user', async ({ span: innerSpan }) => {
         const { id, masks } = finalToAdd[username]
 
-        innerSpan.addFields()
-
         await innerSpan.withAsyncSpan(
           'save to db',
           {

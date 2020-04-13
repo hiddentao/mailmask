@@ -1,12 +1,12 @@
 {
   "name": "@camomail/mta",
   "private": true,
-  "version": "1.2.0",
+  "version": "1.2.2",
   "description": "MailMask MTA",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon node_modules/.bin/haraka -c .",
-    "start": "haraka -c ."
+    "start": "node_modules/.bin/haraka -c ."
   },
   "repository": {
     "type": "git",
@@ -20,8 +20,8 @@
   "homepage": "https://github.com/hiddentao/camomail#readme",
   "dependencies": {
     "@camomail/config": "^1.2.0",
-    "@camomail/data": "^1.2.0",
-    "@camomail/log": "^1.2.0",
+    "@camomail/data": "^1.2.1",
+    "@camomail/log": "^1.2.2",
     "@camomail/mailgun": "^1.1.8",
     "@camomail/utils": "^1.1.8",
     "Haraka": "^2.8.25",

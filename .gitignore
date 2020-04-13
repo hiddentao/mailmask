@@ -2,3 +2,5 @@ node_modules
 yarn-*.log
 npm-*.log
 lerna-*.log
+*.tgz
+*.tar

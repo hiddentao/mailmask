@@ -1,6 +1,34 @@
-const buildConfig = ({ connection, ...props }) => ({
+const CONFIG_MAP = {
+  host: 'DB_HOST',
+  port: 'DB_PORT',
+  user: 'DB_USERNAME',
+  password: 'DB_PASSWORD',
+}
+
+const getConnectionVars = (e, connVarSource) => {
+  if (!e || !connVarSource) {
+    return {}
+  }
+
+  const ret = {}
+
+  Object.keys(CONFIG_MAP).forEach(key => {
+    const srcKey = CONFIG_MAP[key]
+    if (connVarSource[srcKey] && connVarSource[srcKey] !== e[key]) {
+      ret[key] = connVarSource[srcKey]
+    }
+  })
+
+  return ret
+}
+
+const buildConfig = ({ connection }) => ({
   client: 'pg',
   connection: {
+    host: 'localhost',
+    port: 5432,
+    user: 'postgres',
+    password: 'postgres',
     ...connection,
   },
   migrations: {
@@ -8,43 +36,42 @@ const buildConfig = ({ connection, ...props }) => ({
   },
   searchPath: [ 'public' ],
   acquireConnectionTimeout: 10000,
-  ...props,
 })
 
-module.exports = ({ env, config }) => {
-  const connProps = {
-    host: config.DB_HOST || 'localhost',
-    user: config.DB_USERNAME || 'postgres',
-    password: config.DB_PASSWORD || 'postgres',
-    port: config.DB_PORT || 5432,
-  }
-
-  const envs = {
-    development: buildConfig({
-      connection: {
-        database: 'camomail-local',
-        ...connProps,
-      },
-      seeds: {
-        directory: './migrations/seeds',
-        ...connProps,
-      }
-    }),
-    test: buildConfig({
-      connection: {
-        database: 'camomail-test',
-        ...connProps,
-      }
-    }),
-    live: buildConfig({
-      connection: {
-        database: 'camomail-live',
-        ssl: true,
-        ...connProps,
-      }
-    })
-  }
-
-  return envs[env]
+const envs = {
+  development: buildConfig({
+    connection: {
+      database: 'camomail-local',
+    },
+    seeds: {
+      directory: './migrations/seeds',
+    }
+  }),
+  test: buildConfig({
+    connection: {
+      database: 'camomail-test',
+    }
+  }),
+  live: buildConfig({
+    connection: {
+      database: 'camomail-live',
+      ssl: true,
+      ...getConnectionVars({}, process.env)
+    }
+  })
 }
 
+// for all packages which use this programmatically we allow config-based override here
+envs.getConfig = ({ env, config }) => {
+  const e = envs[env]
+
+  e.connection = {
+    ...e.connection,
+    ...getConnectionVars(e.connection, config)
+  }
+
+  return e
+}
+
+// for knex CLI to work
+module.exports = envs

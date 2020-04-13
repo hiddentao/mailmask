@@ -1,7 +1,7 @@
 const { _ } = require('@camomail/utils')
 const knex = require('knex')
 
-const getKnexConfig = require('../knexfile')
+const { getConfig: getDbConfig } = require('../knexfile')
 const userMethods = require('./users')
 const maskMethods = require('./masks')
 
@@ -11,7 +11,7 @@ class Db {
   constructor ({ config }) {
     const env = config.APP_MODE
 
-    const knexConfig = getKnexConfig({ env, config })
+    const knexConfig = getDbConfig({ env, config })
 
     if (!knexConfig) {
       throw new Error(`Invalid db env: ${env}`)

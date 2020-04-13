@@ -34,13 +34,13 @@ modes using Docker.
 To build the image, first ensure the `NPM_TOKEN` env var is set correctly. Then do:
 
 ```shell
-docker build --build-arg NPM_TOKEN=$NPM_TOKEN --tag camomail:latest .
+docker build --build-arg NPM_TOKEN=$NPM_TOKEN --tag camomail-mta:latest .
 ```
 
 ### Run: terminal
 
 ```shell
-docker run --publish 25:50025 -it --entrypoint /bin/bash camomail:latest
+docker run --publish 25:50025 -it --entrypoint /bin/bash camomail-mta:latest
 ```
 
 
@@ -49,7 +49,12 @@ docker run --publish 25:50025 -it --entrypoint /bin/bash camomail:latest
 `Db: postgresql://postgres:postgres@127.0.0.1:5432/camomail-local`
 
 ```shell
-docker run --publish 25:50025 --env DB_HOST=host.docker.internal --detach camomail camomail:latest
+docker run \
+  --publish 25:50025 \
+  --env DB_HOST=host.docker.internal \
+  --env MAILGUN_API_KEY=...
+  camomail-mta \
+  camomail-mta:latest
 ```
 
 To tail the log:
@@ -63,19 +68,33 @@ docker logs -f <id>
 `Db: postgresql://<user>:<password>@<host>:<port>/camomail-live`
 
 ```shell
-docker run --publish 25:50025 --env APP_MODE=live --env DB_HOST=... --env DB_PORT=... --env DB_USERNAME=... --env DB_PASSWORD=... --env MAILGUN_API_KEY=... --detach camomail camomail:latest
+docker run \
+  --publish 25:50025 \
+  --env APP_MODE=live \
+  --env TRACE_CONSOLE_ENABLED=false \
+  --env TRACE_CLOUD_ENDPOINT=https://jaeger2.hiddentao.com/api/v2/spans \
+  --env DB_HOST=... \
+  --env DB_PORT=... \
+  --env DB_USERNAME=... \
+  --env DB_PASSWORD=... \
+  --env MAILGUN_API_KEY=... \
+  --detach \
+  camomail-mta \
+  camomail-mta:latest
 ```
+
+## Other docker commands
 
 To delete the container:
 
 ```shell
-docker rm --force camomail
+docker rm --force camomail-mta
 ```
 
 To delete the image:
 
 ```shell
-docker rmi camomail:latest
+docker rmi camomail-mta:latest
 ```
 
 To delete all dangling containers and images:
@@ -86,3 +105,37 @@ docker rmi $(docker images -f "dangling=true" -q)
 ```
 
 
+## Deployment to production
+
+Setup terraform:
+
+```shell
+cd terraform
+terraform init
+```
+
+Decrypt tfvars:
+
+```shell
+
+```
+
+Plan terraform:
+
+```shell
+terraform plan -var-file "secrets.tfvars.json"
+```
+
+
+Apply terraform:
+
+```shell
+terraform apply -var-file "secrets.tfvars.json"
+```
+
+
+Destroy it all and start again:
+
+```shell
+terraform destroy -var-file "secrets.tfvars.json"
+```
