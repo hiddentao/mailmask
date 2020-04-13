@@ -117,7 +117,7 @@ terraform init
 Decrypt tfvars:
 
 ```shell
-
+openssl enc -d -aes-256-cbc -salt -in secrets.enc -out secrets.tfvars.json
 ```
 
 Plan terraform:
