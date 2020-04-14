@@ -21,7 +21,7 @@ resource "digitalocean_droplet" "camomail-mta" {
         timeout = "2m"
     }
 
-    # base init
+    // base init
     provisioner "remote-exec" {
         inline = [
             "sleep 60", # wait for network and OS to be initialized properly
@@ -29,7 +29,7 @@ resource "digitalocean_droplet" "camomail-mta" {
         ]
     }
 
-    # setup swapfile
+    // setup swapfile
     provisioner "remote-exec" {
         inline = [
             "sudo fallocate -l 4G /swapfile",
@@ -40,7 +40,7 @@ resource "digitalocean_droplet" "camomail-mta" {
         ]
     }
 
-    # install base deps
+    // install base deps
     provisioner "remote-exec" {
         inline = [
             "sudo apt update",
@@ -48,7 +48,7 @@ resource "digitalocean_droplet" "camomail-mta" {
         ]
     }
 
-    # install docker
+    // install docker
     provisioner "remote-exec" {
         inline = [
             "sudo apt -y install apt-transport-https ca-certificates curl gnupg-agent",
@@ -62,13 +62,13 @@ resource "digitalocean_droplet" "camomail-mta" {
     // clean out old docker images (so that docker build is fast)
     provisioner "local-exec" {
         command = "rm -f mta-docker-image*"
-        working_dir = ".."
+        working_dir = "${path.root}/.."
     }
 
     // build docker image
     provisioner "local-exec" {
         command = "docker build --build-arg NPM_TOKEN=$NPM_TOKEN --tag camomail-mta:latest ."
-        working_dir = ".."
+        working_dir = "${path.root}/.."
     }
 
     // save docker image
@@ -80,7 +80,7 @@ resource "digitalocean_droplet" "camomail-mta" {
     // zip docker image
     provisioner "local-exec" {
         command = "gzip -9 -f mta-docker-image.tar"
-        working_dir = ".."
+        working_dir = "${path.root}/.."
     }
 
     // transfer docker image
