@@ -5,4 +5,4 @@ export const buildUrlPath = (pathname, query) => url.format({ pathname, query })
 
 export const buildBackendUrl = urlPath => url.resolve(config.WEB_URL, urlPath)
 
-export const buildCamoUrl = (prefix, username) => `${prefix}@${username}.${config.DOMAIN}`
+export const buildMaskAddress = (prefix, username) => `${prefix}@${username}.${config.DOMAIN}`

@@ -31,8 +31,8 @@ export const Link = ({ href, as, query = {}, children }) => {
 }
 
 
-export const AccountLink = ({ children }) => (
-  <DefaultLink href='/account' scroll={true}>
+export const DashboardLink = ({ children }) => (
+  <DefaultLink href='/dashboard' scroll={true}>
     {wrapInAnchor(children)}
   </DefaultLink>
 )

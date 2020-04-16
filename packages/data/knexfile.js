@@ -36,6 +36,9 @@ const buildConfig = ({ connection }) => ({
   },
   searchPath: [ 'public' ],
   acquireConnectionTimeout: 10000,
+  seeds: {
+    directory: './migrations/seeds',
+  }
 })
 
 const envs = {
@@ -43,9 +46,6 @@ const envs = {
     connection: {
       database: 'camomail-local',
     },
-    seeds: {
-      directory: './migrations/seeds',
-    }
   }),
   test: buildConfig({
     connection: {

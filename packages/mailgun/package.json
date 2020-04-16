@@ -20,6 +20,7 @@
     "url": "https://github.com/hiddentao/camomail/issues"
   },
   "dependencies": {
+    "@camomail/utils": "^1.1.8",
     "mailgun-js": "^0.22.0"
   },
   "gitHead": "139e31f4278cba700c5f4dcb4ee9ba5d13f95532"

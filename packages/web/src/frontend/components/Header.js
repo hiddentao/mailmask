@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from 'react'
 import styled from '@emotion/styled'
-import { flex, font, childAnchors, boxShadow } from 'emotion-styled-utils'
+import { flex, font, childAnchors, boxShadow, smoothTransitions } from 'emotion-styled-utils'
 
-import { Link, AccountLink, LoginLink } from './Link'
+import { Link, DashboardLink, LoginLink } from './Link'
 import Authenticated from './Authenticated'
 import Button from './Button'
 import Icon from './Icon'
@@ -54,6 +54,8 @@ const MobileNav = styled.ul`
   border-radius: 5px;
   ${({ theme }) => boxShadow({ color: theme.mobileNavBoxShadow })};
   background-color: ${({ theme }) => theme.mobileNavBgColor};
+  opacity: ${({ open }) => (open ? '1' : '0')};
+  ${smoothTransitions()};
 
   ${({ theme }) => childAnchors({
     textColor: theme.mobileNavAnchorTextColor,
@@ -123,7 +125,10 @@ const MobileNavButton = styled(Button)`
   display: block;
   background-color: transparent;
   padding: 0.5em;
-  ${({ theme }) => theme.headerTextColor};
+  border: none;
+  color: ${({ theme }) => theme.headerTextColor};
+  transform: rotate(${({ open }) => (open ? '90' : '0')}deg);
+  ${smoothTransitions()};
 
   ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
     display: none;
@@ -137,10 +142,9 @@ const Header = ({ className, onClickHome, children }) => {
 
   const navLinks = (
     <React.Fragment>
-      <NavLi><Link href='/pricing'>Pricing</Link></NavLi>
       <DashboardLi>
-        <Authenticated renderNotAuthenticated={() => <LoginLink>Login</LoginLink>}>
-          {() => <AccountLink>My account</AccountLink>}
+        <Authenticated renderNotAuthenticated={() => <LoginLink>Login</LoginLink>} renderError={() => null}>
+          {() => <DashboardLink>My dashboard</DashboardLink>}
         </Authenticated>
       </DashboardLi>
     </React.Fragment>
@@ -149,14 +153,12 @@ const Header = ({ className, onClickHome, children }) => {
   return (
     <Container className={className}>
       <Link href='/'>
-        <Brand onClick={onClickHome}>camomail</Brand>
+        <Brand onClick={onClickHome}>Mailmask</Brand>
       </Link>
       {children}
       <DesktopNav>{navLinks}</DesktopNav>
-      <MobileNavButton onClick={toggleMobileMenu}><Icon name='bars' /></MobileNavButton>
-      {mobileNavOpen ? (
-        <MobileNav>{navLinks}</MobileNav>
-      ) : null}
+      <MobileNavButton open={mobileNavOpen} onClick={toggleMobileMenu}><Icon name='bars' /></MobileNavButton>
+      <MobileNav open={mobileNavOpen}>{navLinks}</MobileNav>
     </Container>
   )
 }

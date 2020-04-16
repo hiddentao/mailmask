@@ -1,50 +1,77 @@
 import React, { useState, useCallback } from 'react'
 import styled from '@emotion/styled'
-import { isValidEmail } from '@camomail/utils'
+import { _, isValidEmail } from '@camomail/utils'
+import { flex } from 'emotion-styled-utils'
+import { useRouter } from 'next/router'
 
 import { withApollo } from '../hoc'
 import { useSafeMutation } from '../hooks'
 import { RequestLoginLinkMutation } from '../../graphql/mutations'
 import Button from './Button'
 import QueryResult from './QueryResult'
+import TextInput from './TextInput'
 
-const Form = styled.form``
+const Container = styled.div``
+
+const Form = styled.form`
+  ${flex({ direction: 'row', justify: 'center', align: 'center' })};
+  margin-bottom: 0.5rem;
+`
+
+const SubmitButton = styled(Button)`
+  margin-left: 0.5rem;
+`
 
 const GetStartedForm = ({ className }) => {
+  const router = useRouter()
   const [ email, setEmail ] = useState('')
   const [ isValid, setIsValid ] = useState(false)
   const [ doRequest, result ] = useSafeMutation(RequestLoginLinkMutation)
 
-  const updateEmail = useCallback(({ currentTarget: { value: inputValue } }) => {
-    if (inputValue !== email) {
-      setEmail(inputValue)
-      setIsValid(isValidEmail(inputValue))
+  const updateEmail = useCallback(newEmail => {
+    if (newEmail !== email) {
+      setEmail(newEmail)
+      setIsValid(isValidEmail(newEmail))
     }
   }, [ email ])
 
-  const submitEmail = useCallback(e => {
+  const submitEmail = useCallback(async e => {
     e.preventDefault()
 
     if (!isValid) {
       return
     }
 
-    doRequest({
+    const ret = await doRequest({
       variables: {
         email,
       }
     })
-  }, [ email, isValid, doRequest ])
+
+    if (_.get(ret, 'data.result.success')) {
+      router.replace('/await-email')
+    }
+  }, [ email, isValid, doRequest, router ])
 
   return (
-    <Form className={className} onSubmit={submitEmail}>
-      <p>Enter your email to get started!</p>
-      <input type="email" value={email} onChange={updateEmail} />
-      <Button disabled={!isValid} onClick={submitEmail}>Go</Button>
-      <QueryResult {...result}>
-        <div>Email sent!</div>
-      </QueryResult>
-    </Form>
+    <Container className={className}>
+      <Form onSubmit={submitEmail}>
+        <TextInput
+          type="email"
+          value={email}
+          onChange={updateEmail}
+          placeholder='Enter email address...'
+        />
+        <SubmitButton
+          loading={result.loading}
+          disabled={!isValid}
+          onClick={submitEmail}
+        >
+          Start
+        </SubmitButton>
+      </Form>
+      <QueryResult {...result} hideLoading={true} />
+    </Container>
   )
 }
 

@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import {
   faBars,
+  faInfo,
   faCheckCircle,
   faExclamation,
   faSnowflake,
@@ -15,6 +16,7 @@ config.autoAddCss = false
 
 const ICONS = {
   bars: faBars,
+  info: faInfo,
   'check-circle': faCheckCircle,
   exclamation: faExclamation,
   snowflake: faSnowflake,

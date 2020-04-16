@@ -1,28 +1,39 @@
 import React from 'react'
+import styled from '@emotion/styled'
 
 import { withApollo } from '../src/frontend/hoc'
 import Layout from '../src/frontend/components/Layout'
-import { AccountLink } from '../src/frontend/components/Link'
+import Seo from '../src/frontend/components/Seo'
+import { DashboardLink } from '../src/frontend/components/Link'
 import Authenticated from '../src/frontend/components/Authenticated'
+import ContentWrapper from '../src/frontend/components/ContentWrapper'
 import SetUsernameForm from '../src/frontend/components/SetUsernameForm'
 import Button from '../src/frontend/components/Button'
+
+const Heading = styled.h1`
+  line-height: 1.3em;
+  margin-bottom: 2rem;
+`
 
 const LoggedInPage = () => {
   return (
     <Layout>
-      <Authenticated>
-        {({ signedUp }) => (signedUp ? (
-          <div>
-            <p>You are now logged in.</p>
-            <AccountLink><Button>Goto my account</Button></AccountLink>
-          </div>
-        ) : (
-          <div>
-            <p>Thanks for signing up.</p>
-            <SetUsernameForm />
-          </div>
-        ))}
-      </Authenticated>
+      <Seo title='Logged-in' />
+      <ContentWrapper>
+        <Authenticated>
+          {({ signedUp }) => (signedUp ? (
+            <div>
+              <Heading>Welcome back! you are now logged in.</Heading>
+              <DashboardLink><Button>View my dashboard</Button></DashboardLink>
+            </div>
+          ) : (
+              <div>
+                <Heading>Please set your username to continue.</Heading>
+                <SetUsernameForm />
+              </div>
+            ))}
+        </Authenticated>
+      </ContentWrapper>
     </Layout>
   )
 }

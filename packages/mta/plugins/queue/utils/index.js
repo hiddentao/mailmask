@@ -1,4 +1,4 @@
-const { _, parseEmailAddress } = require('@camomail/utils')
+const { _, parseMaskEmailAddress } = require('@camomail/utils')
 
 exports.extractRecipients = ({ to, cc, bcc }) => {
   const map = [].concat(
@@ -20,7 +20,7 @@ exports.getUsers = async ({ span: rootSpan, db }, recipients) => {
 
     recipients.forEach(a => {
       // parse format: mask@username.msk.sh
-      const { username, mask } = parseEmailAddress(a)
+      const { username, mask } = parseMaskEmailAddress(a)
 
       users[username] = users[username] || {
         masks: {},

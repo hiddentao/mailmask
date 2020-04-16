@@ -72,7 +72,7 @@ docker run \
   --publish 25:50025 \
   --env APP_MODE=live \
   --env TRACE_CONSOLE_ENABLED=false \
-  --env TRACE_CLOUD_ENDPOINT=https://jaeger2.hiddentao.com/api/v2/spans \
+  --env TRACE_CLOUD_ENDPOINT=... \
   --env DB_HOST=... \
   --env DB_PORT=... \
   --env DB_USERNAME=... \
@@ -117,7 +117,7 @@ terraform init
 Decrypt tfvars:
 
 ```shell
-openssl enc -d -aes-256-cbc -salt -in secrets.enc -out secrets.tfvars.json
+scripts/decrypt-vars.sh
 ```
 
 Plan terraform:

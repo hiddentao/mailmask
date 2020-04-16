@@ -2,32 +2,24 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { font } from 'emotion-styled-utils'
 
-import ErrorBox from '../src/frontend/components/ErrorBox'
+import { getAppConfig } from '../src/frontend/appConfig'
 import Layout from '../src/frontend/components/Layout'
+import ContentWrapper from '../src/frontend/components/ContentWrapper'
+import NoSsr from '../src/frontend/components/NoSsr'
 
-const Heading = styled.h1`
-  ${font('header')}
-  margin: 2rem 0;
-  font-size: 2rem;
-  color: #333;
-`
+const { SUPPORT_EMAIL } = getAppConfig()
 
-const StatusCode = styled.p`
-  ${font('body', 'bold')}
-  margin: 0 0 1rem;
-  font-size: 1.trem;
-`
-
-const StyledErrorBox = styled(ErrorBox)`
-  margin: 0 0 1rem;
-  font-size: 1.5rem;
+const StyledContentWrapper = styled(ContentWrapper)`
+  h1 {
+    line-height: 1.3em;
+  }
 `
 
 const ErrorStack = styled.pre`
   ${font('body')}
   font-size: 0.8rem;
   line-height: 1.2em;
-  background-color: #eee;
+  color: ${({ theme }) => theme.errorPageStackBgColor};
   border-radius: 5px;
   padding: 1em;
   margin: 0 0 1rem;
@@ -36,35 +28,36 @@ const ErrorStack = styled.pre`
 const Explanation = styled.p`
   ${font('body')}
   font-size: 1rem;
-  color: #333;
-  margin: 1rem 0 0;
+  line-height: 1.3em;
+  color: ${({ theme }) => theme.errorPageExplanationTextColor};
+  margin: 2rem 0 0;
   a {
     margin: 0 0.5em;
   }
 `
 
 export default class ErrorPage extends React.Component {
-  static async getInitialProps ({ res, err, query: { msg, stack } = {} }) {
+  static async getInitialProps ({ res, query: { msg, stack } = {} }) {
     /* eslint-disable-next-line no-nested-ternary */
-    const statusCode = (res ? res.statusCode : (err ? err.statusCode : null))
-
-    return { statusCode, msg, stack: res && res.inDevMode ? stack : null }
+    return { msg, stack: res && res.inDevMode ? stack : null }
   }
 
   render () {
-    const { msg, stack, statusCode } = this.props
+    const { msg, stack } = this.props
+
+    const finalMsg = msg || `Sorry, we've encountered a problem`
 
     return (
       <Layout>
-        <Heading>Sorry, we've encountered a problem 😕</Heading>
-        {statusCode ? <StatusCode>Status: {statusCode}</StatusCode> : null}
-        {msg ? <StyledErrorBox>{msg}</StyledErrorBox> : null}
-        {stack ? <ErrorStack>{stack}</ErrorStack> : null}
-        <Explanation>
-          If you keep seeing this
-          error please get in touch with us at
-          <a href="mailto:support@msk.sh">support@msk.sh</a>
-        </Explanation>
+        <StyledContentWrapper>
+          <h1>{finalMsg}</h1>
+          {stack ? <ErrorStack>{stack}</ErrorStack> : null}
+          <Explanation>
+            If you keep seeing this
+            error please get in touch with us at
+            <NoSsr><a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a></NoSsr>
+          </Explanation>
+        </StyledContentWrapper>
       </Layout>
     )
   }

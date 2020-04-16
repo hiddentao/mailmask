@@ -4,7 +4,7 @@ import { middleware as TracerMiddleware } from './tracer'
 import { middleware as ErrorMiddleware } from './error'
 import { middleware as AuthMiddleware } from './auth'
 
-export const createMiddlewareWrwapper = args => endpoint => {
+export const createMiddlewareWrapper = args => endpoint => {
   return _.compose(
     TracerMiddleware(args),
     ErrorMiddleware(args),

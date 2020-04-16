@@ -1,6 +1,7 @@
 const slug = require('slugify')
 const validator = require('validator')
 const { uuid } = require('uuidv4')
+const emailAddresses = require('email-addresses')
 
 /**
  * Obfuscate given string.
@@ -40,7 +41,13 @@ exports.randStr = (numChars = 8) => {
 }
 
 
-exports.parseEmailAddress = a => {
+exports.extractEmailAddress = str => {
+  const { address } = emailAddresses.parseOneAddress(str)
+  return address
+}
+
+
+exports.parseMaskEmailAddress = a => {
   const atPos = a.indexOf('@')
   const firstDotPos = a.substr(atPos).indexOf('.')
   const username = a.substr(atPos + 1, firstDotPos - 1).toLowerCase()

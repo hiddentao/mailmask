@@ -16,9 +16,16 @@ const LoadingContainer = styled.div`
   ${flex({ justify: 'center' })};
 `
 
+const PleaseLogin = styled.div`
+  p {
+    margin-bottom: 1rem;
+  }
+`
+
 const Authenticated = ({
   children,
   renderNotAuthenticated,
+  renderError,
 }) => {
   const { data, loading, error } = useSafeQuery(GetMyProfileQuery)
 
@@ -29,13 +36,17 @@ const Authenticated = ({
   } else if (error) {
     if (error.code === NOT_LOGGED_IN) {
       return renderNotAuthenticated ? renderChildWithArgs(renderNotAuthenticated) : (
-        <div>
+        <PleaseLogin>
           <p>Please login to view this page!</p>
           <GetStartedForm />
-        </div>
+        </PleaseLogin>
       )
     } else {
-      return <ErrorBox error={error} />
+      return (
+        renderError
+          ? renderChildWithArgs(renderError, error)
+          : <ErrorBox error={error} />
+      )
     }
   }
 

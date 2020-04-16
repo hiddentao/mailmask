@@ -1,34 +1,26 @@
-import { buildCamoUrl, buildBackendUrl } from '../../utils/url'
+import { buildBackendUrl } from '../../utils/url'
 import { SIGNED_UP } from '../types'
 
-export function render ({ email, username, dashboardUrl }) {
+export function render ({ username, dashboardUrl }) {
   return {
-    subject: 'Congratulations! your camomail account is ready to go',
+    subject: 'Congratulations! your MaskMail account is now ready',
     body: `Hi ${username},
 
 You have successfully signed up for MailMask.
 
-This is a test email sent to ${email} to ensure that email forwarding works.
-
-You can now manage all your forwarding addresses via your account:
-
-Please follow the link below to login:
+You can now manage all your masks via your dashboard:
 
 ${dashboardUrl}
 
 thanks,
-
-Team MailMask
+MailMask team
 `
   }
 }
 
-export async function sendNotification ({ username }) {
-  const email = `root@msk.sh`//buildCamoUrl(`congrats@`, username)
-
+export async function sendNotification ({ email, username }) {
   return this._sendEmail(email, SIGNED_UP, {}, {
-    email,
     username,
-    dashboardUrl: buildBackendUrl('/account'),
+    dashboardUrl: buildBackendUrl('/dashboard'),
   })
 }

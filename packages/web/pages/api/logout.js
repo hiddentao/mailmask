@@ -1,4 +1,5 @@
 import { doBootstrap } from '../../src/bootstrap'
+import { redirectToPage } from '../../src/utils/functions'
 
 const { wrapMiddleware } = doBootstrap()
 
@@ -9,11 +10,8 @@ const endpoint = async (req, res) => {
 
       await res.setUser({})
 
-      res.writeHead(301, {
-        Location: '/'
-      })
+      redirectToPage({ res }, '/')
 
-      res.end()
       break
     }
     default: {

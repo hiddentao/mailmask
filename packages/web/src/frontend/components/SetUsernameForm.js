@@ -1,84 +1,171 @@
 import React, { useState, useCallback, useMemo } from 'react'
+import { useRouter } from 'next/router'
+import { useApolloClient } from '@apollo/react-hooks'
 import styled from '@emotion/styled'
 import { _, isValidUsername } from '@camomail/utils'
+import { font, flex } from 'emotion-styled-utils'
 
 import { withApollo } from '../hoc'
-import { useSafeMutation, useSafeQuery } from '../hooks'
+import { useSafeMutation } from '../hooks'
 import { SetUsernameMutation } from '../../graphql/mutations'
+import { resolveError } from '../../graphql/errors'
 import { GetUsernameAvailabilityQuery } from '../../graphql/queries'
 import Button from './Button'
+import LoadingIcon from './LoadingIcon'
+import AlertBox from './AlertBox'
+import TextInput from './TextInput'
 import Icon from './Icon'
 import QueryResult from './QueryResult'
 
-const Form = styled.form``
+const Form = styled.form`
+  margin-bottom: 2rem;
+`
+
+const InstructionsBox = styled(AlertBox)`
+  margin: 1rem 0;
+
+  p {
+    margin: 1rem 0;
+  }
+
+  strong {
+    ${font('body', 'bold')}
+  }
+`
+
+const TickContainer = styled.div`
+  margin: 0.3rem 0 2rem;
+  ${flex({ direction: 'row', justify: 'flex-start', align: 'center' })};
+`
+
+const YesTick = styled.span`
+  color: ${({ theme }) => theme.setUsernameYesTickColor};
+`
+
+const NoTick = styled.span`
+  color: ${({ theme }) => theme.setUsernameNoTickColor};
+`
+
+
+let usernameCheckTimer
 
 const SetUsernameForm = ({ className }) => {
+  const apolloClient = useApolloClient()
+  const router = useRouter()
   const [ username, setUsername ] = useState('')
   const [ isValid, setIsValid ] = useState(false)
+  const [ isAvailable, setIsAvailable ] = useState(false)
+  const [ checkingUsername, setCheckingUsername ] = useState(false)
   const [ doRequest, result ] = useSafeMutation(SetUsernameMutation)
-  const usernameCheckQuery = useSafeQuery(GetUsernameAvailabilityQuery, {
-    fetchPolicy: 'network-only',
-    // see https://www.apollographql.com/docs/react/data/queries/#inspecting-loading-states
-    notifyOnNetworkStatusChange: true,
-  })
 
-  const availabilityResult = useMemo(() => _.get(usernameCheckQuery, 'data.result'), [ usernameCheckQuery ])
-  const canSubmit = useMemo(() => isValid && _.get(availabilityResult, 'available'), [ isValid, availabilityResult ])
+  const canSubmit = useMemo(() => isValid && isAvailable, [ isValid, isAvailable ])
 
-  const updateUsername = useCallback(({ currentTarget: { value: inputValue } }) => {
-    if (inputValue !== username) {
-      setUsername(inputValue)
+  const updateUsername = useCallback(newUsername => {
+    if (newUsername !== username) {
+      setUsername(newUsername)
+      setIsValid(false)
 
-      const _valid = isValidUsername(inputValue)
+      // wait 250ms for user to finish typing before checking
+      clearTimeout(usernameCheckTimer)
+      usernameCheckTimer = setTimeout(async () => {
+        const _valid = isValidUsername(newUsername)
+        setIsValid(_valid)
 
-      setIsValid(_valid)
+        if (_valid) {
+          setCheckingUsername(true)
 
-      if (_valid) {
-        usernameCheckQuery.refetch({
-          username: inputValue,
-        })
-      }
+          try {
+            const ret = await apolloClient.query({
+              query: GetUsernameAvailabilityQuery,
+              variables: {
+                username: newUsername,
+              },
+              fetchPolicy: 'network-only',
+            })
+
+            const error = resolveError(ret)
+
+            if (error) {
+              throw error
+            }
+
+            setIsAvailable(_.get(ret, 'data.result.available'))
+          } catch (err) {
+            setIsAvailable(false)
+          }
+
+          setCheckingUsername(false)
+        }
+      }, 250)
     }
-  }, [ username, usernameCheckQuery ])
+  }, [ username, apolloClient ])
 
-  const submitUsername = useCallback(e => {
+  const submitUsername = useCallback(async e => {
     e.preventDefault()
 
     if (!canSubmit) {
       return
     }
 
-    doRequest({
+    const ret = await doRequest({
       variables: {
         username,
       }
     })
-  }, [ username, canSubmit, doRequest ])
+
+    if (_.get(ret, 'data.result.success')) {
+      router.replace(`/sign-up-done?username=${username}`)
+    }
+  }, [ router, username, canSubmit, doRequest ])
 
   let tickContent
   if (isValid) {
-    if (availabilityResult) {
-      if (availabilityResult.available) {
-        tickContent = <Icon name='check-circle' />
-      } else {
-        tickContent = <Icon name='times-circle' />
-      }
+    if (checkingUsername) {
+      tickContent = <LoadingIcon />
     } else {
-      tickContent = <QueryResult {...usernameCheckQuery} />
+      if (isAvailable) {
+        tickContent = (
+          <YesTick>
+            <Icon name='check-circle' /> Available
+          </YesTick>
+        )
+      } else {
+        tickContent = (
+          <NoTick>
+            <Icon name='times-circle' /> Already taken
+          </NoTick>
+        )
+      }
     }
   }
 
   return (
     <Form className={className} onSubmit={submitUsername}>
-      <p>Please set your username!</p>
-      <p>NOTE: once set it cannot be changed, so please choose carefully</p>
-      <p>Upto 16 characters, allowable characters: a-z, 0-9, -</p>
-      <input type="text" value={username} onChange={updateUsername} />
-      {tickContent}
-      <Button disabled={!canSubmit} onClick={submitUsername}>Go</Button>
-      <QueryResult {...result}>
-        {() => <div>Username set!</div>}
-      </QueryResult>
+      <InstructionsBox>
+        <p>Your username must be between 3 and 16 characters in length and must
+        only contain letters (A-Z), numbers (0-9) and hyphens (-).</p>
+        <p>
+          <strong>Once set it cannot be changed, so please choose carefully!</strong>
+        </p>
+      </InstructionsBox>
+
+      <TextInput
+        type="text"
+        value={username}
+        onChange={updateUsername}
+      />
+      <TickContainer>
+        {tickContent}
+      </TickContainer>
+
+      <Button
+        disabled={!canSubmit}
+        loading={_.get(result, 'loading')}
+        onClick={submitUsername}
+      >
+        Continue
+      </Button>
+      <QueryResult {...result} hideLoading={true} />
     </Form>
   )
 }

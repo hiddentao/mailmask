@@ -107,6 +107,7 @@ exports.msk_queue_handler = async (next, connection) => {
       const msg = {
         from: `"${senderStr}" <bot@${config.DOMAIN}>`,
         to: userData.map(u => u.email),
+        replyTo: sender,
         subject,
         text,
         html,

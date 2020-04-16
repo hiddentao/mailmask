@@ -16,9 +16,10 @@
     "start": "next start --port 3002",
     "dev": "next dev --port 3002",
     "lint": "eslint .",
-    "now-cli": "now --token $NOW_TOKEN --scope solui",
-    "deploy": "npm run build && npm run now-cli -- --prod -f --public",
-    "clean-old-deploys": "npm run now-cli rm camomail-web --safe --yes"
+    "now-cli": "now --token $NOW_TOKEN --scope mailmask",
+    "deploy-to-zeit": "npm run now-cli -- --prod -f --public",
+    "deploy": "npm run build && npm run deploy-to-zeit",
+    "clean-old-deploys": "npm run now-cli -- rm mailmask-web --safe --yes"
   },
   "scarfSettings": {
     "enabled": false
@@ -41,11 +42,14 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^2.3.0",
-    "eslint-plugin-standard": "^4.0.1"
+    "eslint-plugin-standard": "^4.0.1",
+    "now": "^18.0.0",
+    "webpack": "^4.42.1"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.4",
     "@apollographql/graphql-playground-html": "^1.6.24",
+    "@babel/core": "^7.9.0",
     "@camomail/config": "^1.2.0",
     "@camomail/data": "^1.2.1",
     "@camomail/log": "^1.2.2",
@@ -61,6 +65,7 @@
     "apollo-link": "^1.2.13",
     "apollo-link-http": "^1.5.16",
     "apollo-server-core": "^2.11.0",
+    "babel-runtime": "^6.26.0",
     "emotion-styled-utils": "^1.1.0",
     "emotion-theming": "^10.0.27",
     "graphql": "^15.0.0",
@@ -68,17 +73,21 @@
     "graphql-tag": "^2.10.3",
     "graphql-tools": "^4.0.7",
     "graphql-type-json": "^0.3.1",
+    "logrocket": "^1.0.7",
     "match-sorter": "^4.1.0",
     "next": "^9.3.4",
+    "next-seo": "^4.4.0",
     "next-with-apollo": "^5.0.0",
     "node-fetch": "^2.6.0",
     "nookies": "^2.2.2",
+    "query-string": "^6.12.1",
     "react": "^16.13.1",
     "react-apollo": "^3.1.4",
     "react-dom": "^16.13.1",
     "react-headroom": "^3.0.0",
     "react-table": "^7.0.4",
     "react-toastify": "^5.5.0",
+    "react-typing-animation": "^1.6.2",
     "url": "^0.11.0"
   }
 }

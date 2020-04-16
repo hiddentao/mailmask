@@ -2,11 +2,16 @@ import { opacify } from 'emotion-styled-utils'
 
 // pallette
 const primary = '#6807f9'
+const secondary = '#f90798'
+const tertiary = '#5ca102'
 
 // standard colours
 const white = '#fff'
 const black = '#000'
 const darkGrey = '#666'
+const green = tertiary
+const red = '#f00'
+const yellow = 'yellow'
 const grey = '#999'
 const lightGrey = '#ccc'
 const lighterGrey = '#eee'
@@ -23,7 +28,7 @@ export default {
   layoutTextColor: white,
   // header component
   headerWrapperBgColor: transparent,
-  headerWrapperFloatingBgColor: 'rgba(0, 0, 0, 0.9)',
+  headerWrapperFloatingBgColor: opacify(black, 0.9),
   headerBgColor: transparent,
   headerTextColor: white,
   navAnchorTextColor: white,
@@ -39,4 +44,61 @@ export default {
   // content wrapper component
   contentWrapperBgColor: white,
   contentWrapperTextColor: black,
+  // errorBox component
+  errorBoxBgColor: red,
+  errorBoxTextColor: white,
+  errorBoxIconColor: yellow,
+  // alertBox component
+  alertBoxBgColor: opacify(tertiary, 0.3),
+  alertBoxTextColor: black,
+  alertBoxIconColor: tertiary,
+  // button component
+  buttonDisabledBgColor: grey,
+  buttonDisabledTextColor: darkGrey,
+  buttonDisabledBorderColor: grey,
+  buttonBgColor: secondary,
+  buttonTextColor: white,
+  buttonBorderColor: secondary,
+  buttonHoverBgColor: opacify(secondary, 0.9),
+  buttonHoverTextColor: white,
+  buttonHoverBorderColor: secondary,
+  buttonShadowColor: darkGrey,
+  // icon button component
+  iconButtonBorderColor: secondary,
+  iconButtonBgColor: transparent,
+  iconButtonTextColor: secondary,
+  iconButtonDisabledBorderColor: lightGrey,
+  iconButtonDisabledBgColor: transparent,
+  iconButtonDisabledTextColor: grey,
+  iconButtonHoverBorderColor: secondary,
+  iconButtonHoverBgColor: secondary,
+  iconButtonHoverTextColor: white,
+  iconButtonShadowColor: darkGrey,
+  // input components general styles
+  inputBorderColor: darkGrey,
+  inputBgColor: white,
+  inputErrorBorderColor: red,
+  inputErrorBgColor: yellow,
+  inputPlaceholderTextColor: lightGrey,
+  // queryResult component
+  queryResultLoadingTextColor: white,
+  // setUsername component
+  setUsernameYesTickColor: green,
+  setUsernameNoTickColor: red,
+  // error page
+  errorPageExplanationTextColor: darkGrey,
+  errorPageStackBgColor: lightGrey,
+  // home page: top block
+  homePageTopBlockTextColor: white,
+  homePageHowItWorksNumberBorderColor: black,
+  homePageHowItWorksExampleBgColor: lighterGrey,
+  homePageHowItWorksExampleTextColor: grey,
+  homePageBenefitBorderColor: grey,
+  // dashboard page: bottom block
+  dashboardPageBottomBlockBorderColor: grey,
+  // dashboard page: masks table
+  dashboardPageMasksTableMaskSuffixTextColor: lightGrey,
+  dashboardPageMasksTableMaskStatusTextColor: grey,
+  dashboardPageMasksTableMaskOnIconColor: green,
+  dashboardPageMasksTableMaskOffIconColor: red,
 }

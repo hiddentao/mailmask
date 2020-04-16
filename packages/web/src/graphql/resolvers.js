@@ -72,6 +72,7 @@ export default ({ db, notifier }) => {
         await db.finalizeSignUp(user.id, username)
 
         await notifier.sendNotification(notifier.TYPES.SIGNED_UP, {
+          email: user.email,
           username,
         })
 

@@ -1,4 +1,5 @@
 module.exports = {
   _: require('./lodash'),
-  ...require('./string')
+  ...require('./string'),
+  ...require('./date'),
 }

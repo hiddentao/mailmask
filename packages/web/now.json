@@ -1,0 +1,53 @@
+{
+  "version": 2,
+  "regions": [
+    "all"
+  ],
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/next"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "APP_MODE": "live",
+    "ENCRYPTION_IV": "@encryption_iv",
+    "ENCRYPTION_KEY": "@encryption_key",
+    "MAILGUN_API_KEY": "@mailgun_api_key",
+    "DB_HOST": "@db_host",
+    "DB_PORT": "@db_port",
+    "DB_USERNAME": "@db_username",
+    "DB_PASSWORD": "@db_password",
+    "TRACE_CLOUD_ENDPOINT": "@trace_cloud_endpoint"
+  },
+  "build": {
+    "env": {
+      "NODE_ENV": "production",
+      "APP_MODE": "live",
+      "NPM_TOKEN": "@npm_token",
+      "ENCRYPTION_IV": "@encryption_iv",
+      "ENCRYPTION_KEY": "@encryption_key",
+      "MAILGUN_API_KEY": "@mailgun_api_key",
+      "DB_HOST": "@db_host",
+      "DB_PORT": "@db_port",
+      "DB_USERNAME": "@db_username",
+      "DB_PASSWORD": "@db_password",
+      "TRACE_CLOUD_ENDPOINT": "@trace_cloud_endpoint"
+  }
+  },
+  "routes": [
+    {
+      "src": "/await-email",
+      "dest": "public"
+    },
+    {
+      "src": "/sign-up-done",
+      "dest": "public"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "public/$1"
+    }
+  ]
+}

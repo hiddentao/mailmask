@@ -7,6 +7,7 @@ import { maxContentWidth } from './Layout'
 const Container = styled.div`
   background: ${({ theme }) => theme.contentWrapperBgColor};
   color: ${({ theme }) => theme.contentWrapperTextColor};
+  padding: 2rem;
 `
 
 const ContentWrapper = ({ children, className }) => (

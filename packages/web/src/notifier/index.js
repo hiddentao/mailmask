@@ -1,6 +1,6 @@
 import url from 'url'
 import Mailgun from '@camomail/mailgun'
-import { obfuscate } from '@camomail/utils'
+import { obfuscate, formatDate } from '@camomail/utils'
 
 import TYPES from './types'
 import { encrypt, decrypt } from '../utils/crypto'
@@ -14,6 +14,7 @@ class Notifier {
     }
 
     this._domain = config.DOMAIN
+    this._senderEmail = config.SUPPORT_EMAIL
 
     this._mg = new Mailgun({
       apiKey: config.MAILGUN_API_KEY,
@@ -67,10 +68,12 @@ class Notifier {
   }
 
   async _sendEmail (email, type, payload, templateVars = {}) {
+    const { token, expires } = await this._encodePayload(payload)
+
     const urlPath = url.format({
       pathname: `/api/verify/${type}`,
       query: {
-        v: await this._encodePayload(payload)
+        v: token
       }
     })
 
@@ -78,12 +81,13 @@ class Notifier {
 
     const { subject, body: text } = this._handlers[type].render({
       url: absUrl,
+      urlValidTo: formatDate(expires, 'PPppp'),
       ...templateVars
     })
 
     try {
       const msg = {
-        from: `MailMask <support@${this._domain}>`,
+        from: `MailMask <${this._senderEmail}>`,
         to: [ email ],
         subject,
         text,
@@ -97,14 +101,30 @@ class Notifier {
   }
 
   async _encodePayload (params) {
-    return encrypt({ expires: Date.now() + /* 1 hour */ 3600000, params }, this._cryptoParams)
+    const expires = Date.now() + /* 1 hour */ 3600000
+
+    return {
+      token: await encrypt({ expires, params }, this._cryptoParams),
+      expires,
+    }
   }
 
-  async _decodePayload (v) {
-    const { expires, params } = await decrypt(v, this._cryptoParams)
+  async _decodePayload (v, { retryMsg = '' } = {}) {
+    let expires
+    let params
+
+    try {
+      ({ expires, params } = await decrypt(v, this._cryptoParams))
+    } catch (err) {
+      throw new Error(
+        `Sorry, this link is invalid. ${retryMsg}`
+      )
+    }
 
     if (expires <= Date.now()) {
-      throw new Error('Sorry, the link you tried has already expired.')
+      throw new Error(
+        `Sorry, this link has already expired. ${retryMsg}`
+      )
     }
 
     return params

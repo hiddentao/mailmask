@@ -107,7 +107,7 @@ resource "digitalocean_droplet" "camomail-mta" {
                 --env NODE_ENV=production \
                 --env TRACE_CONSOLE_ENABLED=false \
                 --env TRACE_CLOUD_ENABLED=true \
-                --env TRACE_CLOUD_ENDPOINT=https://jaeger2.hiddentao.com/api/v2/spans \
+                --env TRACE_CLOUD_ENDPOINT=${var.trace_cloud_endpoint} \
                 --env DB_HOST=${var.db_host} \
                 --env DB_PORT=${var.db_port} \
                 --env DB_USERNAME=${var.db_username} \
@@ -117,6 +117,16 @@ resource "digitalocean_droplet" "camomail-mta" {
                 camomail-mta \
                 camomail-mta:latest
             EOF
+        ]
+    }
+
+    // setup firewall
+    provisioner "remote-exec" {
+        inline = [
+            "echo y | sudo ufw enable",
+            "sudo ufw allow 22",
+            "sudo ufw allow 8302",
+            "sudo ufw allow 8303",
         ]
     }
 }

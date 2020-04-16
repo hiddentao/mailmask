@@ -3,7 +3,7 @@ import { obfuscate, randStr } from '@camomail/utils'
 import { buildUrlPath } from '../../utils/url'
 import { LOGIN } from '../types'
 
-export function render ({ url }) {
+export function render ({ url, urlValidTo }) {
   return {
     subject: 'Please follow the link to login',
     body: `Hi,
@@ -12,15 +12,18 @@ Please follow the link below to login:
 
 ${url}
 
-thanks,
+(This link will be valid until ${urlValidTo})
 
-Team MailMask
+thanks,
+The MailMask team
 `
   }
 }
 
 export async function handleLink ({ span, res }, v) {
-  const { email, loginToken } = await this._decodePayload(v)
+  const { email, loginToken } = await this._decodePayload(v, {
+    retryMsg: 'Please try logging in again.'
+  })
 
   // record the login
   const id = await span.withAsyncSpan(
@@ -30,7 +33,7 @@ export async function handleLink ({ span, res }, v) {
   )
 
   // set auth cookie
-  res.setUser({ id })
+  await res.setUser({ id })
 
   res.status(302)
   res.setHeader('Location', buildUrlPath('/logged-in'))

@@ -1,3 +1,4 @@
+const os = require('os')
 const opentelemetry = require('@opentelemetry/api')
 
 const {
@@ -8,6 +9,17 @@ const {
 } = require('@opentelemetry/tracing')
 
 const { ZipkinExporter } = require('@opentelemetry/exporter-zipkin')
+
+const globalProps = {
+  pid: process.pid,
+  hostname: os.hostname(),
+  type: os.type(),
+  platform: os.platform(),
+  arch: os.arch(),
+  freemem: os.freemem(),
+  cpus: os.cpus().length,
+}
+
 
 class Span {
   constructor (tracer, span) {
@@ -126,7 +138,12 @@ class Tracer {
 
     const t = opentelemetry.trace.getTracer(name)
 
-    const span = new Span(t, t.startSpan(name, { attributes }))
+    const span = new Span(t, t.startSpan(name, {
+      attributes: {
+        ...attributes,
+        ...globalProps,
+      }
+    }))
 
     return span
   }
