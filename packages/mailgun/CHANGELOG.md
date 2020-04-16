@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/hiddentao/camomail/compare/v1.2.0...v1.3.0) (2020-04-16)
+
+
+### Features
+
+* website ready for alpha ([1cff516](https://github.com/hiddentao/camomail/commit/1cff5160e421b8ec3c2f5f8f18810979cd0a87c9))
+
+
+
+
+
 ## [1.1.8](https://github.com/hiddentao/camomail/compare/v1.1.7...v1.1.8) (2020-04-09)
 
 **Note:** Version bump only for package @camomail/mailgun

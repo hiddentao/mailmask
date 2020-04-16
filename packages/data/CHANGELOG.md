@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/hiddentao/camomail/compare/v1.2.0...v1.3.0) (2020-04-16)
+
+
+### Features
+
+* terraform deployment for mta ([7ef2c4c](https://github.com/hiddentao/camomail/commit/7ef2c4cd340290afe9cf2977aaa86ee5eae67145))
+* website ready for alpha ([1cff516](https://github.com/hiddentao/camomail/commit/1cff5160e421b8ec3c2f5f8f18810979cd0a87c9))
+
+
+
+
+
 ## [1.2.1](https://github.com/hiddentao/camomail/compare/v1.2.0...v1.2.1) (2020-04-13)
 
 **Note:** Version bump only for package @camomail/data
