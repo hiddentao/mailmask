@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.2](https://github.com/hiddentao/camomail/compare/v1.3.1...v1.3.2) (2020-04-17)
+
+
+### Bug Fixes
+
+* sending through html email when it should not ([ce5c1c8](https://github.com/hiddentao/camomail/commit/ce5c1c884bbd253888aa5cb025cd8a90c62f7ebd))
+* use dynamic ip resolution for trace server endpoint ([4a60f05](https://github.com/hiddentao/camomail/commit/4a60f05b45b275746820a264d7a71666adb9bd0c))
+
+
+
+
+
 ## [1.3.1](https://github.com/hiddentao/camomail/compare/v1.3.0...v1.3.1) (2020-04-17)
 
 **Note:** Version bump only for package camomail
