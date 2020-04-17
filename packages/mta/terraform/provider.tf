@@ -18,7 +18,7 @@ variable "db_host" {}
 variable "db_port" {}
 variable "db_username" {}
 variable "db_password" {}
-variable "mailgun_api_key" {}
+variable "mailer_api_key" {}
 
 
 provider "digitalocean" {

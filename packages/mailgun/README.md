@@ -1,3 +1,3 @@
 # `mailgun`
 
-Mailgun API wrapper.
+Interface to mailing service.

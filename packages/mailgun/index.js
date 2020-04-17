@@ -1,41 +1,47 @@
-const { parseEmailAddress } = require('@mailmask/utils')
-const Mailgun = require('mailgun-js')
+const sgMail = require('@sendgrid/mail')
 
-class MailgunWrapper {
-  constructor ({ apiKey, domain, testMode }) {
-    this.mailgun = Mailgun({
-      apiKey,
-      domain,
-      mute: true,
-      host: 'api.eu.mailgun.net',
-      testMode,
-    })
+class Mailer {
+  constructor ({ apiKey, testMode }) {
+    sgMail.setApiKey(apiKey)
+    this.testMode = testMode
   }
 
   async send ({ from, to, replyTo, subject, text, html, attachments }) {
-    if (!replyTo) {
-      replyTo = parseEmailAddress(from).address
-    }
+    if (this.testMode) {
+      console.log(`
+Mail wrapper would send email:
 
-    return this.mailgun.messages().send({
-      from,
-      to: (Array.isArray(to) ? to.join(',') : to),
-      'h:Reply-To': replyTo,
-      subject,
-      text,
-      html,
-      attachments: this._prepareAttachments(attachments),
-    })
+from: ${from}
+to: ${to}
+replyTo: ${replyTo}
+subject: ${subject}
+text: ${text}
+html: ${html}
+attachments: ${this._prepareAttachments(attachments).map(a => `${a.filename} (${a.type}`).join(', ')}
+      `)
+
+      return null
+    } else {
+      return sgMail.send({
+        from,
+        to,
+        replyTo: replyTo || from,
+        subject,
+        text,
+        html,
+        attachments: this._prepareAttachments(attachments),
+      })
+    }
   }
 
   _prepareAttachments (attachments = []) {
-    const { Attachment } = this.mailgun
-
-    return attachments.map(({ filename, contentType, content: data, size: knownLength }, index) => {
-      filename = filename || `attachment${index}`
-      return new Attachment({ filename, contentType, data, knownLength })
-    })
+    return attachments.map(({ filename, contentType, content }, index) => ({
+      content: Buffer.isBuffer(content) ? content.toString('base64') : content,
+      filename: filename || `attachment${index + 1}`,
+      type: contentType,
+      disposition: 'attachment',
+    }))
   }
 }
 
-module.exports = MailgunWrapper
+module.exports = Mailer

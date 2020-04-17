@@ -14,7 +14,7 @@ const VARS = {
   TRACE_CLOUD_ENABLED: bool({ default: true }),
   TRACE_CONSOLE_ENABLED: bool({ default: false }),
   TRACE_CLOUD_ENDPOINT: str({ default: 'http://localhost:9411/api/v2/spans' }),
-  MAILGUN_API_KEY: str(),
+  MAILER_API_KEY: str(),
 }
 
 exports.str = str

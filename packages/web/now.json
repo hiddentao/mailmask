@@ -14,7 +14,7 @@
     "APP_MODE": "live",
     "ENCRYPTION_IV": "@encryption_iv",
     "ENCRYPTION_KEY": "@encryption_key",
-    "MAILGUN_API_KEY": "@mailgun_api_key",
+    "MAILER_API_KEY": "@mailer_api_key",
     "DB_HOST": "@db_host",
     "DB_PORT": "@db_port",
     "DB_USERNAME": "@db_username",
@@ -28,7 +28,7 @@
       "NPM_TOKEN": "@npm_token",
       "ENCRYPTION_IV": "@encryption_iv",
       "ENCRYPTION_KEY": "@encryption_key",
-      "MAILGUN_API_KEY": "@mailgun_api_key",
+      "MAILER_API_KEY": "@mailer_api_key",
       "DB_HOST": "@db_host",
       "DB_PORT": "@db_port",
       "DB_USERNAME": "@db_username",
@@ -39,15 +39,15 @@
   "routes": [
     {
       "src": "/await-email",
-      "dest": "public"
+      "dest": "/"
     },
     {
       "src": "/sign-up-done",
-      "dest": "public"
+      "dest": "/"
     },
     {
       "src": "/(.*)",
-      "dest": "public/$1"
+      "dest": "/$1"
     }
   ]
 }

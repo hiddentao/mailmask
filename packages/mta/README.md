@@ -15,7 +15,7 @@ The server will be listening for SMTP connections on `localhost:50025`.
 Ensure `.env` contains:
 
 ```
-MAILGUN_API_KEY=key-...
+MAILER_API_KEY=key-...
 APP_MODE=live
 LOG_LEVEL=info
 ```
@@ -52,7 +52,7 @@ docker run --publish 25:50025 -it --entrypoint /bin/bash mailmask-mta:latest
 docker run \
   --publish 25:50025 \
   --env DB_HOST=host.docker.internal \
-  --env MAILGUN_API_KEY=...
+  --env MAILER_API_KEY=...
   mailmask-mta \
   mailmask-mta:latest
 ```
@@ -77,7 +77,7 @@ docker run \
   --env DB_PORT=... \
   --env DB_USERNAME=... \
   --env DB_PASSWORD=... \
-  --env MAILGUN_API_KEY=... \
+  --env MAILER_API_KEY=... \
   --detach \
   mailmask-mta \
   mailmask-mta:latest

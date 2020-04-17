@@ -13,7 +13,7 @@ const emailAddresses = require('email-addresses')
  * @example
  *
  * obfuscate('password') // p*******
- * obfuscate('test@me.com') // t***@m*.c**
+ * obfuscate('ok test@me.com') // ok t***@m*.c**
  *
  * @param  {String} str Input
  * @return {String}

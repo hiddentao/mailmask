@@ -71,7 +71,8 @@ export default ({ db, notifier }) => {
 
         await db.finalizeSignUp(user.id, username)
 
-        await notifier.sendNotification(notifier.TYPES.SIGNED_UP, {
+        // this doesn't have to succeed, so we don't wait for it
+        notifier.sendNotification(notifier.TYPES.SIGNED_UP, {
           email: user.email,
           username,
         })

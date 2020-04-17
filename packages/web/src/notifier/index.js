@@ -1,5 +1,5 @@
 import url from 'url'
-import Mailgun from '@mailmask/mailgun'
+import Mailer from '@mailmask/mailgun'
 import { obfuscate, formatDate } from '@mailmask/utils'
 
 import TYPES from './types'
@@ -16,9 +16,8 @@ class Notifier {
     this._domain = config.DOMAIN
     this._senderEmail = config.SUPPORT_EMAIL
 
-    this._mg = new Mailgun({
-      apiKey: config.MAILGUN_API_KEY,
-      domain: this._domain,
+    this._mailer = new Mailer({
+      apiKey: config.MAILER_API_KEY,
       testMode: !!config.SMTP_TESTMODE,
     })
 
@@ -93,7 +92,7 @@ class Notifier {
         text,
       }
 
-      await this._mg.send(msg)
+      await this._mailer.send(msg)
     } catch (err) {
       const errStr = `Error sending email to ${obfuscate(email)}: ${err.message}`
       throw new Error(errStr)

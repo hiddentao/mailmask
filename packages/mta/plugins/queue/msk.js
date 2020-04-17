@@ -2,7 +2,7 @@
 const _ = require('lodash')
 const { simpleParser } = require('mailparser')
 const { createTracer } = require('@mailmask/log')
-const Mailgun = require('@mailmask/mailgun')
+const Mailer = require('@mailmask/mailgun')
 const { DB } = require('@mailmask/data')
 const { obfuscate } = require('@mailmask/utils')
 
@@ -14,7 +14,7 @@ const {
   buildSenderStr,
 } = require('./utils')
 
-let mailgun
+let mailer
 let db
 
 const tracer = createTracer('mailmask-mta', { config })
@@ -29,11 +29,10 @@ exports.msk_setup = function (next) {
   const span = tracer.startTrace('msk_setup', { type: 'setup' })
 
   try {
-    span.recordEvent('setup mailgun')
+    span.recordEvent('setup mailer')
 
-    mailgun = new Mailgun({
-      apiKey: config.MAILGUN_API_KEY,
-      domain: config.DOMAIN,
+    mailer = new Mailer({
+      apiKey: config.MAILER_API_KEY,
       testMode: !!config.SMTP_TESTMODE,
     })
 
@@ -104,6 +103,7 @@ exports.msk_queue_handler = async (next, connection) => {
       numFinalRecipients: userData.length
     })
 
+    // if we have users to send to
     if (userData.length) {
       const baseMsg = {
         from: `"${senderName}" <no-reply@${config.DOMAIN}>`,
@@ -112,6 +112,7 @@ exports.msk_queue_handler = async (next, connection) => {
         attachments,
       }
 
+      // do it!
       await Promise.all(
         userData.map(u => span.withAsyncSpan('send', async ({ span: sendSpan }) => {
           sendSpan.addFields({
@@ -131,7 +132,7 @@ exports.msk_queue_handler = async (next, connection) => {
             msg.html = `<p><strong>(Originally sent to ${u.maskEmail} and forwarded to you by MailMask. You can turn this mask off in your dashboard at <a href="https://msk.sh/dashboard">https://msk.sh/dashboard</a>)</strong></p><br />${html}`
           }
 
-          await sendSpan.withAsyncSpan('send via mailgun', () => mailgun.send(msg))
+          await sendSpan.withAsyncSpan('send via mailer', () => mailer.send(msg))
         }))
       )
 

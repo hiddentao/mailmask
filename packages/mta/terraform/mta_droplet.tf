@@ -117,7 +117,7 @@ resource "digitalocean_droplet" "mailmask-mta" {
                 --env DB_PORT=${var.db_port} \
                 --env DB_USERNAME=${var.db_username} \
                 --env DB_PASSWORD=${var.db_password} \
-                --env MAILGUN_API_KEY=${var.mailgun_api_key} \
+                --env MAILER_API_KEY=${var.mailer_api_key} \
                 --detach \
                 mailmask-mta \
                 mailmask-mta:latest
