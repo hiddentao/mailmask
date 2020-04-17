@@ -134,6 +134,14 @@ terraform apply -var-file "secrets.tfvars.json"
 ```
 
 
+Re-deploy droplet:
+
+```shell
+terraform taint digitalocean_droplet.camomail-mta
+terraform apply -var-file "secrets.tfvars.json"
+```
+
+
 Destroy it all and start again:
 
 ```shell

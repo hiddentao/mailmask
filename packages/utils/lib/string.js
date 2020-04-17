@@ -41,9 +41,8 @@ exports.randStr = (numChars = 8) => {
 }
 
 
-exports.extractEmailAddress = str => {
-  const { address } = emailAddresses.parseOneAddress(str)
-  return address
+exports.parseEmailAddress = str => {
+  return emailAddresses.parseOneAddress(str)
 }
 
 

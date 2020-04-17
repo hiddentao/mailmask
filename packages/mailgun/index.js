@@ -1,4 +1,4 @@
-const { extractEmailAddress } = require('@camomail/utils')
+const { parseEmailAddress } = require('@camomail/utils')
 const Mailgun = require('mailgun-js')
 
 class MailgunWrapper {
@@ -14,7 +14,7 @@ class MailgunWrapper {
 
   async send ({ from, to, replyTo, subject, text, html, attachments }) {
     if (!replyTo) {
-      replyTo = extractEmailAddress(from)
+      replyTo = parseEmailAddress(from).address
     }
 
     return this.mailgun.messages().send({

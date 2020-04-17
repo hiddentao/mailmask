@@ -13,6 +13,11 @@ resource "digitalocean_droplet" "camomail-mta" {
     size                 = "s-1vcpu-1gb"
     tags                 = [ "camomail-mta" ]
 
+    # for blue-green deployments
+    lifecycle {
+        create_before_destroy = true
+    }
+
     connection {
         host = "${digitalocean_droplet.camomail-mta.ipv4_address}"
         user = "root"

@@ -1,4 +1,18 @@
-const { _, parseMaskEmailAddress } = require('@camomail/utils')
+const { _, parseMaskEmailAddress, parseEmailAddress } = require('@camomail/utils')
+
+exports.buildSenderStr = senderStr => {
+  const { address: senderAddress, name: senderName } = (parseEmailAddress(senderStr) || {})
+
+  if (senderAddress) {
+    if (senderName) {
+      return `${senderName} (${senderAddress})`
+    } else {
+      return senderAddress
+    }
+  } else {
+    return senderStr
+  }
+}
 
 exports.extractRecipients = ({ to, cc, bcc }) => {
   const map = [].concat(
@@ -19,6 +33,8 @@ exports.getUsers = async ({ span: rootSpan, db }, recipients) => {
     const users = {}
 
     recipients.forEach(a => {
+      // normalize it
+      a = a.toLowerCase()
       // parse format: mask@username.msk.sh
       const { username, mask } = parseMaskEmailAddress(a)
       // note that only the last mask for the user counts (this helps prevent mass mask spam)

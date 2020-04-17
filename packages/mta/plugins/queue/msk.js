@@ -11,6 +11,7 @@ const {
   extractRecipients,
   getUsers,
   saveNewMasks,
+  buildSenderStr,
 } = require('./utils')
 
 let mailgun
@@ -75,8 +76,8 @@ exports.msk_queue_handler = async (next, connection) => {
       })
     })
 
-    const { address: sender, name: senderName } = parsed.from.value[0]
-    const senderStr = `${senderName || txFrom} (${sender})`
+    const senderStr = buildSenderStr(txFrom)
+
     const {
       to,
       cc,
@@ -106,7 +107,7 @@ exports.msk_queue_handler = async (next, connection) => {
     if (userData.length) {
       const baseMsg = {
         from: `"${senderStr}" <no-reply@${config.DOMAIN}>`,
-        replyTo: sender,
+        replyTo: txFrom,
         subject,
         attachments,
       }

@@ -24,7 +24,7 @@
 # asn
 # fcrdns
 # block mails from known bad hosts (see config/dnsbl.zones for the DNS zones queried)
-dnsbl
+#dnsbl
 
 # HELO
 #early_talker
