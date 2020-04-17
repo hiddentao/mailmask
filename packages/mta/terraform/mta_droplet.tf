@@ -17,7 +17,7 @@ resource "digitalocean_droplet" "camomail-mta" {
         host = "${digitalocean_droplet.camomail-mta.ipv4_address}"
         user = "root"
         type = "ssh"
-        private_key = "${var.pvt_key}"
+        private_key = "${file(var.pvt_key)}"
         timeout = "2m"
     }
 
