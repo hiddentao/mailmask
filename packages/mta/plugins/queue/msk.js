@@ -120,8 +120,14 @@ exports.msk_queue_handler = async (next, connection) => {
           const msg = {
             ...baseMsg,
             to: u.email,
-            text: `(Originally sent to ${u.maskEmail} and forwarded to you by MailMask. You can turn this mask off in your dashboard at https://msk.sh/dashboard)\n\n${text}`,
-            html: `<p><strong>(Originally sent to ${u.maskEmail} and forwarded to you by MailMask. You can turn this mask off in your dashboard at <a href="https://msk.sh/dashboard">https://msk.sh/dashboard</a>)</strong></p><br />${html}`,
+          }
+
+          if (text) {
+            msg.text = `(Originally sent to ${u.maskEmail} and forwarded to you by MailMask. You can turn this mask off in your dashboard at https://msk.sh/dashboard)\n\n${text}`
+          }
+
+          if (html) {
+            msg.html = `<p><strong>(Originally sent to ${u.maskEmail} and forwarded to you by MailMask. You can turn this mask off in your dashboard at <a href="https://msk.sh/dashboard">https://msk.sh/dashboard</a>)</strong></p><br />${html}`
           }
 
           await sendSpan.withAsyncSpan('send via mailgun', () => mailgun.send(msg))
