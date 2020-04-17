@@ -63,10 +63,6 @@ exports.msk_queue_handler = async (next, connection) => {
     const txFrom = _.get(connection, 'transaction.mail_from.user')
     const incomingMsg = _.get(connection, 'transaction.message_stream.write_ce.bufs')
 
-    span.addFields({
-      from: txFrom,
-    })
-
     const parsed = await span.withAsyncSpan('parse', () => {
       return simpleParser(Buffer.concat(incomingMsg), {
         skipHtmlToText: true,
@@ -76,7 +72,12 @@ exports.msk_queue_handler = async (next, connection) => {
       })
     })
 
-    const senderStr = buildSenderStr(txFrom)
+    const senderAddress = _.get(parsed, 'from.value.0.address', txFrom)
+    const senderName = buildSenderStr(_.get(parsed, 'from.text', txFrom))
+
+    span.addFields({
+      from: obfuscate(senderAddress),
+    })
 
     const {
       to,
@@ -91,7 +92,6 @@ exports.msk_queue_handler = async (next, connection) => {
     const recipients = extractRecipients({ to, cc, bcc })
 
     span.addFields({
-      subject,
       to: recipients.map(r => obfuscate(r))
     })
 
@@ -106,8 +106,8 @@ exports.msk_queue_handler = async (next, connection) => {
 
     if (userData.length) {
       const baseMsg = {
-        from: `"${senderStr}" <no-reply@${config.DOMAIN}>`,
-        replyTo: txFrom,
+        from: `"${senderName}" <no-reply@${config.DOMAIN}>`,
+        replyTo: senderAddress,
         subject,
         attachments,
       }

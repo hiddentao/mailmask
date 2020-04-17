@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-swaks --to camo1@test.msk.sh,camo1@test.msk.sh --server 127.0.0.1  "$@"
+swaks --to mask1@test.msk.sh,mask1@test.msk.sh --server 127.0.0.1  "$@"
 
