@@ -104,17 +104,29 @@ exports.msk_queue_handler = async (next, connection) => {
     })
 
     if (userData.length) {
-      const msg = {
-        from: `"${senderStr}" <bot@${config.DOMAIN}>`,
-        to: userData.map(u => u.email),
+      const baseMsg = {
+        from: `"${senderStr}" <no-reply@${config.DOMAIN}>`,
         replyTo: sender,
         subject,
-        text,
-        html,
         attachments,
       }
 
-      span.withAsyncSpan('send', () => mailgun.send(msg))
+      await Promise.all(
+        userData.map(u => span.withAsyncSpan('send', async ({ span: sendSpan }) => {
+          sendSpan.addFields({
+            uid: u.id,
+          })
+
+          const msg = {
+            ...baseMsg,
+            to: u.email,
+            text: `(Originally sent to ${u.maskEmail} and forwarded to you by MailMask. You can turn this mask off in your dashboard at https://msk.sh/dashboard)\n\n${text}`,
+            html: `<p><strong>(Originally sent to ${u.maskEmail} and forwarded to you by MailMask. You can turn this mask off in your dashboard at <a href="https://msk.sh/dashboard">https://msk.sh/dashboard</a>)</strong></p><br />${html}`,
+          }
+
+          await sendSpan.withAsyncSpan('send via mailgun', () => mailgun.send(msg))
+        }))
+      )
 
       await saveNewMasks({ span, db }, users)
     }

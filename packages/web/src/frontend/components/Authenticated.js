@@ -1,6 +1,8 @@
+import LogRocket from 'logrocket'
 import React from 'react'
 import styled from '@emotion/styled'
 import { flex } from 'emotion-styled-utils'
+import { _ } from '@camomail/utils'
 
 import { withApollo } from '../hoc'
 import { renderChildWithArgs } from '../utils/functions'
@@ -30,6 +32,12 @@ const Authenticated = ({
   const { data, loading, error } = useSafeQuery(GetMyProfileQuery)
 
   if (data) {
+    const uid = _.get(data, 'result.id')
+
+    if (uid) {
+      LogRocket.identify(uid)
+    }
+
     return renderChildWithArgs(children, data.result)
   } else if (loading) {
     return <LoadingContainer><LoadingIcon /></LoadingContainer>

@@ -21,17 +21,8 @@ exports.getUsers = async ({ span: rootSpan, db }, recipients) => {
     recipients.forEach(a => {
       // parse format: mask@username.msk.sh
       const { username, mask } = parseMaskEmailAddress(a)
-
-      users[username] = users[username] || {
-        masks: {},
-        maskCount: 0,
-      }
-      users[username].masks[mask] = true
-      users[username].maskCount += 1
-
-      if (users[username].maskCount > 5) {
-        throw new Error('Too many masks in use at once, possible spam')
-      }
+      // note that only the last mask for the user counts (this helps prevent mass mask spam)
+      users[username] = { mask, maskEmail: a }
     })
 
     span.addFields({
@@ -44,8 +35,7 @@ exports.getUsers = async ({ span: rootSpan, db }, recipients) => {
     // now get status of each mask
     await Promise.all(Object.keys(users).map(username => {
       return span.withAsyncSpan('get mask status', async ({ span: innerSpan }) => {
-        const { masks } = users[username]
-        const maskNames = Object.keys(masks)
+        const { mask, maskEmail } = users[username]
 
         // check that user exists
         const userObj = await innerSpan.withAsyncSpan(
@@ -55,47 +45,23 @@ exports.getUsers = async ({ span: rootSpan, db }, recipients) => {
         )
 
         if (userObj) {
-          const masksAndTheirStatuses = await innerSpan.withAsyncSpan(
-            'get mask statuses',
+          const ret = await innerSpan.withAsyncSpan(
+            'get mask status',
             {
               username,
-              numMasks: maskNames.length,
+              mask,
             },
-            () => db.getMaskStatuses(username, maskNames)
+            () => db.getMaskStatuses(username, [ mask ])
           )
 
-          const finalMasks = {}
-
-          let atleastOneMaskEnabled = false
-
-          // save to final list
-          masksAndTheirStatuses.forEach(({ name, enabled }) => {
-            atleastOneMaskEnabled = atleastOneMaskEnabled || enabled
-
-            finalMasks[name] = {
-              enabled
-            }
-          })
-
-          // add missing masks (and these ones wil be marked as "new"
-          // so that we remember to save them later on!)
-          maskNames.forEach(mask => {
-            if (!finalMasks[mask]) {
-              atleastOneMaskEnabled = true
-
-              finalMasks[mask] = {
-                enabled: true,
-                isNew: true,
-              }
-            }
-          })
-
-          // finalize
-          if (atleastOneMaskEnabled) {
+          // if enabled OR is new
+          if (_.get(ret, '0.enabled') || !ret.length) {
             finalUsers[username] = {
               id: userObj.id,
               email: userObj.email,
-              masks: finalMasks,
+              mask,
+              maskEmail,
+              isNew: !ret.length,
             }
           } else {
             innerSpan.addFields({
@@ -116,19 +82,15 @@ exports.saveNewMasks = async ({ span: rootSpan, db }, users) => {
     let numMasks = 0
 
     Object.keys(users).forEach(username => {
-      const { id, masks } = users[username]
+      const { id, mask, isNew } = users[username]
 
-      const newMasks = Object.keys(masks).filter(m => {
-        return masks[m].isNew
-      })
-
-      if (newMasks.length) {
+      if (isNew) {
         finalToAdd[username] = {
           id,
-          masks: newMasks
+          mask,
         }
 
-        numMasks += newMasks.length
+        numMasks += 1
       }
     })
 
@@ -139,15 +101,15 @@ exports.saveNewMasks = async ({ span: rootSpan, db }, users) => {
 
     await Promise.all(Object.keys(finalToAdd).map(async username => {
       return span.withAsyncSpan('save masks for user', async ({ span: innerSpan }) => {
-        const { id, masks } = finalToAdd[username]
+        const { id, mask } = finalToAdd[username]
 
         await innerSpan.withAsyncSpan(
           'save to db',
           {
             id,
-            numMasks: masks.length
+            mask,
           },
-          () => db.saveNewMasks(id, masks)
+          () => db.saveNewMasks(id, [ mask ])
         )
       })
     }))

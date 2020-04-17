@@ -56,6 +56,9 @@ exports.parseMaskEmailAddress = a => {
 }
 
 
+exports.buildMaskAddress = (mask, username, domain) => `${mask}@${username}.${domain}`
+
+
 exports.isValidEmail = a => validator.isEmail(a)
 
 
