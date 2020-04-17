@@ -1,4 +1,4 @@
-import { _ } from '@camomail/utils'
+import { _ } from '@mailmask/utils'
 import qs from 'query-string'
 
 import { redirectToPage } from '../../utils/functions'

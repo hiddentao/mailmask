@@ -1,6 +1,6 @@
 import url from 'url'
-import Mailgun from '@camomail/mailgun'
-import { obfuscate, formatDate } from '@camomail/utils'
+import Mailgun from '@mailmask/mailgun'
+import { obfuscate, formatDate } from '@mailmask/utils'
 
 import TYPES from './types'
 import { encrypt, decrypt } from '../utils/crypto'

@@ -1,10 +1,10 @@
 /* eslint-disable func-names */
 const _ = require('lodash')
 const { simpleParser } = require('mailparser')
-const { createTracer } = require('@camomail/log')
-const Mailgun = require('@camomail/mailgun')
-const { DB } = require('@camomail/data')
-const { obfuscate } = require('@camomail/utils')
+const { createTracer } = require('@mailmask/log')
+const Mailgun = require('@mailmask/mailgun')
+const { DB } = require('@mailmask/data')
+const { obfuscate } = require('@mailmask/utils')
 
 const config = require('../../config')
 const {
@@ -17,7 +17,7 @@ const {
 let mailgun
 let db
 
-const tracer = createTracer('camomail-mta', { config })
+const tracer = createTracer('mailmask-mta', { config })
 
 exports.register = function () {
   this.register_hook('init_master', 'msk_setup')
@@ -64,7 +64,7 @@ exports.msk_queue_handler = async (next, connection) => {
     const incomingMsg = _.get(connection, 'transaction.message_stream.write_ce.bufs')
 
     span.addFields({
-      from: obfuscate(txFrom)
+      from: txFrom,
     })
 
     const parsed = await span.withAsyncSpan('parse', () => {

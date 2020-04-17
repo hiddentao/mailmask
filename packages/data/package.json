@@ -1,5 +1,5 @@
 {
-  "name": "@camomail/data",
+  "name": "@mailmask/data",
   "version": "1.3.2",
   "description": "MailMask data",
   "author": "Ramesh Nair <ram@hiddentao.com>",
@@ -8,7 +8,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hiddentao/camomail.git"
+    "url": "git+https://github.com/hiddentao/mailmask.git"
   },
   "scripts": {
     "db:migrate": "knex migrate:latest",
@@ -17,10 +17,10 @@
     "db:reset": "yarn db:rollback && yarn db:migrate && yarn db:seed"
   },
   "bugs": {
-    "url": "https://github.com/hiddentao/camomail/issues"
+    "url": "https://github.com/hiddentao/mailmask/issues"
   },
   "dependencies": {
-    "@camomail/utils": "^1.3.2",
+    "@mailmask/utils": "^1.3.2",
     "binary-search": "^1.3.6",
     "knex": "^0.20.13",
     "pg": "^7.12.1"

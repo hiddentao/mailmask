@@ -1,5 +1,5 @@
 {
-  "name": "@camomail/mta",
+  "name": "@mailmask/mta",
   "private": true,
   "version": "1.3.2",
   "description": "MailMask MTA",
@@ -10,20 +10,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hiddentao/camomail.git"
+    "url": "git+https://github.com/hiddentao/mailmask.git"
   },
   "author": "Ramesh Nair <ram@hiddentao.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/hiddentao/camomail/issues"
+    "url": "https://github.com/hiddentao/mailmask/issues"
   },
-  "homepage": "https://github.com/hiddentao/camomail#readme",
+  "homepage": "https://github.com/hiddentao/mailmask#readme",
   "dependencies": {
-    "@camomail/config": "^1.3.0",
-    "@camomail/data": "^1.3.2",
-    "@camomail/log": "^1.3.0",
-    "@camomail/mailgun": "^1.3.2",
-    "@camomail/utils": "^1.3.2",
+    "@mailmask/config": "^1.3.0",
+    "@mailmask/data": "^1.3.2",
+    "@mailmask/log": "^1.3.0",
+    "@mailmask/mailgun": "^1.3.2",
+    "@mailmask/utils": "^1.3.2",
     "Haraka": "^2.8.25",
     "lodash": "^4.17.15",
     "mailgun-js": "^0.22.0",

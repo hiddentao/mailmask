@@ -1,9 +1,9 @@
-resource "digitalocean_droplet" "camomail-mta" {
+resource "digitalocean_droplet" "mailmask-mta" {
     backups              = false
     image                = "ubuntu-18-04-x64"
     ipv6                 = true
     monitoring           = true
-    name                 = "camomail-mta"
+    name                 = "mailmask-mta"
     private_networking   = true
     ssh_keys             = [
         "${var.ssh_fingerprint}"
@@ -11,7 +11,7 @@ resource "digitalocean_droplet" "camomail-mta" {
     region               = "lon1"
     resize_disk          = true
     size                 = "s-1vcpu-1gb"
-    tags                 = [ "camomail-mta" ]
+    tags                 = [ "mailmask-mta" ]
 
     # for blue-green deployments
     lifecycle {
@@ -19,7 +19,7 @@ resource "digitalocean_droplet" "camomail-mta" {
     }
 
     connection {
-        host = "${digitalocean_droplet.camomail-mta.ipv4_address}"
+        host = "${digitalocean_droplet.mailmask-mta.ipv4_address}"
         user = "root"
         type = "ssh"
         private_key = "${file(var.pvt_key)}"
@@ -72,13 +72,13 @@ resource "digitalocean_droplet" "camomail-mta" {
 
     // build docker image
     provisioner "local-exec" {
-        command = "docker build --build-arg NPM_TOKEN=$NPM_TOKEN --tag camomail-mta:latest ."
+        command = "docker build --build-arg NPM_TOKEN=$NPM_TOKEN --tag mailmask-mta:latest ."
         working_dir = "${path.root}/.."
     }
 
     // save docker image
     provisioner "local-exec" {
-        command = "docker save camomail-mta:latest -o mta-docker-image.tar"
+        command = "docker save mailmask-mta:latest -o mta-docker-image.tar"
         working_dir = ".."
     }
 
@@ -119,8 +119,8 @@ resource "digitalocean_droplet" "camomail-mta" {
                 --env DB_PASSWORD=${var.db_password} \
                 --env MAILGUN_API_KEY=${var.mailgun_api_key} \
                 --detach \
-                camomail-mta \
-                camomail-mta:latest
+                mailmask-mta \
+                mailmask-mta:latest
             EOF
         ]
     }
@@ -136,10 +136,10 @@ resource "digitalocean_droplet" "camomail-mta" {
     }
 }
 
-resource "digitalocean_project" "camomail" {
-    name        = "camomail"
+resource "digitalocean_project" "mailmask" {
+    name        = "mailmask"
     description = "Camomail services"
     resources = [
-        "${digitalocean_droplet.camomail-mta.urn}"
+        "${digitalocean_droplet.mailmask-mta.urn}"
     ]
 }

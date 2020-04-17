@@ -1,5 +1,5 @@
 import nookies from 'nookies'
-import { _ } from '@camomail/utils'
+import { _ } from '@mailmask/utils'
 
 import { encrypt, decrypt } from '../../utils/crypto'
 

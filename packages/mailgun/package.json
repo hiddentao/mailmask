@@ -1,5 +1,5 @@
 {
-  "name": "@camomail/mailgun",
+  "name": "@mailmask/mailgun",
   "version": "1.3.2",
   "description": "Mailgun wrapper",
   "keywords": [
@@ -14,13 +14,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hiddentao/camomail.git"
+    "url": "git+https://github.com/hiddentao/mailmask.git"
   },
   "bugs": {
-    "url": "https://github.com/hiddentao/camomail/issues"
+    "url": "https://github.com/hiddentao/mailmask/issues"
   },
   "dependencies": {
-    "@camomail/utils": "^1.3.2",
+    "@mailmask/utils": "^1.3.2",
     "mailgun-js": "^0.22.0"
   },
   "gitHead": "139e31f4278cba700c5f4dcb4ee9ba5d13f95532"

@@ -1,4 +1,4 @@
-import { _ } from '@camomail/utils'
+import { _ } from '@mailmask/utils'
 
 import * as codes from './errorCodes'
 

@@ -1,4 +1,4 @@
-const { _ } = require('@camomail/utils')
+const { _ } = require('@mailmask/utils')
 const knex = require('knex')
 
 const { getConfig: getDbConfig } = require('../knexfile')

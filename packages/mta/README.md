@@ -34,27 +34,27 @@ modes using Docker.
 To build the image, first ensure the `NPM_TOKEN` env var is set correctly. Then do:
 
 ```shell
-docker build --build-arg NPM_TOKEN=$NPM_TOKEN --tag camomail-mta:latest .
+docker build --build-arg NPM_TOKEN=$NPM_TOKEN --tag mailmask-mta:latest .
 ```
 
 ### Run: terminal
 
 ```shell
-docker run --publish 25:50025 -it --entrypoint /bin/bash camomail-mta:latest
+docker run --publish 25:50025 -it --entrypoint /bin/bash mailmask-mta:latest
 ```
 
 
 ### Run: development (Mac)
 
-`Db: postgresql://postgres:postgres@127.0.0.1:5432/camomail-local`
+`Db: postgresql://postgres:postgres@127.0.0.1:5432/mailmask-local`
 
 ```shell
 docker run \
   --publish 25:50025 \
   --env DB_HOST=host.docker.internal \
   --env MAILGUN_API_KEY=...
-  camomail-mta \
-  camomail-mta:latest
+  mailmask-mta \
+  mailmask-mta:latest
 ```
 
 To tail the log:
@@ -65,7 +65,7 @@ docker logs -f <id>
 
 ### Run: production
 
-`Db: postgresql://<user>:<password>@<host>:<port>/camomail-live`
+`Db: postgresql://<user>:<password>@<host>:<port>/mailmask-live`
 
 ```shell
 docker run \
@@ -79,8 +79,8 @@ docker run \
   --env DB_PASSWORD=... \
   --env MAILGUN_API_KEY=... \
   --detach \
-  camomail-mta \
-  camomail-mta:latest
+  mailmask-mta \
+  mailmask-mta:latest
 ```
 
 ## Other docker commands
@@ -88,13 +88,13 @@ docker run \
 To delete the container:
 
 ```shell
-docker rm --force camomail-mta
+docker rm --force mailmask-mta
 ```
 
 To delete the image:
 
 ```shell
-docker rmi camomail-mta:latest
+docker rmi mailmask-mta:latest
 ```
 
 To delete all dangling containers and images:
@@ -137,7 +137,7 @@ terraform apply -var-file "secrets.tfvars.json"
 Re-deploy droplet:
 
 ```shell
-terraform taint digitalocean_droplet.camomail-mta
+terraform taint digitalocean_droplet.mailmask-mta
 terraform apply -var-file "secrets.tfvars.json"
 ```
 

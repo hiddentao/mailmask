@@ -2,7 +2,7 @@ import React, { useState, useCallback, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { useApolloClient } from '@apollo/react-hooks'
 import styled from '@emotion/styled'
-import { _, isValidUsername } from '@camomail/utils'
+import { _, isValidUsername } from '@mailmask/utils'
 import { font, flex } from 'emotion-styled-utils'
 
 import { withApollo } from '../hoc'

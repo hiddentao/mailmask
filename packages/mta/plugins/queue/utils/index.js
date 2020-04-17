@@ -1,4 +1,4 @@
-const { _, parseMaskEmailAddress, parseEmailAddress } = require('@camomail/utils')
+const { _, parseMaskEmailAddress, parseEmailAddress } = require('@mailmask/utils')
 
 exports.buildSenderStr = senderStr => {
   const { address: senderAddress, name: senderName } = (parseEmailAddress(senderStr) || {})

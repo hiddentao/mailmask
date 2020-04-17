@@ -2,7 +2,7 @@ import LogRocket from 'logrocket'
 import React from 'react'
 import styled from '@emotion/styled'
 import { flex } from 'emotion-styled-utils'
-import { _ } from '@camomail/utils'
+import { _ } from '@mailmask/utils'
 
 import { withApollo } from '../hoc'
 import { renderChildWithArgs } from '../utils/functions'

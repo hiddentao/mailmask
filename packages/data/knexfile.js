@@ -44,17 +44,17 @@ const buildConfig = ({ connection }) => ({
 const envs = {
   development: buildConfig({
     connection: {
-      database: 'camomail-local',
+      database: 'mailmask-local',
     },
   }),
   test: buildConfig({
     connection: {
-      database: 'camomail-test',
+      database: 'mailmask-test',
     }
   }),
   live: buildConfig({
     connection: {
-      database: 'camomail-live',
+      database: 'mailmask-live',
       ssl: true,
       ...getConnectionVars({}, process.env)
     }

@@ -1,4 +1,4 @@
-import { obfuscate, randStr } from '@camomail/utils'
+import { obfuscate, randStr } from '@mailmask/utils'
 
 import { buildUrlPath } from '../../utils/url'
 import { LOGIN } from '../types'

@@ -1,5 +1,5 @@
 {
-  "name": "camomail",
+  "name": "mailmask",
   "private": true,
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",

@@ -1,4 +1,4 @@
-import { isValidEmail, isValidUsername } from '@camomail/utils'
+import { isValidEmail, isValidUsername } from '@mailmask/utils'
 
 import { getDefaultResolvers } from './typedefs'
 import { createErrorResponse } from './errors'

@@ -1,6 +1,6 @@
 import { renderPlaygroundPage } from '@apollographql/graphql-playground-html'
 import { convertNodeHttpToRequest, runHttpQuery } from 'apollo-server-core'
-import { _ } from '@camomail/utils'
+import { _ } from '@mailmask/utils'
 
 import { createSchema } from '../../src/graphql'
 import { doBootstrap } from '../../src/bootstrap'

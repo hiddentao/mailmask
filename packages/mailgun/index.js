@@ -1,4 +1,4 @@
-const { parseEmailAddress } = require('@camomail/utils')
+const { parseEmailAddress } = require('@mailmask/utils')
 const Mailgun = require('mailgun-js')
 
 class MailgunWrapper {

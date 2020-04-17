@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import styled from '@emotion/styled'
-import { _, isValidEmail } from '@camomail/utils'
+import { _, isValidEmail } from '@mailmask/utils'
 import { flex } from 'emotion-styled-utils'
 import { useRouter } from 'next/router'
 

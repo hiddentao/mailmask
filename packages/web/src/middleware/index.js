@@ -1,4 +1,4 @@
-import { _ } from '@camomail/utils'
+import { _ } from '@mailmask/utils'
 
 import { middleware as TracerMiddleware } from './tracer'
 import { middleware as ErrorMiddleware } from './error'

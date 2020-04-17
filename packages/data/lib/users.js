@@ -1,5 +1,5 @@
 /* eslint-disable func-names */
-const { _ } = require('@camomail/utils')
+const { _ } = require('@mailmask/utils')
 
 
 exports._createUserOrFetchExisting = async function (email, trx) {

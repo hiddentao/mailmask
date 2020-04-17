@@ -1,4 +1,4 @@
-const { str, getConfig } = require('@camomail/config')
+const { str, getConfig } = require('@mailmask/config')
 
 module.exports = getConfig({
   vars: {
