@@ -31,15 +31,7 @@ const Authenticated = ({
 }) => {
   const { data, loading, error } = useSafeQuery(GetMyProfileQuery)
 
-  if (data) {
-    const uid = _.get(data, 'result.id')
-
-    if (uid) {
-      LogRocket.identify(uid)
-    }
-
-    return renderChildWithArgs(children, data.result)
-  } else if (loading) {
+  if (loading) {
     return <LoadingContainer><LoadingIcon /></LoadingContainer>
   } else if (error) {
     if (error.code === NOT_LOGGED_IN) {
@@ -56,9 +48,15 @@ const Authenticated = ({
           : <ErrorBox error={error} />
       )
     }
-  }
+  } else {
+    const uid = _.get(data, 'result.id')
 
-  return null
+    if (uid) {
+      LogRocket.identify(uid)
+    }
+
+    return renderChildWithArgs(children, data.result)
+  }
 }
 
 export default withApollo(Authenticated)

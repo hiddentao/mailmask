@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react'
+import CookieConsent from "react-cookie-consent"
 import styled from '@emotion/styled'
 import Headroom from 'react-headroom'
 import { font } from 'emotion-styled-utils'
@@ -38,6 +39,9 @@ const PageLayout = ({ children }) => {
 
   return (
     <Layout>
+      <CookieConsent debug={true}>
+        This website uses cookies to enhance the user experience.
+      </CookieConsent>
       <Headroom onPin={onHeaderFloat} onUnfix={onHeaderUnfloat}>
         <HeaderWrapper floating={!!floatingHeader}>
           <MaxContentWidth width={maxContentWidth}>
