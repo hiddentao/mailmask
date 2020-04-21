@@ -8,8 +8,10 @@ import {
   faInfo,
   faCheckCircle,
   faExclamation,
+  faSignInAlt,
   faSnowflake,
   faTimesCircle,
+  faUser,
 } from '@fortawesome/free-solid-svg-icons'
 
 config.autoAddCss = false
@@ -19,8 +21,10 @@ const ICONS = {
   info: faInfo,
   'check-circle': faCheckCircle,
   exclamation: faExclamation,
+  'sign-in-alt': faSignInAlt,
   snowflake: faSnowflake,
   'times-circle': faTimesCircle,
+  user: faUser,
 }
 
 library.add(...(Object.values(ICONS)))

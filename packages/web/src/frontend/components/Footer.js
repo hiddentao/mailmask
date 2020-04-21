@@ -29,7 +29,7 @@ const Container = styled.footer`
 
   ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
     ${flex({ direction: 'row', justify: 'space-between', align: 'flex-start' })};
-    padding: 3rem 0.1rem 2rem;
+    padding: 3rem 1.5rem 2rem;
 
     & > div {
       margin: 0;

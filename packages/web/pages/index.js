@@ -40,9 +40,13 @@ const TypingExample = styled(Typing)`
   }
 `
 
-const FirstGetStartedForm = styled(GetStartedForm)`
+const StyledGetStartedForm = styled(GetStartedForm)`
+  margin: 0 auto;
+`
+
+const FirstGetStartedForm = styled(StyledGetStartedForm)`
   width: 80%;
-  margin-top: 3rem;
+  margin: 4rem auto 0;
 `
 
 const ContentBlock = styled(ContentWrapper)`
@@ -53,17 +57,27 @@ const ContentBlock = styled(ContentWrapper)`
     margin: 1rem 0 2rem;
     font-size: 3rem;
   }
+
+  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+    min-height: auto;
+  }
 `
 
 const ItemList = styled.div`
   ${flex({ direction: 'column', justify: 'flex-start', align: 'center' })};
+
+  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+    ${flex({ direction: 'row', justify: 'space-around', align: 'flex-start' })};
+  }
 `
 
 const StyledHowItWorks = styled(HowItWorks)`
   margin: 2rem 0;
+  width: 80%;
 
   ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
-    margin: 3rem;
+    margin: 2rem 1rem;
+    max-width: 300px;
   }
 `
 
@@ -80,14 +94,14 @@ const InterimBlockInner = styled.div`
 `
 
 const Benefit = styled.div`
-  width: 60%;
+  width: 80%;
   border: 1px solid ${({ theme }) => theme.homePageBenefitBorderColor};
   border-radius: 5px;
   padding: 2rem;
   text-align: center;
   font-size: 1rem;
   line-height: 1.3em;
-  margin-bottom: 2rem;
+  margin: 2rem 0;
 
   strong {
     ${font('body', 'bold')};
@@ -95,6 +109,11 @@ const Benefit = styled.div`
     font-size: 1.3em;
     line-height: 1.1em;
     margin-bottom: 0.5rem;
+  }
+
+  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+    margin: 2rem 1rem;
+    max-width: 300px;
   }
 `
 
@@ -117,15 +136,14 @@ const HomePage = () => {
             number={1}
             details='Provide us your real email address and choose an easy-to-remember username.'
             example={(
-              <span>If your real email address is jim@gmail.com then you might choose jim as your username.</span>
+              <span>If your real email address is <strong>jim@gmail.com</strong> then you might choose <strong>jim</strong> as your username.</span>
             )}
           />
           <StyledHowItWorks
             number={2}
-            details='Next time you need to give someone your email address just make one up (a "mask") on-the-fly (a "mask").'
+            details='Next time you need to give someone your email address just make one up on-the-fly (we cal this a "mask").'
             example={(
-              <span>If your username is jim then you could sign up for acme.com
-              using acme@jim.msk.sh. We will forward
+              <span>If your username is <strong>jim</strong> then you could sign up for <strong>acme.com</strong> using <strong>acme@jim.msk.sh</strong>. We will forward
               all email received here to your real email address.</span>
             )}
           />
@@ -134,7 +152,7 @@ const HomePage = () => {
             details='Whenever you want to stop receiving email through an address
           you can turn it off through the dashboard without having to inform the sender.'
             example={(
-              <span>If you turn off acme@jim.msk.sh you will no longer receive emails
+              <span>If you turn off <strong>acme@jim.msk.sh</strong> you will no longer receive emails
           sent to it. Goodbye spam, hello privacy!</span>
             )}
           />
@@ -143,7 +161,7 @@ const HomePage = () => {
       <InterimBlock>
         <InterimBlockInner>
           <h2>Get started</h2>
-          <GetStartedForm />
+          <StyledGetStartedForm />
         </InterimBlockInner>
       </InterimBlock>
       <ContentBlock>
@@ -167,7 +185,7 @@ const HomePage = () => {
       </ContentBlock>
       <InterimBlockInner>
         <h2>Get started</h2>
-        <GetStartedForm />
+        <StyledGetStartedForm />
       </InterimBlockInner>
     </Layout>
   )

@@ -11,7 +11,11 @@ import Button from './Button'
 import QueryResult from './QueryResult'
 import TextInput from './TextInput'
 
-const Container = styled.div``
+const Container = styled.div`
+  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+    max-width: 500px;
+  }
+`
 
 const Form = styled.form`
   ${flex({ direction: 'row', justify: 'center', align: 'center' })};

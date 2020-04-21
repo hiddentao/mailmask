@@ -18,7 +18,6 @@ const Number = styled.div`
 
 const Details = styled.div`
   ${font('body')};
-  width: 70%;
   font-size: 1.2rem;
   line-height: 1.2em;
   margin-top: 1rem;
@@ -26,7 +25,6 @@ const Details = styled.div`
 
 const Example = styled.div`
   ${font('body')};
-  width: 70%;
   padding: 1rem;
   background-color: ${({ theme }) => theme.homePageHowItWorksExampleBgColor};
   color: ${({ theme }) => theme.homePageHowItWorksExampleTextColor};
@@ -34,10 +32,16 @@ const Example = styled.div`
   line-height: 1.5em;
   margin-top: 1rem;
   border-radius: 5px;
+`
 
+const ExamplePrefix = styled.span`
+  ${font('body', 'normal', 'italic')};
+  margin-right: 0.5rem;
+`
+
+const ExampleDetails = styled.span`
   strong {
     ${font('body', 'bold')};
-    margin-right: 0.5rem;
   }
 `
 
@@ -46,7 +50,7 @@ const HowItWorks = ({ className, number, details, example }) => {
     <Container className={className}>
       <Number>{number}</Number>
       <Details>{details}</Details>
-      <Example><strong>Example:</strong>{example}</Example>
+      <Example><ExamplePrefix>Example:</ExamplePrefix><ExampleDetails>{example}</ExampleDetails></Example>
     </Container>
   )
 }

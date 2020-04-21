@@ -1,11 +1,9 @@
-import React, { useState, useCallback } from 'react'
+import React from 'react'
 import styled from '@emotion/styled'
-import { flex, font, childAnchors, boxShadow, smoothTransitions } from 'emotion-styled-utils'
+import { flex, font, childAnchors } from 'emotion-styled-utils'
 
-import { Link, DashboardLink, LoginLink } from './Link'
+import { Link, DashboardLink, PricingLink, LoginLink } from './Link'
 import Authenticated from './Authenticated'
-import Button from './Button'
-import Icon from './Icon'
 
 export const headerHeight = '75px'
 
@@ -29,91 +27,48 @@ const Brand = styled.div`
 const DesktopNav = styled.ul`
   display: none;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
-    display: block;
-    list-style: none;
-    ${flex({ direction: 'row', basis: 0 })};
-
-    ${({ theme }) => childAnchors({
+  ${({ theme }) => childAnchors({
     textColor: theme.navAnchorTextColor,
     hoverTextColor: theme.navAnchorHoverTextColor,
     hoverBgColor: theme.navAnchorHoverBgColor,
     borderBottomColor: theme.navAnchorBorderBottomColor
   })};
-  }
-`
-
-const MobileNav = styled.ul`
-  list-style: none;
-  ${flex({ direction: 'column', basis: 0 })}
-  z-index: 5;
-  position: fixed;
-  top: ${headerHeight};
-  right: 10px;
-  min-width: 9rem;
-  border-radius: 5px;
-  ${({ theme }) => boxShadow({ color: theme.mobileNavBoxShadow })};
-  background-color: ${({ theme }) => theme.mobileNavBgColor};
-  opacity: ${({ open }) => (open ? '1' : '0')};
-  ${smoothTransitions()};
-
-  ${({ theme }) => childAnchors({
-    textColor: theme.mobileNavAnchorTextColor,
-    hoverTextColor: theme.mobileNavAnchorHoverTextColor,
-    hoverBgColor: theme.mobileNavAnchorHoverBgColor,
-    borderBottomColor: theme.mobileNavAnchorBorderBottomColor
-  })};
 
   ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
-    display: none;
+    display: block;
+    list-style: none;
+    ${flex({ direction: 'row', basis: 0 })};
   }
 `
+
 
 const NavLi = styled.li`
   display: block;
-  border-bottom: 1px solid ${({ theme }) => theme.mobileNavAnchorTextColor};
-  width: 100%;
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  a {
-    display: block;
-    font-size: 0.9rem;
-    padding: 0.7rem 1rem;
-    white-space: nowrap;
-  }
 
   ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
-    border-bottom: none;
-    width: auto;
-
     a {
-      display: inline-block;
-      padding: 0.5rem 1rem;
+      display: block;
+      font-size: 0.9rem;
+      padding: 0.7rem 1rem;
+      white-space: nowrap;
     }
   }
 `
 
 const DashboardLi = styled.li`
   display: block;
-  width: 100%;
+  border: 1px solid ${({ theme }) => theme.navSpecialAnchorBorderColor};
+  border-radius: 5px;
 
   a {
     display: block;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     padding: 0.7rem 1rem;
-
-    ${flex({ direction: 'row', justify: 'flex-start', align: 'center', wrap: 'no-wrap' })};
-
-    span {
-      margin-left: 0.5rem;
-    }
+    white-space: nowrap;
   }
 
   ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
-    margin-left: 20px;
+    margin-left: 1.2rem;
 
     a {
       padding: 0.5rem 1rem;
@@ -121,44 +76,47 @@ const DashboardLi = styled.li`
   }
 `
 
-const MobileNavButton = styled(Button)`
-  display: block;
-  background-color: transparent;
-  padding: 0.5em;
-  border: none;
-  color: ${({ theme }) => theme.headerTextColor};
-  transform: rotate(${({ open }) => (open ? '90' : '0')}deg);
-  ${smoothTransitions()};
+const MobileNavContainer = styled.div`
+  ${flex({ direction: 'row', justify: 'flex-end', align: 'center', wrap: 'no-wrap', basis: 0 })};
+
+  ${({ theme }) => childAnchors({
+    textColor: theme.navAnchorTextColor,
+    hoverTextColor: theme.navAnchorHoverTextColor,
+    hoverBgColor: theme.navAnchorHoverBgColor,
+    borderBottomColor: theme.navAnchorBorderBottomColor
+  })};
 
   ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
     display: none;
   }
 `
 
-const Header = ({ className, onClickHome, children }) => {
-  const [ mobileNavOpen, setMobileNavOpen ] = useState(false)
+const Header = ({ className, onClickHome }) => {
+  const loginLink = <LoginLink>Login</LoginLink>
 
-  const toggleMobileMenu = useCallback(() => setMobileNavOpen(!mobileNavOpen), [ mobileNavOpen ])
-
-  const navLinks = (
-    <React.Fragment>
-      <DashboardLi>
-        <Authenticated renderNotAuthenticated={() => <LoginLink>Login</LoginLink>} renderError={() => null}>
-          {() => <DashboardLink>My dashboard</DashboardLink>}
-        </Authenticated>
-      </DashboardLi>
-    </React.Fragment>
+  const dashboardLink = (
+    <DashboardLi key='dashboard'>
+      <Authenticated renderNotAuthenticated={loginLink} renderError={loginLink}>
+        <DashboardLink>My dashboard</DashboardLink>
+      </Authenticated>
+    </DashboardLi>
   )
+
+  const navLinks = [
+    <NavLi key='pricing'><PricingLink>Pricing</PricingLink></NavLi>
+  ]
+
+  const desktopNavLinks = navLinks.concat(dashboardLink)
 
   return (
     <Container className={className}>
       <Link href='/'>
         <Brand onClick={onClickHome}>Mailmask</Brand>
       </Link>
-      {children}
-      <DesktopNav>{navLinks}</DesktopNav>
-      <MobileNavButton open={mobileNavOpen} onClick={toggleMobileMenu}><Icon name='bars' /></MobileNavButton>
-      <MobileNav open={mobileNavOpen}>{navLinks}</MobileNav>
+      <DesktopNav>{desktopNavLinks}</DesktopNav>
+      <MobileNavContainer>
+        {dashboardLink}
+      </MobileNavContainer>
     </Container>
   )
 }

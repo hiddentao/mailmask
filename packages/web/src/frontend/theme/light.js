@@ -35,12 +35,7 @@ export default {
   navAnchorHoverTextColor: white,
   navAnchorHoverBgColor: primary,
   navAnchorBorderBottomColor: transparent,
-  mobileNavBoxShadow: darkGrey,
-  mobileNavBgColor: white,
-  mobileNavAnchorTextColor: primary,
-  mobileNavAnchorHoverTextColor: white,
-  mobileNavAnchorHoverBgColor: primary,
-  mobileNavAnchorBorderBottomColor: transparent,
+  navSpecialAnchorBorderColor: primary,
   // content wrapper component
   contentWrapperBgColor: white,
   contentWrapperTextColor: black,
