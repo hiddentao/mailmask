@@ -40,7 +40,10 @@ export default class MyDocument extends Document {
               var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
               g.type='text/javascript'; g.async=true; g.defer=true; g.src='//cdn.matomo.cloud/hiddentao.matomo.cloud/matomo.js'; s.parentNode.insertBefore(g,s);
             })();
-          `}}></script>
+          ` }}></script>
+          <script type="text/javascript" dangerouslySetInnerHTML={{ __html: `
+            window.$crisp=[];window.CRISP_WEBSITE_ID="445bc5b9-ca21-4e22-bae8-0b85244b6efa";(function(){d = document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
+          ` }}></script>
         </Head>
         <body>
           <Main />
