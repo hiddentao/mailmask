@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import styled from '@emotion/styled'
 import { font, flex } from 'emotion-styled-utils'
 
+import { trackEvent } from '../../../analytics'
 import { DeleteAccountMutation } from '../../../../graphql/mutations'
 import { useSafeMutation } from '../../../hooks'
 import Button from '../../Button'
@@ -52,6 +53,8 @@ const Account = ({ className }) => {
   const openConfirmDeleteModal = useCallback(() => setConfirmDeleteModalOpen(true), [])
 
   const deleteAccount = useCallback(async () => {
+    trackEvent('dashboard', 'DeleteAccount')
+
     const { error } = await doDeleteMutation()
 
     if (!error) {

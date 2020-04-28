@@ -136,6 +136,8 @@ const CompleteSignupForm = ({ className }) => {
       return
     }
 
+    trackEvent('signup', 'SubmitFinalizeSignUpForm')
+
     const ret = await doRequest({
       variables: {
         signUp: {

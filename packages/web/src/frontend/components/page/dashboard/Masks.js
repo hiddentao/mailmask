@@ -10,6 +10,7 @@ import {
 } from 'react-table'
 
 import { getAppConfig } from '../../../appConfig'
+import { trackEvent } from '../../../analytics'
 import { useSafeMutation, useSafeQuery } from '../../../hooks'
 import { GetMyMasksQuery } from '../../../../graphql/queries'
 import { UpdateMaskStatusMutation } from '../../../../graphql/mutations'
@@ -103,6 +104,7 @@ const CellRenderer = ({
   }, [ initialValue ])
 
   const onToggle = useCallback(() => {
+    trackEvent('dashboard', 'SetMaskStatus', !value)
     setValue(!value)
     setMaskStatus(row.original.name, !value)
   }, [ value, row, setMaskStatus ])
