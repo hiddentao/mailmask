@@ -8,6 +8,7 @@ import { loadFonts } from 'emotion-styled-utils'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
+import { trackPageChange } from '../src/frontend/analytics'
 import { isProduction } from '../src/frontend/appConfig'
 import GlobalStyles from '../src/frontend/components/GlobalStyles'
 import { setupThemes } from '../src/frontend/theme'
@@ -17,8 +18,12 @@ if (isProduction()) {
   LogRocket.init('xiw3fx/mailmask')
 }
 
-// always scroll to top on route change
-Router.events.on('routeChangeComplete', () => { window.scrollTo(0, 0) })
+// when page changes
+Router.events.on('routeChangeComplete', () => {
+  trackPageChange()
+  // always scroll to top on route change
+  window.scrollTo(0, 0)
+})
 
 const themes = setupThemes({
   width: {

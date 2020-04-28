@@ -1,10 +1,11 @@
-import React, { useState, useCallback, useMemo } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { useApolloClient } from '@apollo/react-hooks'
 import styled from '@emotion/styled'
 import { _, isValidUsername } from '@mailmask/utils'
 import { font, flex } from 'emotion-styled-utils'
 
+import { trackEvent } from '../analytics'
 import { withApollo } from '../hoc'
 import { useSafeMutation } from '../hooks'
 import { CompleteSignupMutation } from '../../graphql/mutations'
@@ -68,7 +69,11 @@ const LegalContainer = styled.div`
 
 let usernameCheckTimer
 
-const SetUsernameForm = ({ className }) => {
+const CompleteSignupForm = ({ className }) => {
+  useEffect(() => {
+    trackEvent('signup', 'ViewFinalizeSignUpForm')
+  }, [])
+
   const apolloClient = useApolloClient()
   const router = useRouter()
   const [ termsAgreed, setTermsAgreed ] = useState(false)
@@ -140,6 +145,8 @@ const SetUsernameForm = ({ className }) => {
     })
 
     if (_.get(ret, 'data.result.success')) {
+      trackEvent('signup', 'SubmittedFinalizeSignUpForm')
+
       router.replace(`/sign-up-done?username=${username}`)
     }
   }, [ router, username, canSubmit, doRequest ])
@@ -205,4 +212,4 @@ const SetUsernameForm = ({ className }) => {
   )
 }
 
-export default withApollo(SetUsernameForm)
+export default withApollo(CompleteSignupForm)

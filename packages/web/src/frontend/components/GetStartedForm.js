@@ -4,6 +4,7 @@ import { _, isValidEmail } from '@mailmask/utils'
 import { flex } from 'emotion-styled-utils'
 import { useRouter } from 'next/router'
 
+import { trackEvent } from '../analytics'
 import { withApollo } from '../hoc'
 import { useSafeMutation } from '../hooks'
 import { RequestLoginLinkMutation } from '../../graphql/mutations'
@@ -53,6 +54,8 @@ const GetStartedForm = ({ className }) => {
     })
 
     if (_.get(ret, 'data.result.success')) {
+      trackEvent('signup', 'RequestedSignUpEmail')
+
       router.replace('/await-email')
     }
   }, [ email, isValid, doRequest, router ])

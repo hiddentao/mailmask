@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 import { flex } from 'emotion-styled-utils'
 import { _ } from '@mailmask/utils'
 
+import { trackUser } from '../analytics'
 import { withApollo } from '../hoc'
 import { renderChildWithArgs } from '../utils/functions'
 import { NOT_LOGGED_IN } from '../../graphql/errorCodes'
@@ -52,6 +53,7 @@ const Authenticated = ({
     const uid = _.get(data, 'result.id')
 
     if (uid) {
+      trackUser(uid)
       LogRocket.identify(uid)
     }
 
