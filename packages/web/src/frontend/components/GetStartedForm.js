@@ -27,7 +27,7 @@ const SubmitButton = styled(Button)`
   margin-left: 0.5rem;
 `
 
-const GetStartedForm = ({ className }) => {
+const GetStartedForm = ({ className, buttonText = 'Signup' }) => {
   const router = useRouter()
   const [ email, setEmail ] = useState('')
   const [ isValid, setIsValid ] = useState(false)
@@ -74,7 +74,7 @@ const GetStartedForm = ({ className }) => {
           disabled={!isValid}
           onClick={submitEmail}
         >
-          Signup
+          {buttonText}
         </SubmitButton>
       </Form>
       <QueryResult {...result} hideLoading={true} />

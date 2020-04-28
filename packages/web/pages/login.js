@@ -17,7 +17,7 @@ const LoginPage = () => {
       <Seo title='Login' />
       <ContentWrapper>
         <Heading>Login</Heading>
-        <GetStartedForm />
+        <GetStartedForm buttonText='Login' />
       </ContentWrapper>
     </Layout>
   )
