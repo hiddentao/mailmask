@@ -170,9 +170,9 @@ Please see our [pricing page](/pricing) for more details.`,
     ],
     [
       'How do I cancel?',
-      `You can cancel your subscription via the [dashboard](/dashboard). Your email aliases will continue to work until your subscription's original renewal date.
+      `To cancel your trial, simply delete your account via the [dashboard](/dashboard).
 
-To cancel your trial, simply delete your account via the dashboard.`,
+You can also cancel your paid subscription via the dashboard. Your email aliases will continue to work until your subscription's original renewal date.`,
     ],
     [
       'If I cancel my paid subscription at any point can I get a refund?',
