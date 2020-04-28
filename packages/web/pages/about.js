@@ -25,11 +25,14 @@ const AboutPage = () => {
         <Container>
           <h1>About</h1>
           <p>
-            Mailmask was developed in response to the frustrations of having to deal with spam, our email addresses
+            Mailmask is a product by <a href="https://hiddentao.com">HiddenTao Labs</a>.
+          </p>
+          <p>
+            It was developed in response to the frustrations of having to deal with spam, email addresses
             being sold to advertisers, and being unable to unsubscribe from or block certain senders.
           </p>
           <p>
-            Our aim is to build a service which helps as many people as possible get on top of
+            Mailmask aims to help as many people as possible get on top of
             their email spam and protect their privacy.
           </p>
           <p>
