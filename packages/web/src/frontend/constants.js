@@ -153,26 +153,26 @@ Please note that any emails received over the limit will be silently discarded, 
 Please see our [pricing page](/pricing) for more details.`,
     ],
     [
+      'How long does the free trial last for?',
+      `The trial period is 30 days.`,
+    ],
+    [
       'When will I have to pay?',
-      `We will email you shortly before your free trial is due to end, and again after it has ended, prompting you to sign up for a paid plan in order to continue.
-
-Please see our [pricing page](/pricing) for more details.`,
+      `We will email you shortly before your free trial is due to end, and again after it has ended, prompting you to sign up for a paid plan in order to continue using Mailmask.`,
     ],
     [
       'Will I lose access to my account once my trial ends?',
-      `You will always be able to login to your account and view your dashboard. However, your email aliases will no longer work until you sign up for a paid plan.`,
+      `Not at all! You will always be able to login to your account and view your dashboard. However, your email aliases will temporarily not work until you sign up for a paid plan.`,
     ],
     [
-      'Will my email aliases stop working once my trial ends?',
-      `Yes, your email aliases will stop working (and we will not be forwarding email to you) until you sign up for a paid plan.`,
+      'If I delay in signing up for a paid plan will I receive the backlog of emails I missed?',
+      `For security and privacy reasons we do not store or log email content. Thus, if you delay in signing up for a paid plan after your trial has ended you may miss out on any emails received in the intervening period.`,
     ],
     [
-      'Once I sign up for a paid plan will I receive the backlog of emails I missed?',
-      `Unfortunately, for security and privacy reasons we cannot store or log email content. Thus, if you delay in signing up for a paid plan after your trial has ended you will miss out on any emails received in the intervening period.`,
-    ],
-    [
-      'How do I cancel my paid subscription?',
-      `You can cancel your subscription via the [dashboard](/dashboard). Your email aliases will continue to work until the next renewal date for your subscription's original renewal date.`,
+      'How do I cancel?',
+      `You can cancel your subscription via the [dashboard](/dashboard). Your email aliases will continue to work until your subscription's original renewal date.
+
+To cancel your trial, simply delete your account via the dashboard.`,
     ],
     [
       'If I cancel my paid subscription at any point can I get a refund?',
@@ -182,12 +182,12 @@ Please see our [pricing page](/pricing) for more details.`,
 }
 
 FAQ.TRIAL_COLUMN_1 = [
-  FAQ.SUBSCRIPTIONS[1],
   FAQ.SUBSCRIPTIONS[2],
+  FAQ.SUBSCRIPTIONS[3],
 ]
 
 FAQ.TRIAL_COLUMN_2 = [
-  FAQ.SUBSCRIPTIONS[3],
   FAQ.SUBSCRIPTIONS[4],
+  FAQ.SUBSCRIPTIONS[5],
 ]
 

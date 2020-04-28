@@ -145,7 +145,7 @@ const HomePage = () => {
           />
           <StyledHowItWorks
             number={2}
-            details='Next time you need to give someone your email address just make one up on-the-fly (we cal this a "mask").'
+            details='Next time you need to give someone your email address just make one up on-the-fly (we cal this an "alias").'
             example={(
               <span>If your username is <strong>jim</strong> then you could sign up for <strong>acme.com</strong> using <strong>acme@jim.{DOMAIN}</strong>. We will forward
               all email received here to your real email address.</span>
@@ -153,7 +153,7 @@ const HomePage = () => {
           />
           <StyledHowItWorks
             number={3}
-            details='Whenever you want to stop receiving email through an address
+            details='Whenever you want to stop receiving email through an alias
           you can turn it off through the dashboard without having to inform the sender.'
             example={(
               <span>If you turn off <strong>acme@jim.{DOMAIN}</strong> you will no longer receive emails
@@ -173,27 +173,27 @@ const HomePage = () => {
         <ItemList>
           <Benefit>
             <strong>Keep your email address private forever.</strong>
-            Create as many or as few masks for your real email address as you like - no limits!
+            Create as many or as few aliases as you like - no limits!
           </Benefit>
           <Benefit>
             <strong>Block unwanted emails with certainty.</strong>
-            Unable to unsubscribe from an annoying newsletter? Just block the specific mask address you
+            Unable to unsubscribe from an annoying newsletter? Just block the specific alias address you
             gave them.
           </Benefit>
           <Benefit>
-            <strong>Your email address will not be sold.</strong>
-            When a mask address gets shared with marketers without your consent you
+            <strong>No more worrying about misuse</strong>
+            When an alias address gets shared with marketers without your consent you
             can just turn it off. Your real address remains private.
           </Benefit>
           <Benefit>
-            <strong>No more worrying about hacks.</strong>
-            If another service gets hacked, only the mask address you gave them is
-            compromised, not your real address.
+            <strong>No more worrying about hacks</strong>
+            If a service gets hacked, only the alias address you gave them is
+            compromised, not your real email address.
           </Benefit>
         </ItemList>
       </ContentBlock>
       <InterimBlockInner>
-        <h2>Get started</h2>
+        <h2>Take back control of your inbox now!</h2>
         <StyledGetStartedForm />
       </InterimBlockInner>
     </Layout>
