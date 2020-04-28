@@ -5,11 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import {
   faBars,
-  faInfo,
   faCheckCircle,
   faChevronDown,
   faChevronRight,
+  faComments,
+  faEnvelope,
   faExclamation,
+  faInfo,
   faSignInAlt,
   faSnowflake,
   faTimesCircle,
@@ -20,11 +22,13 @@ config.autoAddCss = false
 
 const ICONS = {
   bars: faBars,
-  info: faInfo,
   'check-circle': faCheckCircle,
   'chevron-down': faChevronDown,
   'chevron-right': faChevronRight,
+  comments: faComments,
+  envelope: faEnvelope,
   exclamation: faExclamation,
+  info: faInfo,
   'sign-in-alt': faSignInAlt,
   snowflake: faSnowflake,
   'times-circle': faTimesCircle,

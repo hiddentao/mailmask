@@ -8,7 +8,7 @@ import { maxContentWidth } from './Layout'
 const Container = styled.div`
   background: ${({ theme }) => theme.contentWrapperBgColor};
   color: ${({ theme }) => theme.contentWrapperTextColor};
-  padding: 2rem;
+  padding: 2rem 2rem 3rem;
 
   ${({ theme }) => childAnchors({
     textColor: theme.contentWrapperAnchorTextColor,

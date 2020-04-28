@@ -136,4 +136,7 @@ export default {
   pricingPageOriginalPriceTextColor: red,
   pricingPageBenefitBorderColor: grey,
   pricingPagePriceScheduleTextColor: grey,
+  // help page
+  helpPageContactItemBorderColor: lightGrey,
 }
+

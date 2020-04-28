@@ -70,8 +70,9 @@ const MenuNavLink = styled.li`
   display: block;
 `
 
-const SpecialMenuNavLink = styled.li`
+const SpecialMenuNavLink = styled(MenuNavLink)`
   ${font('body', 'bold')}
+  margin-bottom: 0.3rem;
 `
 
 
