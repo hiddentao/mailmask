@@ -60,9 +60,9 @@ export default ({ db, notifier }) => {
 
         return { success: true }
       }),
-      setUsername: _authCall(async (_ignore, { username }, { user }) => {
+      completeSignup: _authCall(async (_ignore, { signUp: { username } }, { user }) => {
         if (user.signedUp) {
-          return createErrorResponse(INVALID_INPUT, 'Username already set')
+          return createErrorResponse(INVALID_INPUT, 'Already signed up')
         }
 
         if (!isValidUsername(username)) {

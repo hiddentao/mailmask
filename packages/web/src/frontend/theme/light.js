@@ -36,9 +36,18 @@ export default {
   navAnchorHoverBgColor: primary,
   navAnchorBorderBottomColor: transparent,
   navSpecialAnchorBorderColor: primary,
+  // footer component
+  footerAnchorTextColor: white,
+  footerAnchorHoverTextColor: white,
+  footerAnchorHoverBgColor: primary,
+  footerAnchorBorderBottomColor: white,
   // content wrapper component
   contentWrapperBgColor: white,
   contentWrapperTextColor: black,
+  contentWrapperAnchorTextColor: secondary,
+  contentWrapperAnchorHoverTextColor: white,
+  contentWrapperAnchorHoverBgColor: secondary,
+  contentWrapperAnchorBorderBottomColor: secondary,
   // errorBox component
   errorBoxBgColor: red,
   errorBoxTextColor: white,
@@ -69,6 +78,17 @@ export default {
   iconButtonHoverBgColor: secondary,
   iconButtonHoverTextColor: white,
   iconButtonShadowColor: darkGrey,
+  // link button component
+  linkButtonBorderColor: transparent,
+  linkButtonBgColor: transparent,
+  linkButtonTextColor: secondary,
+  linkButtonDisabledBorderColor: transparent,
+  linkButtonDisabledBgColor: transparent,
+  linkButtonDisabledTextColor: grey,
+  linkButtonHoverBorderColor: transparent,
+  linkButtonHoverBgColor: secondary,
+  linkButtonHoverTextColor: white,
+  linkButtonShadowColor: transparent,
   // input components general styles
   inputBorderColor: darkGrey,
   inputBgColor: white,
@@ -80,6 +100,15 @@ export default {
   // setUsername component
   setUsernameYesTickColor: green,
   setUsernameNoTickColor: red,
+  // faqItem component
+  faqItemQuestionTextColor: black,
+  faqItemAnswerTextColor: darkGrey,
+  // markdown component
+  markdownContentImageBorderColor: grey,
+  // modal component
+  modalOverlayBgColor: 'rgba(0, 0, 0, 0.8)',
+  modalBgColor: white,
+  modalTextColor: black,
   // error page
   errorPageExplanationTextColor: darkGrey,
   errorPageStackBgColor: lightGrey,
@@ -89,11 +118,22 @@ export default {
   homePageHowItWorksExampleBgColor: lighterGrey,
   homePageHowItWorksExampleTextColor: grey,
   homePageBenefitBorderColor: grey,
-  // dashboard page: bottom block
+  // dashboard page
+  dashboardPageSidebarBorderColor: grey,
   dashboardPageBottomBlockBorderColor: grey,
-  // dashboard page: masks table
   dashboardPageMasksTableMaskSuffixTextColor: lightGrey,
   dashboardPageMasksTableMaskStatusTextColor: grey,
   dashboardPageMasksTableMaskOnIconColor: green,
   dashboardPageMasksTableMaskOffIconColor: red,
+  dashboardPageMobileSidebarBgColor: white,
+  // pricing page
+  pricingPageScheduleBgColor: white,
+  pricingPageScheduleTextColor: darkGrey,
+  pricingPageScheduleBorderColor: darkGrey,
+  pricingPageSelectedScheduleBgColor: primary,
+  pricingPageSelectedScheduleTextColor: white,
+  pricingPagePackageBorderColor: grey,
+  pricingPageOriginalPriceTextColor: red,
+  pricingPageBenefitBorderColor: grey,
+  pricingPagePriceScheduleTextColor: grey,
 }

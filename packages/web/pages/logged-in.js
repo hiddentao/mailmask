@@ -7,7 +7,7 @@ import Seo from '../src/frontend/components/Seo'
 import { DashboardLink } from '../src/frontend/components/Link'
 import Authenticated from '../src/frontend/components/Authenticated'
 import ContentWrapper from '../src/frontend/components/ContentWrapper'
-import SetUsernameForm from '../src/frontend/components/SetUsernameForm'
+import CompleteSignupForm from '../src/frontend/components/CompleteSignupForm'
 import Button from '../src/frontend/components/Button'
 
 const Heading = styled.h1`
@@ -28,8 +28,8 @@ const LoggedInPage = () => {
             </div>
           ) : (
               <div>
-                <Heading>Please set your username to continue.</Heading>
-                <SetUsernameForm />
+                <Heading>Please set your username to finish signing up.</Heading>
+                <CompleteSignupForm />
               </div>
             ))}
         </Authenticated>

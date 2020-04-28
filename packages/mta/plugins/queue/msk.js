@@ -106,7 +106,7 @@ exports.msk_queue_handler = async (next, connection) => {
     // if we have users to send to
     if (userData.length) {
       const baseMsg = {
-        from: `"${senderName}" <no-reply@${config.DOMAIN}>`,
+        from: `"${senderName}" <${config.ALIAS_SENDER_EMAIL}>`,
         replyTo: senderAddress,
         subject,
         attachments,

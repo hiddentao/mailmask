@@ -32,11 +32,11 @@ export const RequestLoginLinkResultFragment = gql`
 `
 
 
-export const SetUsernameResultFragment = gql`
+export const CompleteSignupResultFragment = gql`
   ${SuccessFragment}
   ${ErrorFragment}
 
-  fragment SetUsernameResultFragment on SetUsernameResult {
+  fragment CompleteSignupResultFragment on CompleteSignupResult {
     ...on Success {
       ...SuccessFragment
     }

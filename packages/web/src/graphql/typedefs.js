@@ -47,13 +47,17 @@ export const getTypeDefs = () => gql`
     paging: PagedResult!
   }
 
+  input SignUpInput {
+    username: String!
+  }
+
   input PagingInput {
     page: Int
     resultsPerPage: Int
   }
 
   union RequestLoginLinkResult = Success | Error
-  union SetUsernameResult = Success | Error
+  union CompleteSignupResult = Success | Error
   union UpdateMaskStatusResult = Success | Error
   union DeleteAccountResult = Success | Error
   union UserProfileResult = UserProfile | Error
@@ -62,7 +66,7 @@ export const getTypeDefs = () => gql`
 
   type Mutation {
     requestLoginLink (email: String!): RequestLoginLinkResult!
-    setUsername (username: String!): SetUsernameResult!
+    completeSignup (signUp: SignUpInput!): CompleteSignupResult!
     updateMaskStatus (name: String!, enabled: Boolean!): UpdateMaskStatusResult!
     deleteAccount: DeleteAccountResult!
   }
@@ -76,7 +80,7 @@ export const getTypeDefs = () => gql`
 
 const UNIONS = [
   [ 'RequestLoginLinkResult', 'Success' ],
-  [ 'SetUsernameResult', 'Success' ],
+  [ 'CompleteSignupResult', 'Success' ],
   [ 'UpdateMaskStatusResult', 'Success' ],
   [ 'DeleteAccountResult', 'Success' ],
   [ 'UserProfileResult', 'UserProfile' ],

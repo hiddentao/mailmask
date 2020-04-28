@@ -5,6 +5,7 @@ const { str, num, bool } = envalid
 const VARS = {
   DOMAIN: str({ default: 'msk.sh' }),
   SUPPORT_EMAIL: str({ default: 'support@msk.sh' }),
+  ALIAS_SENDER_EMAIL: str({ default: 'no-reply@msk.sh' }),
   APP_MODE: str({ default: 'development' }),
   SMTP_TESTMODE: bool({ default: false }),
   DB_HOST: str({ default: '' }),

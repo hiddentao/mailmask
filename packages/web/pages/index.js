@@ -2,6 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { flex, font } from 'emotion-styled-utils'
 
+import { getAppConfig } from '../src/frontend/appConfig'
 import { withApollo } from '../src/frontend/hoc'
 import { headerHeight } from '../src/frontend/components/Header'
 import Layout from '../src/frontend/components/Layout'
@@ -11,6 +12,8 @@ import GetStartedForm from '../src/frontend/components/GetStartedForm'
 import ContentWrapper from '../src/frontend/components/ContentWrapper'
 import MaxContentWidth from '../src/frontend/components/MaxContentWidth'
 import HowItWorks from '../src/frontend/components/page/home/HowItWorks'
+
+const { DOMAIN } = getAppConfig()
 
 const TopBlock = styled.div`
   height: calc(100vh - ${headerHeight});
@@ -67,7 +70,7 @@ const ItemList = styled.div`
   ${flex({ direction: 'column', justify: 'flex-start', align: 'center' })};
 
   ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
-    ${flex({ direction: 'row', justify: 'space-around', align: 'flex-start' })};
+    ${flex({ direction: 'row', justify: 'space-around', align: 'stretch' })};
   }
 `
 
@@ -76,6 +79,7 @@ const StyledHowItWorks = styled(HowItWorks)`
   width: 80%;
 
   ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+    justify-content: flex-start;
     margin: 2rem 1rem;
     max-width: 300px;
   }
@@ -143,7 +147,7 @@ const HomePage = () => {
             number={2}
             details='Next time you need to give someone your email address just make one up on-the-fly (we cal this a "mask").'
             example={(
-              <span>If your username is <strong>jim</strong> then you could sign up for <strong>acme.com</strong> using <strong>acme@jim.msk.sh</strong>. We will forward
+              <span>If your username is <strong>jim</strong> then you could sign up for <strong>acme.com</strong> using <strong>acme@jim.{DOMAIN}</strong>. We will forward
               all email received here to your real email address.</span>
             )}
           />
@@ -152,7 +156,7 @@ const HomePage = () => {
             details='Whenever you want to stop receiving email through an address
           you can turn it off through the dashboard without having to inform the sender.'
             example={(
-              <span>If you turn off <strong>acme@jim.msk.sh</strong> you will no longer receive emails
+              <span>If you turn off <strong>acme@jim.{DOMAIN}</strong> you will no longer receive emails
           sent to it. Goodbye spam, hello privacy!</span>
             )}
           />
@@ -168,18 +172,23 @@ const HomePage = () => {
         <h2>Benefits</h2>
         <ItemList>
           <Benefit>
-            <strong>Never give out your real email address.</strong>
+            <strong>Keep your email address private forever.</strong>
             Create as many or as few masks for your real email address as you like - no limits!
           </Benefit>
           <Benefit>
-            <strong>Block unwanted emails permanently.</strong>
-            Unable to unsubscribe from an annoying newsletter? Just block the mask you
+            <strong>Block unwanted emails with certainty.</strong>
+            Unable to unsubscribe from an annoying newsletter? Just block the specific mask address you
             gave them.
           </Benefit>
           <Benefit>
-            <strong>Find out who is sharing your address.</strong>
-            When one of your mask addresses gets shared without your consent you
-            will know who did it!
+            <strong>Your email address will not be sold.</strong>
+            When a mask address gets shared with marketers without your consent you
+            can just turn it off. Your real address remains private.
+          </Benefit>
+          <Benefit>
+            <strong>No more worrying about hacks.</strong>
+            If another service gets hacked, only the mask address you gave them is
+            compromised, not your real address.
           </Benefit>
         </ItemList>
       </ContentBlock>

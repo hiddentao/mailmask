@@ -1,6 +1,7 @@
 /* eslint-disable func-names */
 const { _ } = require('@mailmask/utils')
 
+const { LEGAL } = require('./constants')
 
 exports._createUserOrFetchExisting = async function (email, trx) {
   email = email.toLowerCase()
@@ -27,6 +28,39 @@ exports._createUserOrFetchExisting = async function (email, trx) {
   }
 
   return id
+}
+
+
+exports._getLegalIds = async function (trx) {
+  const ids = Object.keys(LEGAL).reduce((m, v) => {
+    m[v] = null
+    return m
+  }, {})
+
+  const ret = await this._db().table('legal')
+    .select('id', 'type')
+    .orderBy('version', 'desc')
+    .transacting(trx)
+
+  ret.forEach(({ id, type }) => {
+    if (!ids[type]) {
+      ids[type] = id
+    }
+  })
+
+  return ids
+}
+
+
+exports._getTermsId = async function (trx) {
+  const ret = await this._db().table('legal')
+    .select('id')
+    .where({ type: 'TERMS_AND_CONDITIONS' })
+    .orderBy('version', 'desc')
+    .limit(1)
+    .transacting(trx)
+
+  return _.get(ret, '0.id')
 }
 
 
@@ -110,13 +144,30 @@ exports.saveUserLogin = async function (email, token) {
 exports.finalizeSignUp = async function (userId, username) {
   username = username.toLowerCase()
 
-  await this._db()
-    .table('user')
-    .update({
-      username,
-      signedUp: true,
-    })
-    .where('id', userId)
+  await this._dbTrans(async trx => {
+    await this._db()
+      .table('user')
+      .update({
+        username,
+        signedUp: true,
+      })
+      .where('id', userId)
+      .transacting(trx)
+
+    const legalIds = await this._getLegalIds(trx)
+
+    await this._db().table('user_legal')
+      .insert({ userId, legalId: legalIds.TERMS_AND_CONDITIONS })
+      .transacting(trx)
+
+    await this._db().table('user_legal')
+      .insert({ userId, legalId: legalIds.PRIVACY_POLICY })
+      .transacting(trx)
+
+    await this._db().table('user_legal')
+      .insert({ userId, legalId: legalIds.MARKETING_EMAILS })
+      .transacting(trx)
+  })
 }
 
 

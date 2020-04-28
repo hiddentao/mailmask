@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react'
-import CookieConsent from "react-cookie-consent"
+import CookieConsent from 'react-cookie-consent'
 import styled from '@emotion/styled'
 import Headroom from 'react-headroom'
 import { font } from 'emotion-styled-utils'
@@ -7,6 +7,7 @@ import { font } from 'emotion-styled-utils'
 import MaxContentWidth from './MaxContentWidth'
 import Header from './Header'
 import Footer from './Footer'
+import { ModalProvider } from './Modal'
 
 export const maxContentWidth = '1024px'
 
@@ -39,20 +40,22 @@ const PageLayout = ({ children }) => {
 
   return (
     <Layout>
-      <CookieConsent debug={true}>
+      <ModalProvider>
+        <CookieConsent>
         This website uses cookies to enhance the user experience.
-      </CookieConsent>
-      <Headroom onPin={onHeaderFloat} onUnfix={onHeaderUnfloat}>
+        </CookieConsent>
+        <Headroom onPin={onHeaderFloat} onUnfix={onHeaderUnfloat}>
         <HeaderWrapper floating={!!floatingHeader}>
-          <MaxContentWidth width={maxContentWidth}>
-            <StyledHeader />
-          </MaxContentWidth>
+        <MaxContentWidth width={maxContentWidth}>
+        <StyledHeader />
+        </MaxContentWidth>
         </HeaderWrapper>
-      </Headroom>
-      {children}
-      <MaxContentWidth width={maxContentWidth}>
+        </Headroom>
+        {children}
+        <MaxContentWidth width={maxContentWidth}>
         <Footer />
-      </MaxContentWidth>
+        </MaxContentWidth>
+      </ModalProvider>
     </Layout>
   )
 }

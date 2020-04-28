@@ -86,7 +86,7 @@ class Notifier {
 
     try {
       const msg = {
-        from: `MailMask <${this._senderEmail}>`,
+        from: `Mailmask <${this._senderEmail}>`,
         to: [ email ],
         subject,
         text,

@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 
 import {
   RequestLoginLinkResultFragment,
-  SetUsernameResultFragment,
+  CompleteSignupResultFragment,
   UpdateMaskStatusResultFragment,
   DeleteAccountResultFragment,
 } from './fragments'
@@ -20,12 +20,12 @@ export const RequestLoginLinkMutation = gql`
 
 
 
-export const SetUsernameMutation = gql`
-  ${SetUsernameResultFragment}
+export const CompleteSignupMutation = gql`
+  ${CompleteSignupResultFragment}
 
-  mutation SetUsername ($username: String!) {
-    result: setUsername (username: $username) {
-      ...SetUsernameResultFragment
+  mutation CompleteSignupMutation ($signUp: SignUpInput!) {
+    result: completeSignup (signUp: $signUp) {
+      ...CompleteSignupResultFragment
     }
   }
 `

@@ -34,6 +34,7 @@ const GlobalFilterTextInput = styled(TextInput)`
   font-size: 0.9rem;
   padding: 0.5em;
   margin: 0.3rem 0;
+  width: 70%;
   max-width: 400px;
 `
 
@@ -145,7 +146,7 @@ const MaskTable = ({ items, setMaskStatus, myUsername }) => {
 
   const columns = useMemo(() => [
     {
-      Header: 'Name',
+      Header: 'Alias',
       accessor: 'name'
     },
     {

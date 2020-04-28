@@ -7,7 +7,7 @@ import { font, flex } from 'emotion-styled-utils'
 
 import { withApollo } from '../hoc'
 import { useSafeMutation } from '../hooks'
-import { SetUsernameMutation } from '../../graphql/mutations'
+import { CompleteSignupMutation } from '../../graphql/mutations'
 import { resolveError } from '../../graphql/errors'
 import { GetUsernameAvailabilityQuery } from '../../graphql/queries'
 import Button from './Button'
@@ -16,9 +16,15 @@ import AlertBox from './AlertBox'
 import TextInput from './TextInput'
 import Icon from './Icon'
 import QueryResult from './QueryResult'
+import { TermsLink, PrivacyLink } from './Link'
 
 const Form = styled.form`
   margin-bottom: 2rem;
+  width: 90%;
+
+  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+    max-width: 400px;
+  }
 `
 
 const InstructionsBox = styled(AlertBox)`
@@ -46,19 +52,37 @@ const NoTick = styled.span`
   color: ${({ theme }) => theme.setUsernameNoTickColor};
 `
 
+const LegalContainer = styled.div`
+  ${flex({ direction: 'row', justify: 'flex-start', align: 'center' })};
+  margin: 2rem 0 3rem;
+
+  input, label {
+    display: block;
+  }
+
+  input {
+    margin-right: 1rem;
+  }
+`
+
 
 let usernameCheckTimer
 
 const SetUsernameForm = ({ className }) => {
   const apolloClient = useApolloClient()
   const router = useRouter()
+  const [ termsAgreed, setTermsAgreed ] = useState(false)
   const [ username, setUsername ] = useState('')
   const [ isValid, setIsValid ] = useState(false)
   const [ isAvailable, setIsAvailable ] = useState(false)
   const [ checkingUsername, setCheckingUsername ] = useState(false)
-  const [ doRequest, result ] = useSafeMutation(SetUsernameMutation)
+  const [ doRequest, result ] = useSafeMutation(CompleteSignupMutation)
 
-  const canSubmit = useMemo(() => isValid && isAvailable, [ isValid, isAvailable ])
+  const canSubmit = useMemo(() => isValid && isAvailable && termsAgreed, [ isValid, isAvailable, termsAgreed ])
+
+  const toggleTermsAgreed = useCallback(() => {
+    setTermsAgreed(!termsAgreed)
+  }, [ termsAgreed ])
 
   const updateUsername = useCallback(newUsername => {
     if (newUsername !== username) {
@@ -100,7 +124,7 @@ const SetUsernameForm = ({ className }) => {
     }
   }, [ username, apolloClient ])
 
-  const submitUsername = useCallback(async e => {
+  const completeSignUp = useCallback(async e => {
     e.preventDefault()
 
     if (!canSubmit) {
@@ -109,7 +133,9 @@ const SetUsernameForm = ({ className }) => {
 
     const ret = await doRequest({
       variables: {
-        username,
+        signUp: {
+          username,
+        }
       }
     })
 
@@ -140,7 +166,7 @@ const SetUsernameForm = ({ className }) => {
   }
 
   return (
-    <Form className={className} onSubmit={submitUsername}>
+    <Form className={className} onSubmit={completeSignUp}>
       <InstructionsBox>
         <p>Your username must be between 3 and 16 characters in length and must
         only contain letters (A-Z), numbers (0-9) and hyphens (-).</p>
@@ -150,6 +176,7 @@ const SetUsernameForm = ({ className }) => {
       </InstructionsBox>
 
       <TextInput
+        size="20"
         type="text"
         value={username}
         onChange={updateUsername}
@@ -158,10 +185,18 @@ const SetUsernameForm = ({ className }) => {
         {tickContent}
       </TickContainer>
 
+      <LegalContainer>
+        <input type="checkbox" selected={termsAgreed} onClick={toggleTermsAgreed} />
+        <label>
+          I have read the <TermsLink>terms and conditions</TermsLink> and <PrivacyLink>privacy policy</PrivacyLink>.
+        </label>
+      </LegalContainer>
+
       <Button
+        type="submit"
         disabled={!canSubmit}
         loading={_.get(result, 'loading')}
-        onClick={submitUsername}
+        onClick={completeSignUp}
       >
         Continue
       </Button>

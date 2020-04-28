@@ -31,6 +31,12 @@ export const Link = ({ href, as, query = {}, children }) => {
 }
 
 
+export const HomeLink = ({ children }) => (
+  <DefaultLink href='/' scroll={true}>
+    {wrapInAnchor(children)}
+  </DefaultLink>
+)
+
 export const DashboardLink = ({ children }) => (
   <DefaultLink href='/dashboard' scroll={true}>
     {wrapInAnchor(children)}
@@ -51,7 +57,37 @@ export const LogoutLink = ({ children }) => (
 )
 
 export const PricingLink = ({ children }) => (
-  <DefaultLink href='/api/logout' scroll={true}>
+  <DefaultLink href='/pricing' scroll={true}>
+    {wrapInAnchor(children)}
+  </DefaultLink>
+)
+
+export const FaqLink = ({ children }) => (
+  <DefaultLink href='/faq' scroll={true}>
+    {wrapInAnchor(children)}
+  </DefaultLink>
+)
+
+export const HelpLink = ({ children }) => (
+  <DefaultLink href='/help' scroll={true}>
+    {wrapInAnchor(children)}
+  </DefaultLink>
+)
+
+export const AboutLink = ({ children }) => (
+  <DefaultLink href='/about' scroll={true}>
+    {wrapInAnchor(children)}
+  </DefaultLink>
+)
+
+export const TermsLink = ({ children }) => (
+  <DefaultLink href='/terms' scroll={true}>
+    {wrapInAnchor(children)}
+  </DefaultLink>
+)
+
+export const PrivacyLink = ({ children }) => (
+  <DefaultLink href='/privacy' scroll={true}>
     {wrapInAnchor(children)}
   </DefaultLink>
 )

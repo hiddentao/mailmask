@@ -12,7 +12,7 @@ export const createErrorResponse = (code = ERROR_CODES.UNKNOWN, message = '') =>
     error: {
       __typename: 'ErrorDetails',
       code,
-      message: message || codes[code],
+      message: message || codes.messages[code],
     }
   }
 }

@@ -15,7 +15,7 @@ ${url}
 (This link will be valid until ${urlValidTo})
 
 thanks,
-The MailMask team
+The Mailmask team
 `
   }
 }

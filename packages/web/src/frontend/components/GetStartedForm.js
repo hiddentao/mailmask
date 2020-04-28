@@ -71,7 +71,7 @@ const GetStartedForm = ({ className }) => {
           disabled={!isValid}
           onClick={submitEmail}
         >
-          Start
+          Signup
         </SubmitButton>
       </Form>
       <QueryResult {...result} hideLoading={true} />

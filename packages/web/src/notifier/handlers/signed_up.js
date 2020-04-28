@@ -8,14 +8,14 @@ export function render ({ username, maskEmailAddress, dashboardUrl }) {
     subject: 'Congratulations! your MaskMail account is now ready',
     body: `Hi ${username},
 
-You have successfully signed up for MailMask.
+You have successfully signed up for Mailmask.
 
-We sent this email to ${maskEmailAddress} to demonstrate MailMask in action! You can turn this mask off via your dashboard:
+We sent this email to ${maskEmailAddress} to demonstrate Mailmask in action! You can turn this mask off via your dashboard:
 
 ${dashboardUrl}
 
 thanks,
-MailMask team
+Mailmask team
 `
   }
 }

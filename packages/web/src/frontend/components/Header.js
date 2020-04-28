@@ -2,7 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { flex, font, childAnchors } from 'emotion-styled-utils'
 
-import { Link, DashboardLink, PricingLink, LoginLink } from './Link'
+import { HomeLink, DashboardLink, PricingLink, FaqLink, LoginLink } from './Link'
 import Authenticated from './Authenticated'
 
 export const headerHeight = '75px'
@@ -48,7 +48,7 @@ const NavLi = styled.li`
   ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
     a {
       display: block;
-      font-size: 0.9rem;
+      font-size: 1rem;
       padding: 0.7rem 1rem;
       white-space: nowrap;
     }
@@ -57,12 +57,12 @@ const NavLi = styled.li`
 
 const DashboardLi = styled.li`
   display: block;
-  border: 1px solid ${({ theme }) => theme.navSpecialAnchorBorderColor};
+  border: 2px solid ${({ theme }) => theme.navSpecialAnchorBorderColor};
   border-radius: 5px;
 
   a {
     display: block;
-    font-size: 1.1rem;
+    font-size: 1rem;
     padding: 0.7rem 1rem;
     white-space: nowrap;
   }
@@ -102,18 +102,16 @@ const Header = ({ className, onClickHome }) => {
     </DashboardLi>
   )
 
-  const navLinks = [
-    <NavLi key='pricing'><PricingLink>Pricing</PricingLink></NavLi>
-  ]
-
-  const desktopNavLinks = navLinks.concat(dashboardLink)
-
   return (
     <Container className={className}>
-      <Link href='/'>
+      <HomeLink>
         <Brand onClick={onClickHome}>Mailmask</Brand>
-      </Link>
-      <DesktopNav>{desktopNavLinks}</DesktopNav>
+      </HomeLink>
+      <DesktopNav>
+        <NavLi key='pricing'><PricingLink>Pricing</PricingLink></NavLi>
+        <NavLi key='faq'><FaqLink>FAQ</FaqLink></NavLi>
+        {dashboardLink}
+      </DesktopNav>
       <MobileNavContainer>
         {dashboardLink}
       </MobileNavContainer>

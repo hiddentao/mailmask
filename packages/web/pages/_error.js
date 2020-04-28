@@ -2,12 +2,9 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { font } from 'emotion-styled-utils'
 
-import { getAppConfig } from '../src/frontend/appConfig'
 import Layout from '../src/frontend/components/Layout'
 import ContentWrapper from '../src/frontend/components/ContentWrapper'
-import NoSsr from '../src/frontend/components/NoSsr'
-
-const { SUPPORT_EMAIL } = getAppConfig()
+import SupportEmail from '../src/frontend/components/SupportEmail'
 
 const StyledContentWrapper = styled(ContentWrapper)`
   h1 {
@@ -55,7 +52,7 @@ export default class ErrorPage extends React.Component {
           <Explanation>
             If you keep seeing this
             error please get in touch with us at
-            <NoSsr><a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a></NoSsr>
+            <SupportEmail />
           </Explanation>
         </StyledContentWrapper>
       </Layout>
