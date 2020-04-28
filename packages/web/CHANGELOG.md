@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/hiddentao/mailmask/compare/v1.4.0...v1.5.0) (2020-04-28)
+
+
+### Features
+
+* remaining page done ([799d8a0](https://github.com/hiddentao/mailmask/commit/799d8a071176b71068df65117e1b856c35e821d3))
+* **web:** add cookie consent banner ([4ebd1ef](https://github.com/hiddentao/mailmask/commit/4ebd1efd388cdc488df7a4c735bbc1c497f343c7))
+
+
+
+
+
 # [1.4.0](https://github.com/hiddentao/mailmask/compare/v1.3.4...v1.4.0) (2020-04-17)
 
 
