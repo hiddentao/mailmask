@@ -14,6 +14,11 @@ import { Modal } from '../../Modal'
 const Container = styled.div`
   p {
     margin: 1rem 0;
+
+    strong {
+      ${font('body', 'bold')};
+      margin-right: 0.5rem;
+    }
   }
 `
 
@@ -41,7 +46,7 @@ const DeleteButton = styled(Button)`
   margin-top: 1rem;
 `
 
-const Account = ({ className }) => {
+const Account = ({ className, me }) => {
   const router = useRouter()
 
   const [ confirmDeleteModalOpen, setConfirmDeleteModalOpen ] = useState(false)
@@ -64,6 +69,9 @@ const Account = ({ className }) => {
 
   return (
     <Container className={className}>
+      <p><strong>Email:</strong>{me.usernames[0].email}</p>
+      <p><strong>Username:</strong>{me.usernames[0].username}</p>
+
       <p>If you no longer wish to use Mailmask you can delete your account.</p>
 
       <DeleteButton onClick={openConfirmDeleteModal}>Delete account</DeleteButton>

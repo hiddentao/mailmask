@@ -4,7 +4,19 @@ import {
   UserProfileResultFragment,
   UsernameAvailabilityResultFragment,
   MaskListResultFragment,
+  MonthlyStatsResultFragment,
 } from './fragments'
+
+
+export const GetMyMonthlyStatsQuery = gql`
+  ${MonthlyStatsResultFragment}
+
+  query GetMyMonthlyStats {
+    result: getMyMonthlyStats {
+      ...MonthlyStatsResultFragment
+    }
+  }
+`
 
 
 export const GetMyProfileQuery = gql`

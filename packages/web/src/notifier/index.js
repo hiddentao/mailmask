@@ -116,13 +116,13 @@ class Notifier {
       ({ expires, params } = await decrypt(v, this._cryptoParams))
     } catch (err) {
       throw new Error(
-        `Sorry, this link is invalid. ${retryMsg}`
+        `Uh oh! looks like this link is invalid. ${retryMsg}`
       )
     }
 
     if (expires <= Date.now()) {
       throw new Error(
-        `Sorry, this link has already expired. ${retryMsg}`
+        `Oh dear, this link has already expired. ${retryMsg}`
       )
     }
 

@@ -52,6 +52,10 @@ export default {
   errorBoxBgColor: red,
   errorBoxTextColor: white,
   errorBoxIconColor: yellow,
+  errorBoxAnchorTextColor: white,
+  errorBoxAnchorHoverTextColor: white,
+  errorBoxAnchorHoverBgColor: secondary,
+  errorBoxAnchorBorderBottomColor: white,
   // alertBox component
   alertBoxBgColor: opacify(tertiary, 0.3),
   alertBoxTextColor: black,
@@ -109,6 +113,9 @@ export default {
   modalOverlayBgColor: 'rgba(0, 0, 0, 0.8)',
   modalBgColor: white,
   modalTextColor: black,
+  // tooltip component
+  tooltipBgColor: black,
+  tooltipTextColor: white,
   // error page
   errorPageExplanationTextColor: darkGrey,
   errorPageStackBgColor: lightGrey,
@@ -122,6 +129,7 @@ export default {
   dashboardPageSidebarBorderColor: grey,
   dashboardPageBottomBlockBorderColor: grey,
   dashboardPageMasksTableMaskSuffixTextColor: lightGrey,
+  dashboardPageMasksTableMetaDataTextColor: grey,
   dashboardPageMasksTableMaskStatusTextColor: grey,
   dashboardPageMasksTableMaskOnIconColor: green,
   dashboardPageMasksTableMaskOffIconColor: red,

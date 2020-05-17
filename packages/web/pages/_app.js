@@ -1,4 +1,3 @@
-import LogRocket from 'logrocket'
 import React from 'react'
 import App from 'next/app'
 import Router from 'next/router'
@@ -8,15 +7,12 @@ import { loadFonts } from 'emotion-styled-utils'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-import { trackPageChange } from '../src/frontend/analytics'
-import { isProduction } from '../src/frontend/appConfig'
+import { trackPageChange, initSessionRecording } from '../src/frontend/analytics'
 import GlobalStyles from '../src/frontend/components/GlobalStyles'
 import { setupThemes } from '../src/frontend/theme'
 
 // session recording
-if (isProduction()) {
-  LogRocket.init('xiw3fx/mailmask')
-}
+initSessionRecording()
 
 // when page changes
 Router.events.on('routeChangeComplete', () => {

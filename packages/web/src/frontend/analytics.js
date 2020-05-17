@@ -1,3 +1,23 @@
+import LogRocket from 'logrocket'
+
+import { isProduction } from './appConfig'
+
+export const initSessionRecording = () => {
+  if (isProduction()) {
+    LogRocket.init('xiw3fx/mailmask')
+  }
+}
+
+
+let logRocketUid
+export const setLogRocketUid = uid => {
+  if (isProduction() && logRocketUid !== uid) {
+    logRocketUid = uid
+    LogRocket.identify(uid)
+  }
+}
+
+
 const _paq = () => {
   if (typeof window !== 'undefined') {
     return window._paq || []
@@ -36,4 +56,7 @@ export const trackEvent = (category, action, ...args) => {
 
 export const trackUser = id => {
   _paq().push([ 'setUserId', id ])
+  setLogRocketUid(id)
 }
+
+

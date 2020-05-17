@@ -20,13 +20,14 @@ const StyledModal = DefaultModal.styled`
   background-color: ${({ theme }) => theme.modalBgColor};
   color: ${({ theme }) => theme.modalTextColor};
   width: ${props => props.width || '80%'};
+  max-width: 80%;
   height: ${props => props.height || 'auto'};
   padding: 1rem;
   border-radius: 10px;
   margin-top: 50px;
 
   ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
-    width: ${props => props.width || '350px'};
+    width: ${props => props.width || '400px'};
     height: ${props => props.height || 'auto'};
   }
 `

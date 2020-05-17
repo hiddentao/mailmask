@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { toast } from 'react-toastify'
 import matchSorter from 'match-sorter'
 import { font } from 'emotion-styled-utils'
+import { _, formatDate, SUB, bytesToBandwidthStr } from '@mailmask/utils'
 import {
   useTable,
   useSortBy,
@@ -16,9 +17,15 @@ import { GetMyMasksQuery } from '../../../../graphql/queries'
 import { UpdateMaskStatusMutation } from '../../../../graphql/mutations'
 import QueryResult from '../../QueryResult'
 import TextInput from '../../TextInput'
+import { DashboardLink } from '../../Link'
 import Icon from '../../IconButton'
 
 const { DOMAIN } = getAppConfig()
+
+const TableContainer = styled.div`
+  width: 100%;
+  overflow-y: scroll;
+`
 
 const Table = styled.table`
   border: none;
@@ -28,7 +35,7 @@ const HeaderCell = styled.th`
   ${font('header')};
   padding: 1rem 0;
   text-align: left;
-  min-width: 200px;
+  min-width: 100px;
 `
 
 const GlobalFilterTextInput = styled(TextInput)`
@@ -58,11 +65,26 @@ const MaskStatusText = styled.span`
   color: ${({ theme }) => theme.dashboardPageMasksTableMaskStatusTextColor};
 `
 
-const MaskPrefix = styled.span``
+const MaskPrefix = styled.span`
+  margin-right: 0.2em;
+`
+
 const MaskSuffix = styled.span`
   font-size: 80%;
-  margin-left: 0.2em;
   color: ${({ theme }) => theme.dashboardPageMasksTableMaskSuffixTextColor};
+`
+
+const MetaData = styled.span`
+  color: ${({ theme }) => theme.dashboardPageMasksTableMetaDataTextColor};
+`
+
+const CellContent = styled.div`
+  padding-right: 2rem;
+`
+
+const UpgradeText = styled.span`
+  ${font('body', 'normal', 'italic')};
+  font-size: 70%;
 `
 
 
@@ -90,12 +112,28 @@ function fuzzyTextFilterFn (rows, id, filterValue) {
 fuzzyTextFilterFn.autoRemove = val => !val
 
 
+
+const PremiumCellContent = ({ children, me }) => {
+  if (_.get(me, 'sub.plan') !== SUB.PLAN.BASIC) {
+    return <CellContent>{children}</CellContent>
+  } else {
+    return (
+      <CellContent>
+        <UpgradeText>
+          <DashboardLink panel='plan'>upgrade</DashboardLink>
+        </UpgradeText>
+      </CellContent>
+    )
+  }
+}
+
+
 const CellRenderer = ({
   value: initialValue,
   row,
   column: { id },
   setMaskStatus,
-  myUsername,
+  me,
 }) => {
   const [ value, setValue ] = useState(initialValue)
 
@@ -109,26 +147,52 @@ const CellRenderer = ({
     setMaskStatus(row.original.name, !value)
   }, [ value, row, setMaskStatus ])
 
-  if ('enabled' === id) {
-    const iconName = value ? 'check-circle' : 'times-circle'
+  switch (id) {
+    case 'enabled': {
+      const iconName = value ? 'check-circle' : 'times-circle'
 
-    return (
-      <span>
-        <ToggleButton isOn={value} icon={{ name: iconName }} onClick={onToggle} />
-        <MaskStatusText>{value ? 'email will be sent to you' : 'email will be BLOCKED'}</MaskStatusText>
-      </span>
-    )
-  } else {
-    return (
-      <span>
-        <MaskPrefix>
-          {value}
-        </MaskPrefix>
-        <MaskSuffix>
-          @{myUsername}.{DOMAIN}
-        </MaskSuffix>
-      </span>
-    )
+      return (
+        <CellContent>
+          <ToggleButton isOn={value} icon={{ name: iconName }} onClick={onToggle} />
+          <MaskStatusText>{value ? 'ON' : 'OFF'}</MaskStatusText>
+        </CellContent>
+      )
+    }
+    case 'name': {
+      return (
+        <CellContent>
+          <MaskPrefix>
+            {value}
+          </MaskPrefix>
+          <MaskSuffix>
+            @{row.original.username}.{DOMAIN}
+          </MaskSuffix>
+        </CellContent>
+      )
+    }
+    case 'numMessages': {
+      return (
+        <PremiumCellContent me={me}>
+          <MetaData>{value || 0}</MetaData>
+        </PremiumCellContent>
+      )
+    }
+    case 'numBytes': {
+      return (
+        <PremiumCellContent me={me}>
+          <MetaData>{bytesToBandwidthStr(value)}</MetaData>
+        </PremiumCellContent>
+      )
+    }
+    case 'lastReceived': {
+      return (
+        <PremiumCellContent me={me}>
+          <MetaData>{value ? formatDate(new Date(value), 'MMM d, yyyy') : '-'}</MetaData>
+        </PremiumCellContent>
+      )
+    }
+    default:
+      return <CellContent>{value}</CellContent>
   }
 }
 
@@ -138,11 +202,13 @@ const defaultColumn = {
 }
 
 
-const MaskTable = ({ items, setMaskStatus, myUsername }) => {
-  const data = useMemo(() => items.map(({ name, enabled }) => {
+const MaskTable = ({ items, setMaskStatus, me }) => {
+  const data = useMemo(() => items.map(({ name, enabled, stats, username }) => {
     return {
       name,
       enabled,
+      username: username.username,
+      ...stats,
     }
   }), [ items ])
 
@@ -152,9 +218,21 @@ const MaskTable = ({ items, setMaskStatus, myUsername }) => {
       accessor: 'name'
     },
     {
-      Header: 'Status',
+      Header: 'Enabled',
       accessor: 'enabled',
-    }
+    },
+    {
+      Header: 'Count',
+      accessor: 'numMessages',
+    },
+    {
+      Header: 'Bandwidth',
+      accessor: 'numBytes',
+    },
+    {
+      Header: 'Last received',
+      accessor: 'lastReceived',
+    },
   ], [])
 
   const filterTypes = React.useMemo(
@@ -171,7 +249,6 @@ const MaskTable = ({ items, setMaskStatus, myUsername }) => {
     headerGroups,
     rows,
     state,
-    visibleColumns,
     prepareRow,
     preGlobalFilteredRows,
     setGlobalFilter,
@@ -181,52 +258,52 @@ const MaskTable = ({ items, setMaskStatus, myUsername }) => {
     defaultColumn,
     filterTypes,
     setMaskStatus,
-    myUsername,
+    me,
   }, useGlobalFilter, useSortBy)
 
   return (
-    <Table {...getTableProps()} cellSpacing="20">
-      <thead>
-        <tr>
-          <th colSpan={visibleColumns.length}>
-            <GlobalFilter
-              preGlobalFilteredRows={preGlobalFilteredRows}
-              globalFilter={state.globalFilter}
-              setGlobalFilter={setGlobalFilter}
-            />
-          </th>
-        </tr>
-        {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <HeaderCell {...column.getHeaderProps(column.getSortByToggleProps())}>
-                {column.render('Header')}
-                <span>
-                  {/* eslint-disable-next-line no-nested-ternary */}
-                  {column.isSorted
-                    ? column.isSortedDesc
-                      ? ' 🔽'
-                      : ' 🔼'
-                    : ''}
-                </span>
-              </HeaderCell>
+    <div>
+      <GlobalFilter
+        preGlobalFilteredRows={preGlobalFilteredRows}
+        globalFilter={state.globalFilter}
+        setGlobalFilter={setGlobalFilter}
+      />
+      <TableContainer>
+        <Table {...getTableProps()} cellSpacing="20">
+          <thead>
+            {headerGroups.map(headerGroup => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map(column => (
+                  <HeaderCell {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    {column.render('Header')}
+                    <span>
+                      {/* eslint-disable-next-line no-nested-ternary */}
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? ' 🔽'
+                          : ' 🔼'
+                        : ''}
+                    </span>
+                  </HeaderCell>
+                ))}
+              </tr>
             ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row, index) => {
-          prepareRow(row)
-          return (
-            <DataRow {...row.getRowProps()} isEven={index % 2 === 0}>
-              {row.cells.map(cell => {
-                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-              })}
-            </DataRow>
-          )
-        })}
-      </tbody>
-    </Table>
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row, index) => {
+              prepareRow(row)
+              return (
+                <DataRow {...row.getRowProps()} isEven={index % 2 === 0}>
+                  {row.cells.map(cell => {
+                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  })}
+                </DataRow>
+              )
+            })}
+          </tbody>
+        </Table>
+      </TableContainer>
+    </div>
   )
 }
 
@@ -234,7 +311,7 @@ const MaskTable = ({ items, setMaskStatus, myUsername }) => {
 const Container = styled.div``
 
 
-const Masks = ({ className, username }) => {
+const Masks = ({ className, me }) => {
   const query = useSafeQuery(GetMyMasksQuery, {
     variables: {
       paging: {
@@ -262,7 +339,7 @@ const Masks = ({ className, username }) => {
   return (
     <Container className={className}>
       <QueryResult {...query}>
-        {({ result }) => <MaskTable {...result} setMaskStatus={setMaskStatus} myUsername={username} />}
+        {({ result }) => <MaskTable {...result} setMaskStatus={setMaskStatus} me={me} />}
       </QueryResult>
     </Container>
   )

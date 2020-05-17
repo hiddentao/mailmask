@@ -1,23 +1,23 @@
 /* eslint-disable func-names */
-const _ = require('lodash')
-const { simpleParser } = require('mailparser')
 const { createTracer } = require('@mailmask/log')
 const Mailer = require('@mailmask/mailgun')
 const { DB } = require('@mailmask/data')
-const { obfuscate } = require('@mailmask/utils')
+const { _, obfuscate } = require('@mailmask/utils')
 
 const config = require('../../config')
 const {
   extractRecipients,
-  getUsers,
-  saveNewMasks,
+  resolveMasks,
+  updateMaskStats,
   buildSenderStr,
+  parseMail,
 } = require('./utils')
 
 let mailer
 let db
 
 const tracer = createTracer('mailmask-mta', { config })
+
 
 exports.register = function () {
   this.register_hook('init_master', 'msk_setup')
@@ -55,21 +55,17 @@ exports.msk_setup = function (next) {
 }
 
 
+
 exports.msk_queue_handler = async (next, connection) => {
   const span = tracer.startTrace(`msk_queue_handler`, { type: 'queue' })
 
   try {
-    const txFrom = _.get(connection, 'transaction.mail_from.user')
-    const incomingMsg = _.get(connection, 'transaction.message_stream.write_ce.bufs')
+    const txFrom = connection.transaction.mail_from.user
+    const numBytes = connection.transaction.data_bytes
 
-    const parsed = await span.withAsyncSpan('parse', () => {
-      return simpleParser(Buffer.concat(incomingMsg), {
-        skipHtmlToText: true,
-        skipImageLinks: true,
-        skipTextToHtml: true,
-        skipTextLinks: true,
-      })
-    })
+    span.addFields({ numBytes })
+
+    const parsed = await span.withAsyncSpan('parse', () => parseMail(connection.transaction.message_stream))
 
     const senderAddress = _.get(parsed, 'from.value.0.address', txFrom)
     const senderName = buildSenderStr(_.get(parsed, 'from.text', txFrom))
@@ -95,16 +91,15 @@ exports.msk_queue_handler = async (next, connection) => {
     })
 
     // get matching users
-    const users = await getUsers({ span, db }, recipients)
-
-    const userData = Object.values(users)
+    const resolvedMasks = await resolveMasks({ span, db }, recipients)
+    const masks = Object.values(resolvedMasks)
 
     span.addFields({
-      numFinalRecipients: userData.length
+      numFinalRecipients: masks.length
     })
 
     // if we have users to send to
-    if (userData.length) {
+    if (masks.length) {
       const baseMsg = {
         from: `"${senderName}" <${config.ALIAS_SENDER_EMAIL}>`,
         replyTo: senderAddress,
@@ -114,29 +109,29 @@ exports.msk_queue_handler = async (next, connection) => {
 
       // do it!
       await Promise.all(
-        userData.map(u => span.withAsyncSpan('send', async ({ span: sendSpan }) => {
+        masks.map(m => span.withAsyncSpan('send', async ({ span: sendSpan }) => {
           sendSpan.addFields({
-            uid: u.id,
+            uid: m.userId,
           })
 
           const msg = {
             ...baseMsg,
-            to: u.email,
+            to: m.email,
           }
 
           if (text) {
-            msg.text = `(Originally sent to ${u.maskEmail} and forwarded to you by MailMask. You can turn this mask off in your dashboard at https://msk.sh/dashboard)\n\n${text}`
+            msg.text = `(Originally sent to ${m.maskEmail} and forwarded to you by MailMask. You can turn this mask off in your dashboard at https://msk.sh/dashboard)\n\n${text}`
           }
 
           if (html) {
-            msg.html = `<p><strong>(Originally sent to ${u.maskEmail} and forwarded to you by MailMask. You can turn this mask off in your dashboard at <a href="https://msk.sh/dashboard">https://msk.sh/dashboard</a>)</strong></p><br />${html}`
+            msg.html = `<p><strong>(Originally sent to ${m.maskEmail} and forwarded to you by MailMask. You can turn this mask off in your dashboard at <a href="https://msk.sh/dashboard">https://msk.sh/dashboard</a>)</strong></p><br />${html}`
           }
 
           await sendSpan.withAsyncSpan('send via mailer', () => mailer.send(msg))
         }))
       )
 
-      await saveNewMasks({ span, db }, users)
+      await updateMaskStats({ span, db }, masks, numBytes)
     }
 
     span.finish()

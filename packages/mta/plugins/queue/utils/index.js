@@ -1,4 +1,13 @@
-const { _, parseMaskEmailAddress, parseEmailAddress } = require('@mailmask/utils')
+const { simpleParser } = require('mailparser')
+
+const {
+  _,
+  formatISO,
+  parseMaskEmailAddress,
+  parseEmailAddress,
+} = require('@mailmask/utils')
+
+exports.log = console.log.bind(console)
 
 exports.buildSenderStr = senderStr => {
   const { address: senderAddress, name: senderName } = (parseEmailAddress(senderStr) || {})
@@ -27,107 +36,136 @@ exports.extractRecipients = ({ to, cc, bcc }) => {
   return Object.keys(map)
 }
 
-exports.getUsers = async ({ span: rootSpan, db }, recipients) => {
-  return rootSpan.withAsyncSpan('get users', async ({ span }) => {
-    // we use hashmap to ensure we avoid duplicate users
-    const users = {}
+exports.resolveMasks = async ({ span: rootSpan, db }, recipients) => {
+  return rootSpan.withAsyncSpan('resolve masks', async ({ span }) => {
+    // we use hashmap to ensure we avoid duplicate names
+    const usernames = {}
 
     recipients.forEach(a => {
       // normalize it
       a = a.toLowerCase()
       // parse format: mask@username.msk.sh
       const { username, mask } = parseMaskEmailAddress(a)
-      // note that only the last mask for the user counts (this helps prevent mass mask spam)
-      users[username] = { mask, maskEmail: a }
-    })
-
-    span.addFields({
-      numUniqueUsernames: Object.keys(users).length
-    })
-
-    // for the final list
-    const finalUsers = {}
-
-    // now get status of each mask
-    await Promise.all(Object.keys(users).map(username => {
-      return span.withAsyncSpan('get mask status', async ({ span: innerSpan }) => {
-        const { mask, maskEmail } = users[username]
-
-        // check that user exists
-        const userObj = await innerSpan.withAsyncSpan(
-          'check user exists',
-          { username },
-          () => db.getUserByUsername(username)
-        )
-
-        if (userObj) {
-          const ret = await innerSpan.withAsyncSpan(
-            'get mask status',
-            {
-              username,
-              mask,
-            },
-            () => db.getMaskStatuses(username, [ mask ])
-          )
-
-          // if enabled OR is new
-          if (_.get(ret, '0.enabled') || !ret.length) {
-            finalUsers[username] = {
-              id: userObj.id,
-              email: userObj.email,
-              mask,
-              maskEmail,
-              isNew: !ret.length,
-            }
-          } else {
-            innerSpan.addFields({
-              noMasks: true
-            })
-          }
-        }
-      })
-    }))
-
-    return finalUsers
-  })
-}
-
-exports.saveNewMasks = async ({ span: rootSpan, db }, users) => {
-  return rootSpan.withAsyncSpan('save new masks', async ({ span }) => {
-    const finalToAdd = {}
-    let numMasks = 0
-
-    Object.keys(users).forEach(username => {
-      const { id, mask, isNew } = users[username]
-
-      if (isNew) {
-        finalToAdd[username] = {
-          id,
-          mask,
-        }
-
-        numMasks += 1
+      // add to list
+      usernames[username] = usernames[username] || {}
+      usernames[username][mask] = { maskEmail: a }
+      // if too many masks for one username then it might be spam :/
+      if (Object.keys(usernames[username]).length > 5) {
+        throw new Error(`Too many masks for username: ${username}`)
       }
     })
 
     span.addFields({
-      numUsers: Object.keys(finalToAdd).length,
-      numMasks,
+      numUniqueUsernames: Object.keys(usernames).length
     })
 
-    await Promise.all(Object.keys(finalToAdd).map(async username => {
-      return span.withAsyncSpan('save masks for user', async ({ span: innerSpan }) => {
-        const { id, mask } = finalToAdd[username]
+    // now for the final list
+    const final = {}
 
-        await innerSpan.withAsyncSpan(
-          'save to db',
+    // now get status of each mask
+    await Promise.all(Object.keys(usernames).map(async username => {
+      const maskNames = Object.keys(usernames[username])
+
+      await span.withAsyncSpan(
+        'get possible masks',
+        {
+          username,
+          numMasks: maskNames.length,
+        },
+        async ({ span: innerSpan }) => {
+          await Promise.all(maskNames.map(async mask => {
+            const { maskEmail } = usernames[username][mask]
+
+            // get mask status
+            const maskStatus = await innerSpan.withAsyncSpan(
+              'get mask status',
+              {
+                username,
+                mask,
+              },
+              () => db.getPossibleMask(username, mask)
+            )
+
+            // if mask is enabled OR is new
+            if (maskStatus && (!maskStatus.mask || maskStatus.enabled)) {
+              final[username] = final[username] || {
+                userId: maskStatus.userId,
+                usernameId: maskStatus.usernameId,
+                maskEmail,
+                email: maskStatus.email,
+                // to keep track of all ENABLED masks which are encountered
+                masksToUpdate: [],
+              }
+              // add to mask list for this username
+              final[username].masksToUpdate.push({
+                mask,
+                isNew: !maskStatus.mask,
+              })
+            } else {
+              innerSpan.addFields({
+                noMasks: true
+              })
+            }
+          }))
+        }
+      )
+    }))
+
+    return final
+  })
+}
+
+exports.updateMaskStats = async ({ span: rootSpan, db }, masks, numBytes) => {
+  return rootSpan.withAsyncSpan('update mask stats', async ({ span }) => {
+    await Promise.all(Object.keys(masks).map(async username => {
+      const { usernameId, masksToUpdate } = masks[username]
+
+      await Promise.all(masksToUpdate.map(async ({ mask, isNew }) => {
+        await span.withAsyncSpan(
+          'update mask stats',
           {
-            id,
+            username,
             mask,
+            isNew,
           },
-          () => db.saveNewMasks(id, [ mask ])
+          () => db.updateMaskStatsForReceivedEmail({
+            usernameId,
+            mask,
+            numBytes,
+            receivedAt: formatISO(new Date())
+          })
         )
-      })
+      }))
     }))
   })
 }
+
+
+
+exports.parseMail = async messageStream => {
+  const parsed = await simpleParser(messageStream, {
+    skipHtmlToText: true,
+    skipImageLinks: true,
+    skipTextToHtml: true,
+    skipTextLinks: true,
+  })
+  // const parsed = await new Promise((resolve, reject) => {
+  //   const mailParser = new MailParser()
+  //   mailParser.on('end', resolve)
+  //   mailParser.on('error', reject)
+  //   mailParser.write(messageStream)
+  //   mailParser.end()
+  // })
+
+  return {
+    from: parsed.from,
+    to: parsed.to,
+    cc: parsed.cc || [],
+    bcc: parsed.bcc || [],
+    text: parsed.text,
+    html: parsed.html,
+    subject: parsed.subject,
+    attachments: parsed.attachments || [],
+  }
+}
+

@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { _, SUB } from '@mailmask/utils'
 
 import { withApollo } from '../src/frontend/hoc'
 import Layout from '../src/frontend/components/Layout'
@@ -21,17 +22,17 @@ const LoggedInPage = () => {
       <Seo title='Logged-in' />
       <ContentWrapper>
         <Authenticated>
-          {({ signedUp }) => (signedUp ? (
+          {({ sub: { status } }) => (status !== SUB.STATUS.SELECTED ? (
             <div>
               <Heading>Welcome back! you are now logged in.</Heading>
               <DashboardLink><Button>View my dashboard</Button></DashboardLink>
             </div>
           ) : (
-              <div>
-                <Heading>Please set your username to finish signing up.</Heading>
-                <CompleteSignupForm />
-              </div>
-            ))}
+            <div>
+              <Heading>Please set your username to finish signing up.</Heading>
+              <CompleteSignupForm />
+            </div>
+          ))}
         </Authenticated>
       </ContentWrapper>
     </Layout>

@@ -1,6 +1,6 @@
 /* eslint-disable func-names */
+const { LEGAL } = require('@mailmask/utils')
 const { addTimestampColumns, schema } = require('./utils')
-const { LEGAL } = require('../lib/constants')
 
 exports.up = async function (knex) {
   await knex.raw('create extension if not exists "uuid-ossp"')
@@ -33,7 +33,7 @@ exports.up = async function (knex) {
     table.uuid('legal_id').notNullable()
     addTimestampColumns(knex, table)
     table.unique([ 'user_id', 'legal_id' ])
-    table.foreign('user_id').references('user.id').onUpdate('RESTRICT').onDelete('CASCADE')
+    table.foreign('user_id').references('user.id').onUpdate('RESTRICT').onDelete('RESTRICT')
     table.foreign('legal_id').references('legal.id').onUpdate('RESTRICT').onDelete('RESTRICT')
   })
 

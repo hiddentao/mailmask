@@ -26,7 +26,7 @@ const Question = styled.p`
   line-height: 1.2em;
   color: ${({ theme }) => theme.faqItemQuestionTextColor};
 
-  span {
+  & > span {
     margin-left: 0.5em;
   }
 `

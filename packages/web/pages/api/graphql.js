@@ -2,7 +2,7 @@ import { renderPlaygroundPage } from '@apollographql/graphql-playground-html'
 import { convertNodeHttpToRequest, runHttpQuery } from 'apollo-server-core'
 import { _ } from '@mailmask/utils'
 
-import { createSchema } from '../../src/graphql'
+import { createSchema } from '../../src/graphql/server'
 import { doBootstrap } from '../../src/bootstrap'
 
 const { wrapMiddleware, ...server } = doBootstrap()

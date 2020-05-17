@@ -5,14 +5,16 @@ import {
   CompleteSignupResultFragment,
   UpdateMaskStatusResultFragment,
   DeleteAccountResultFragment,
+  PreparePlanResultFragment,
 } from './fragments'
+
 
 
 export const RequestLoginLinkMutation = gql`
   ${RequestLoginLinkResultFragment}
 
-  mutation RequestLoginLink ($email: String!) {
-    result: requestLoginLink (email: $email) {
+  mutation RequestLoginLink ($loginLinkRequest: LoginLinkRequestInput!) {
+    result: requestLoginLink (loginLinkRequest: $loginLinkRequest) {
       ...RequestLoginLinkResultFragment
     }
   }
@@ -26,6 +28,18 @@ export const CompleteSignupMutation = gql`
   mutation CompleteSignupMutation ($signUp: SignUpInput!) {
     result: completeSignup (signUp: $signUp) {
       ...CompleteSignupResultFragment
+    }
+  }
+`
+
+
+
+export const PreparePlanMutation = gql`
+  ${PreparePlanResultFragment}
+
+  mutation PreparePlanMutation ($preparePlanRequest: PreparePlanRequestInput!) {
+    result: preparePlan (preparePlanRequest: $preparePlanRequest) {
+      ...PreparePlanResultFragment
     }
   }
 `

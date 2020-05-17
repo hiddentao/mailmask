@@ -1,6 +1,8 @@
 const { _ } = require('@mailmask/utils')
 const knex = require('knex')
+const knexHooks = require('knex-hooks')
 
+const { tsStr } = require('./utils')
 const { getConfig: getDbConfig } = require('../knexfile')
 const userMethods = require('./users')
 const maskMethods = require('./masks')
@@ -28,14 +30,18 @@ class Db {
         this[methodName] = fn.bind(this)
       })
     })
+
+    knexHooks(this._knex)
+
+    // update the "updated_at" in all update queries
+    this._knex.addHook('before', 'update', '*', (_ignore, __ignore, ___ignore, params) => {
+      const updateData = knexHooks.helpers.getUpdateData(params.query)
+      updateData.updated_at = tsStr()
+    })
   }
 
   async shutdown () {
     await this._knex.destroy()
-  }
-
-  tsStr () {
-    return new Date().toISOString()
   }
 
   _db () {
@@ -56,6 +62,13 @@ class Db {
         await trx.rollback(err)
       }
     })
+  }
+
+  _extractPrefixedValues (row, prefix, keys) {
+    return keys.reduce((m, v) => {
+      m[v] = row[`${prefix}${v.charAt(0).toUpperCase()}${v.substr(1)}`]
+      return m
+    }, {})
   }
 
   _extractReturnedDbIds (rows) {

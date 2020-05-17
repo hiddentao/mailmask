@@ -1,15 +1,19 @@
-import React, { useMemo, useCallback, useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import styled from '@emotion/styled'
 import { flex, font } from 'emotion-styled-utils'
+import { SUB } from '@mailmask/utils'
 
 import { FAQ } from '../src/frontend/constants'
 import { withApollo } from '../src/frontend/hoc'
 import { FaqLink } from '../src/frontend/components/Link'
 import Layout from '../src/frontend/components/Layout'
 import ContentWrapper from '../src/frontend/components/ContentWrapper'
+import Button from '../src/frontend/components/Button'
 import GetStartedForm from '../src/frontend/components/GetStartedForm'
+import PricingSelection from '../src/frontend/components/PricingSelection'
 import FaqBlock from '../src/frontend/components/FaqBlock'
 import Seo from '../src/frontend/components/Seo'
+import { Modal } from '../src/frontend/components/Modal'
 
 const Container = styled.div`
   ${flex({ direction: 'column', justify: 'center', align: 'center' })};
@@ -17,109 +21,20 @@ const Container = styled.div`
 
 const H1 = styled.h1`
   text-align: center;
+  margin-bottom: 3rem;
 `
 
-const Intro = styled.p`
-  text-align: center;
-  ${font('body')};
-  font-size: 1.2rem;
-  margin: 3rem 0;
-
-  strong {
-    ${font('body', 'bold')};
-  }
-`
-
-const ScheduleBar = styled.div`
-  ${flex({ direction: 'row', justify: 'center', align: 'stretch' })};
+const StyledPricingSelection = styled(PricingSelection)`
+  flex: 0;
   margin: 1rem 0 3rem;
-  background-color: ${({ theme }) => theme.pricingPageScheduleBgColor};
-  border: 1px solid ${({ theme }) => theme.pricingPageScheduleBorderColor};
-  border-radius: 5px;
-`
-
-const Schedule = styled.div`
-  font-size: 1.5rem;
-  padding: 0.6em 1em;
-  color: ${({ theme, selected }) => (selected ? theme.pricingPageSelectedScheduleTextColor : theme.pricingPageScheduleTextColor)};
-  background-color: ${({ theme, selected }) => (selected ? theme.pricingPageSelectedScheduleBgColor : theme.pricingPageScheduleBgColor)};
-  text-align: center;
-  cursor: pointer;
-
-  small {
-    display: inline-block;
-    font-size: 70%;
-  }
-`
-
-const Package = styled.div`
-  margin-bottom: 2rem;
-`
-
-const PackageDetails = styled.div`
-  ${flex({ direction: 'column', justify: 'center', align: 'stretch' })};
-  border: 1px solid ${({ theme }) => theme.pricingPagePackageBorderColor};
-  border-radius: 5px;
-  margin-bottom: 1rem;
-`
-
-const PriceContainer = styled.div`
-  ${flex({ direction: 'column', justify: 'center', align: 'center' })};
-  padding: 1rem;
-`
-
-const PriceOriginal = styled.span`
-  color: ${({ theme }) => theme.pricingPageOriginalPriceTextColor};
-  font-size: 80%;
-  ${font('body', 'thin')};
-  background: linear-gradient(155deg,#ffffff 46%,#f00 47%, #f00 53%, #ffffff 54%);
-`
-
-const PriceNumber = styled.div`
-  font-size: 5rem;
-`
-
-const PriceCurrency = styled.span`
-  font-size: 50%;
-`
-
-const PriceSchedule = styled.div`
-  text-align: center;
-  ${font('body', 'regular', 'italic')};
-  color: ${({ theme }) => theme.pricingPagePriceScheduleTextColor};
-`
-
-const BenefitList = styled.ul`
-  display: block;
-`
-const Benefit = styled.li`
-  display: block;
-  text-align: center;
-  padding: 1rem;
-  border-top: 1px solid ${({ theme }) => theme.pricingPageBenefitBorderColor};
-
-  em {
-    ${font('body', 'bold')};
-  }
-`
-
-const SignUpContainer = styled.div`
-  p {
-    margin-bottom: 2rem;
-
-    strong {
-      ${font('body', 'bold')};
-    }
-  }
 `
 
 const StyledGetStartedForm = styled(GetStartedForm)`
-  margin: 0 auto;
-  width: 100%;
+  margin: 1rem 0 0;
+`
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
-    width: 80%;
-  }
+const SignupButtonContainer = styled.div`
+  ${flex({ direction: 'column', justify: 'center', align: 'center' })};
 `
 
 const FaqContainer = styled.div`
@@ -151,27 +66,37 @@ const StyledFaqBlock = styled(FaqBlock)`
   }
 `
 
-const BASE_PRICE = 5
+const SignupModalContainer = styled.div`
+  ${flex({ direction: 'column', justify: 'flex-start', align: 'center' })};
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+`
+
+const ModalP = styled.p`
+  ${font('body')};
+  margin-bottom: 1rem;
+`
+
+const ModalSelectedPlan = styled.p`
+  ${font('body', 'bold')};
+  font-size: 140%;
+  margin-bottom: 2rem;
+`
+
 
 const PricingPage = () => {
-  const [ selectedSchedule, setSelectedSchedule ] = useState('yearly')
+  const [ selectedPlan, setSelectedPlan ] = useState()
+  const [ selectedSchedule, setSelectedSchedule ] = useState()
+  const [ signupModalOpen, setSignupModalOpen ] = useState(false)
 
-  const originalPrice = useMemo(() => {
-    if ('yearly' === selectedSchedule) {
-      return BASE_PRICE * 12
-    }
-  }, [ selectedSchedule ])
+  const openSignupModal = useCallback((plan, schedule) => {
+    setSelectedPlan(plan)
+    setSelectedSchedule(schedule)
+    setSignupModalOpen(true)
+  }, [])
 
-  const finalPrice = useMemo(() => {
-    if ('yearly' === selectedSchedule) {
-      return (BASE_PRICE * 12) * 0.8
-    } else {
-      return BASE_PRICE
-    }
-  }, [ selectedSchedule ])
-
-  const setMonthlySchedule = useCallback(() => setSelectedSchedule('monthly'), [])
-  const setYearlySchedule = useCallback(() => setSelectedSchedule('yearly'), [])
+  const closeSignupModal = useCallback(() => setSignupModalOpen(false), [])
 
   return (
     <Layout>
@@ -179,44 +104,15 @@ const PricingPage = () => {
       <ContentWrapper>
         <Container>
           <H1>Pricing</H1>
-          <Intro>All our pricing plans start with a <strong>30-day FREE trial</strong>.</Intro>
-          <ScheduleBar>
-            <Schedule
-              selected={selectedSchedule === 'monthly'}
-              onClick={setMonthlySchedule}
-            >
-              Monthly
-            </Schedule>
-            <Schedule
-              selected={selectedSchedule === 'yearly'}
-              onClick={setYearlySchedule}
-            >
-              Yearly <small>(20% off)</small>
-            </Schedule>
-          </ScheduleBar>
-          <Package>
-            <PackageDetails>
-              <PriceContainer>
-                <PriceNumber>
-                  {originalPrice ? (
-                    <PriceOriginal><PriceCurrency>$</PriceCurrency>{originalPrice}</PriceOriginal>
-                  ) : null}
-                  <PriceCurrency>$</PriceCurrency>
-                  {finalPrice}
-                </PriceNumber>
-                <PriceSchedule>per {selectedSchedule === 'monthly' ? 'month' : 'year'}</PriceSchedule>
-              </PriceContainer>
-              <BenefitList>
-                <Benefit><em>Unlimited</em> email masks</Benefit>
-                <Benefit>Mobile-friendly dashboard</Benefit>
-                <Benefit>Total email privacy</Benefit>
-              </BenefitList>
-            </PackageDetails>
-          </Package>
-          <SignUpContainer>
-            <p>Sign up for your 30-day FREE trial now. <strong>No credit card needed:</strong></p>
-            <StyledGetStartedForm />
-          </SignUpContainer>
+          <StyledPricingSelection renderPlanFooter={(plan, schedule) =>
+            <SignupButtonContainer>
+              {plan !== SUB.PLAN.PRO ? (
+                <Button onClick={() => openSignupModal(plan, schedule)}>Sign up</Button>
+              ) : (
+                <Button disabled={true}>Coming soon...</Button>
+              )}
+            </SignupButtonContainer>
+          }/>
         </Container>
         <FaqContainer>
           <h2>Frequently asked questions</h2>
@@ -226,6 +122,15 @@ const PricingPage = () => {
           </FaqBlocks>
           <p>For more answers, please visit our <FaqLink>FAQ page</FaqLink>.</p>
         </FaqContainer>
+
+        <Modal isOpen={signupModalOpen} onBackgroundClick={closeSignupModal} width='500px'>
+          <SignupModalContainer>
+            <ModalSelectedPlan>Plan: {selectedPlan}, paid {selectedSchedule}</ModalSelectedPlan>
+            <ModalP>Enter your email address to sign up:</ModalP>
+            <StyledGetStartedForm plan={selectedPlan} schedule={selectedSchedule} />
+          </SignupModalContainer>
+        </Modal>
+
       </ContentWrapper>
     </Layout>
   )

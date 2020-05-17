@@ -44,6 +44,10 @@ export default class MyDocument extends Document {
           <script type="text/javascript" dangerouslySetInnerHTML={{ __html: `
             window.$crisp=[];window.CRISP_WEBSITE_ID="445bc5b9-ca21-4e22-bae8-0b85244b6efa";(function(){d = document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
           ` }}></script>
+          <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
+          <script type="text/javascript" dangerouslySetInnerHTML={{ __html: `
+            Paddle.Setup({ vendor: ${appConfig.PADDLE_VENDOR_ID} });
+          ` }}></script>
         </Head>
         <body>
           <Main />

@@ -27,7 +27,7 @@ const SubmitButton = styled(Button)`
   margin-left: 0.5rem;
 `
 
-const GetStartedForm = ({ className, buttonText = 'Signup' }) => {
+const GetStartedForm = ({ className, buttonText = 'Sign up', plan, schedule }) => {
   const router = useRouter()
   const [ email, setEmail ] = useState('')
   const [ isValid, setIsValid ] = useState(false)
@@ -49,16 +49,20 @@ const GetStartedForm = ({ className, buttonText = 'Signup' }) => {
 
     const ret = await doRequest({
       variables: {
-        email,
+        loginLinkRequest: {
+          email,
+          plan,
+          schedule,
+        }
       }
     })
 
     if (_.get(ret, 'data.result.success')) {
-      trackEvent('signup', 'RequestedSignUpEmail')
+      trackEvent('signup', 'RequestedLoginEmail')
 
       router.replace('/await-email')
     }
-  }, [ email, isValid, doRequest, router ])
+  }, [ plan, email, isValid, doRequest, router, schedule ])
 
   return (
     <Container className={className}>
@@ -67,7 +71,7 @@ const GetStartedForm = ({ className, buttonText = 'Signup' }) => {
           type="email"
           value={email}
           onChange={updateEmail}
-          placeholder='Enter email address...'
+          placeholder='Email address...'
         />
         <SubmitButton
           loading={result.loading}

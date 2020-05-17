@@ -22,10 +22,6 @@ const GlobalStyles = () => {
         html {
           ${font('body')};
           font-size: 16px;
-
-          ${theme.media.when({ minW: 'mobile' })} {
-            font-size: 16px;
-          }
         }
 
         a {

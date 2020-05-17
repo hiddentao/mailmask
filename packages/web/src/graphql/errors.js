@@ -7,6 +7,12 @@ export const ERROR_CODES = Object.keys(codes).reduce((m, v) => {
   return m
 }, {})
 
+export const throwError = (code = ERROR_CODES.UNKNOWN, message = '') => {
+  const e = new Error(message || codes.messages[code])
+  e.code = code
+  throw e
+}
+
 export const createErrorResponse = (code = ERROR_CODES.UNKNOWN, message = '') => {
   return {
     error: {

@@ -6,6 +6,17 @@ export const getTypeDefs = () => gql`
   scalar DateTime
   scalar JSON
 
+  enum PlanType {
+    BASIC
+    PREMIUM
+    PRO
+  }
+
+  enum ScheduleType {
+    MONTHLY
+    YEARLY
+  }
+
   type PagedResult {
     page: Int!
     totalResults: Int!
@@ -25,26 +36,62 @@ export const getTypeDefs = () => gql`
     success: Boolean
   }
 
+  type Subscription {
+    id: ID!
+    createdAt: DateTime!
+    plan: PlanType!
+    schedule: ScheduleType!
+    status: String!
+    nextPaymentAmount: String
+    nextPaymentDate: DateTime
+  }
+
+  type LegalAgreement {
+    id: ID!
+    type: String!
+    version: Int!
+    accepted: DateTime!
+  }
+
+  type Username {
+    id: ID!
+    username: String!
+    email: String!
+  }
+
   type UserProfile {
     id: ID!
     email: String!
-    username: String!
-    signedUp: Boolean!
-    createdAt: DateTime!
+    sub: Subscription
+    usernames: [Username]
+    legal: [LegalAgreement]
   }
 
   type UsernameAvailability {
     available: Boolean
   }
 
+  type MaskStats {
+    period: String!
+    numBytes: Int
+    numMessages: Int
+    lastReceived: DateTime
+  }
+
   type Mask {
     name: String!
     enabled: Boolean!
+    username: Username!
+    stats: MaskStats
   }
 
   type MaskList {
     items: [Mask]!
     paging: PagedResult!
+  }
+
+  type MonthlyStats {
+    maskStats: MaskStats!
   }
 
   input SignUpInput {
@@ -56,17 +103,31 @@ export const getTypeDefs = () => gql`
     resultsPerPage: Int
   }
 
+  input LoginLinkRequestInput {
+    email: String!
+    plan: PlanType
+    schedule: ScheduleType
+  }
+
+  input PreparePlanRequestInput {
+    plan: PlanType!
+    schedule: ScheduleType!
+  }
+
   union RequestLoginLinkResult = Success | Error
   union CompleteSignupResult = Success | Error
   union UpdateMaskStatusResult = Success | Error
+  union PreparePlanResult = Subscription | Error
   union DeleteAccountResult = Success | Error
   union UserProfileResult = UserProfile | Error
   union UsernameAvailabilityResult = UsernameAvailability | Error
   union MaskListResult = MaskList | Error
+  union MonthlyStatsResult = MonthlyStats | Error
 
   type Mutation {
-    requestLoginLink (email: String!): RequestLoginLinkResult!
+    requestLoginLink (loginLinkRequest: LoginLinkRequestInput!): RequestLoginLinkResult!
     completeSignup (signUp: SignUpInput!): CompleteSignupResult!
+    preparePlan (preparePlanRequest: PreparePlanRequestInput!): PreparePlanResult!
     updateMaskStatus (name: String!, enabled: Boolean!): UpdateMaskStatusResult!
     deleteAccount: DeleteAccountResult!
   }
@@ -74,6 +135,7 @@ export const getTypeDefs = () => gql`
   type Query {
     getMyProfile: UserProfileResult!
     getMyMasks (paging: PagingInput!): MaskListResult!
+    getMyMonthlyStats: MonthlyStatsResult!
     getUsernameAvailability (username: String!): UsernameAvailabilityResult!
   }
 `
@@ -83,9 +145,11 @@ const UNIONS = [
   [ 'CompleteSignupResult', 'Success' ],
   [ 'UpdateMaskStatusResult', 'Success' ],
   [ 'DeleteAccountResult', 'Success' ],
+  [ 'PreparePlanResult', 'Subscription' ],
   [ 'UserProfileResult', 'UserProfile' ],
   [ 'UsernameAvailabilityResult', 'UsernameAvailability' ],
   [ 'MaskListResult', 'MaskList' ],
+  [ 'MonthlyStatsResult', 'MonthlyStats' ],
 ]
 
 export const getFragmentMatcherConfig = () => ({

@@ -4,12 +4,14 @@ import { DB } from '@mailmask/data'
 import config from './config'
 import { createNotifier } from './notifier'
 import { createMiddlewareWrapper } from './middleware'
+import { PaddleApi } from './api'
 
 export const doBootstrap = () => {
   const tracer = createTracer('mailmask-api', { config })
   const db = DB.create({ config })
   const notifier = createNotifier({ config, db })
-  const wrapMiddleware = createMiddlewareWrapper({ config, tracer, db, notifier })
+  const paddleApi = new PaddleApi({ config })
+  const wrapMiddleware = createMiddlewareWrapper({ config, tracer, db, notifier, paddleApi })
 
   process.on('uncaughtExceptions', error => {
     tracer.recordGlobalError('Uncaught exception', { error })
@@ -19,5 +21,5 @@ export const doBootstrap = () => {
     tracer.recordGlobalError(`Unhandled Rejection`, { reason, location })
   })
 
-  return { config, tracer, notifier, db, wrapMiddleware }
+  return { config, tracer, notifier, db, paddleApi, wrapMiddleware }
 }

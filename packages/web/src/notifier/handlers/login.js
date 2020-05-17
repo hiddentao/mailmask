@@ -29,7 +29,7 @@ export async function handleLink ({ span, res }, v) {
   const id = await span.withAsyncSpan(
     'save login to db',
     { email: obfuscate(email) },
-    () => this._db.saveUserLogin(email, loginToken)
+    () => this._db.saveUserLogin({ email, loginToken })
   )
 
   // set auth cookie

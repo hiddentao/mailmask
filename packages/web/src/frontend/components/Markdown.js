@@ -105,14 +105,25 @@ const RenderImage = getImage => arg => {
   return <img src={finalSrc} alt={alt} title={title} />
 }
 
-const generateRenderAnchor = transformLink => ({ href, title, children }) => {
+const defaultLinkTransformer = ({ href, title }) => {
+  const asHref = href
+
+  if (href.startsWith('/dashboard/')) {
+    href = '/dashboard/[panel]'
+  }
+
+  return { href, as: asHref, title }
+}
+
+const generateRenderAnchor = (transformLink = defaultLinkTransformer) => ({ href, title, children }) => {
   const c = (Array.isArray(children) ? children.join(', ') : children)
 
   // external image links should be rendered using normal anchor tag
   if (!href || href.startsWith('http')) {
     return <a href={href} title={title}>{c}</a>
   } else {
-    const attrs = (transformLink ? transformLink({ href, title }) : { href, title })
+    const attrs = transformLink({ href, title })
+
     return <Link {...attrs}><a>{c}</a></Link>
   }
 }

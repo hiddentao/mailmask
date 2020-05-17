@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import { buttonStyles } from 'emotion-styled-utils'
 
 import Icon from './Icon'
-
+import Tooltip from './Tooltip'
 
 const StyledButton = styled.button`
   ${({ theme, disabled }) => buttonStyles({
@@ -26,11 +26,20 @@ const StyledButton = styled.button`
   border-radius: 1rem;
 `
 
-const IconButton = ({ icon, ...props }) => {
+const IconButton = ({ icon, tooltip, ...props }) => {
   return (
-    <StyledButton {...props}>
-      <Icon {...icon} />
-    </StyledButton>
+    <Tooltip content={tooltip}>
+      {({ tooltipElement, show, hide }) => (
+        <StyledButton
+          {...props}
+          onMouseOver={show}
+          onMouseOut={hide}
+        >
+          <Icon {...icon} />
+          {tooltipElement}
+        </StyledButton>
+      )}
+    </Tooltip>
   )
 }
 

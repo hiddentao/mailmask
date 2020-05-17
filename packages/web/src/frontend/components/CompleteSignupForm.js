@@ -149,7 +149,7 @@ const CompleteSignupForm = ({ className }) => {
     if (_.get(ret, 'data.result.success')) {
       trackEvent('signup', 'SubmittedFinalizeSignUpForm')
 
-      router.replace(`/sign-up-done?username=${username}`)
+      router.replace(`/dashboard/plan`)
     }
   }, [ router, username, canSubmit, doRequest ])
 

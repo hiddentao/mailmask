@@ -5,5 +5,7 @@ module.exports = {
   mapValues: require('lodash.mapvalues'),
   snakeCase: require('lodash.snakecase'),
   camelCase: require('lodash.camelcase'),
+  capitalize: require('lodash.capitalize'),
+  pick: require('lodash.pick'),
 }
 

@@ -1,7 +1,7 @@
 /* eslint-disable-next-line import/no-extraneous-dependencies */
 import React from 'react'
 import styled from '@emotion/styled'
-import { flex, font } from 'emotion-styled-utils'
+import { flex, font, childAnchors } from 'emotion-styled-utils'
 
 import Icon from './Icon'
 
@@ -20,6 +20,13 @@ const ErrorDiv = styled.div`
   *:first-child {
     margin-top: 0;
   }
+
+  ${({ theme }) => childAnchors({
+    textColor: theme.errorBoxAnchorTextColor,
+    hoverTextColor: theme.errorBoxAnchorHoverTextColor,
+    hoverBgColor: theme.errorBoxAnchorHoverBgColor,
+    borderBottomColor: theme.errorBoxAnchorBorderBottomColor,
+  })}
 `
 
 const StyledIcon = styled(Icon)`
@@ -35,7 +42,7 @@ const Details = styled.div`
   line-height: 1.2em;
 `
 
-const Msg = styled.p`
+const Msg = styled.div`
   font-size: 100%;
   word-break: break-all;
 `
@@ -50,18 +57,22 @@ const SubMsg = styled.p`
  * Render an error alert.
  * @return {ReactElement}
  */
-const ErrorBox = ({ className, error }) => {
-  if (!Array.isArray(error)) {
-    error = [ error ]
+const ErrorBox = ({ className, children, error }) => {
+  let err
+
+  if (children) {
+    err = [ children ]
+  } else {
+    err = (!Array.isArray(error) ? [ error ] : error)
   }
 
   return (
     <Container className={className}>
-      {error.map(e => (
+      {err.map(e => (
         <ErrorDiv key={`${e}`}>
           <StyledIcon name='exclamation' />
           <Details>
-            <Msg>{`${e.message || e}`}</Msg>
+            <Msg>{e.message || e}</Msg>
             {e.details ? e.details.map(d => (
               <SubMsg key={`${d}`}>- {`${d}`}</SubMsg>
             )) : null}

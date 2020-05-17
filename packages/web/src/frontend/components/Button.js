@@ -5,6 +5,7 @@ import { buttonStyles } from 'emotion-styled-utils'
 import LoadingIcon from './LoadingIcon'
 
 const StyledButton = styled.button`
+  white-space: nowrap;
   border-radius: 5px;
   ${({ theme, disabled }) => buttonStyles({
     disabled,

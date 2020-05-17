@@ -47,9 +47,11 @@ const FaqPage = () => {
               <StyledFaqBlock heading='Introduction' data={FAQ.BASIC} />
               <StyledFaqBlock heading='Aliases' data={FAQ.ALIASES} />
               <StyledFaqBlock heading='Privacy' data={FAQ.PRIVACY} />
+              <StyledFaqBlock heading='Limits' data={FAQ.LIMITS} />
+              <StyledFaqBlock heading='Monthly bandwidth' data={FAQ.BANDWIDTH} />
             </FaqColumn>
             <FaqColumn>
-              <StyledFaqBlock heading='Limits' data={FAQ.LIMITS} />
+              <StyledFaqBlock heading='Free and paid plans' data={FAQ.PLANS} />
               <StyledFaqBlock heading='Payments and subscriptions' data={FAQ.SUBSCRIPTIONS} />
               <StyledFaqBlock heading='Account management' data={FAQ.ACCOUNT} />
               <StyledFaqBlock heading='Troubleshooting' data={FAQ.TROUBLESHOOTING} />

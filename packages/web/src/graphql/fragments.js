@@ -10,11 +10,26 @@ export const ErrorFragment = gql`
 `
 
 
+
 export const SuccessFragment = gql`
   fragment SuccessFragment on Success {
     success
   }
 `
+
+
+export const SubscriptionFragment = gql`
+  fragment SubscriptionFragment on Subscription {
+    id
+    createdAt
+    plan
+    schedule
+    status
+    nextPaymentAmount
+    nextPaymentDate
+  }
+`
+
 
 
 export const RequestLoginLinkResultFragment = gql`
@@ -80,13 +95,42 @@ export const DeleteAccountResultFragment = gql`
 
 
 
+export const PreparePlanResultFragment = gql`
+  ${SubscriptionFragment}
+  ${ErrorFragment}
+
+  fragment PreparePlanResultFragment on PreparePlanResult {
+    ...on Subscription {
+      ...SubscriptionFragment
+    }
+    ...on Error {
+      ...ErrorFragment
+    }
+  }
+`
+
+
+
 export const UserProfileFragment = gql`
+  ${SubscriptionFragment}
+
   fragment UserProfileFragment on UserProfile {
     id
     email
-    username
-    signedUp
-    createdAt
+    usernames {
+      id
+      username
+      email
+    }
+    sub {
+      ...SubscriptionFragment
+    }
+    legal {
+      id
+      type
+      version
+      accepted
+    }
   }
 `
 
@@ -142,6 +186,17 @@ export const MaskFragment = gql`
   fragment MaskFragment on Mask {
     name
     enabled
+    username {
+      id
+      username
+      email
+    }
+    stats {
+      period
+      numBytes
+      numMessages
+      lastReceived
+    }
   }
 `
 
@@ -168,6 +223,33 @@ export const MaskListResultFragment = gql`
   fragment MaskListResultFragment on MaskListResult {
     ...on MaskList {
       ...MaskListFragment
+    }
+    ...on Error {
+      ...ErrorFragment
+    }
+  }
+`
+
+
+export const MonthlyStatsFragment = gql`
+  fragment MonthlyStatsFragment on MonthlyStats {
+    maskStats {
+      period
+      numBytes
+      numMessages
+      lastReceived
+    }
+  }
+`
+
+
+export const MonthlyStatsResultFragment = gql`
+  ${MonthlyStatsFragment}
+  ${ErrorFragment}
+
+  fragment MonthlyStatsResultFragment on MonthlyStatsResult {
+    ...on MonthlyStats {
+      ...MonthlyStatsFragment
     }
     ...on Error {
       ...ErrorFragment

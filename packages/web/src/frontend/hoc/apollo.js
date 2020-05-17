@@ -2,7 +2,7 @@
 import withApolloBase from 'next-with-apollo'
 import { ApolloProvider } from '@apollo/react-hooks'
 
-import { createApolloClient } from '../../graphql'
+import { createApolloClient } from '../../graphql/client'
 
 export const withApollo = withApolloBase(
   ({ initialState }) => {

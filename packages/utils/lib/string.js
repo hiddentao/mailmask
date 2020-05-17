@@ -41,6 +41,10 @@ exports.randStr = (numChars = 8) => {
 }
 
 
+exports.parseEmailAddressList = str => {
+  return emailAddresses.parseAddressList(str)
+}
+
 exports.parseEmailAddress = str => {
   return emailAddresses.parseOneAddress(str)
 }

@@ -30,6 +30,10 @@ const Details = styled.div`
 
 const Msg = styled.div`
   font-size: 100%;
+
+  strong {
+    ${font('body', 'bold')};
+  }
 `
 
 /**

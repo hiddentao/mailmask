@@ -1,4 +1,3 @@
-import LogRocket from 'logrocket'
 import React from 'react'
 import styled from '@emotion/styled'
 import { flex } from 'emotion-styled-utils'
@@ -39,7 +38,7 @@ const Authenticated = ({
       return renderNotAuthenticated ? renderChildWithArgs(renderNotAuthenticated) : (
         <PleaseLogin>
           <p>Please login to view this page!</p>
-          <GetStartedForm />
+          <GetStartedForm buttonText='Login' />
         </PleaseLogin>
       )
     } else {
@@ -54,7 +53,6 @@ const Authenticated = ({
 
     if (uid) {
       trackUser(uid)
-      LogRocket.identify(uid)
     }
 
     return renderChildWithArgs(children, data.result)
