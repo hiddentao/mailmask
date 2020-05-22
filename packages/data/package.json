@@ -23,7 +23,7 @@
     "@mailmask/utils": "^1.6.0",
     "binary-search": "^1.3.6",
     "knex": "^0.20.13",
-    "knex-hooks": "git+https://github.com/hiddentao/knex-hooks.git#4ad44b00c40a801c1aea16fe559bab5bbdcc93c9",
+    "knex-hooks": "git+https://github.com/hiddentao/knex-hooks.git",
     "pg": "^7.12.1"
   },
   "devDependencies": {
