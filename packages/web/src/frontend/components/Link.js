@@ -38,8 +38,8 @@ export const HomeLink = ({ children, anchorProps }) => (
 )
 
 export const DashboardLink = ({ children, panel = 'main', anchorProps }) => {
-  const href = '/dashboard/[panel]'
-  const asHref = `/dashboard/${panel}`
+  const href = panel === 'main' ? '/dashboard' : '/dashboard/[panel]'
+  const asHref = panel === 'main' ? '/dashboard' : `/dashboard/${panel}`
 
   return (
     <DefaultLink href={href} as={asHref} scroll={true}>
