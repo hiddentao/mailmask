@@ -19,7 +19,8 @@
     "DB_PORT": "@db_port",
     "DB_USERNAME": "@db_username",
     "DB_PASSWORD": "@db_password",
-    "TRACE_CLOUD_ENDPOINT": "@trace_cloud_endpoint"
+    "TRACE_CLOUD_ENDPOINT": "@trace_cloud_endpoint",
+    "PADDLE_AUTH_CODE": "@paddle_auth_code"
   },
   "build": {
     "env": {
@@ -33,8 +34,9 @@
       "DB_PORT": "@db_port",
       "DB_USERNAME": "@db_username",
       "DB_PASSWORD": "@db_password",
-      "TRACE_CLOUD_ENDPOINT": "@trace_cloud_endpoint"
-  }
+      "TRACE_CLOUD_ENDPOINT": "@trace_cloud_endpoint",
+      "PADDLE_AUTH_CODE": "@paddle_auth_code"
+    }
   },
   "routes": [
     {

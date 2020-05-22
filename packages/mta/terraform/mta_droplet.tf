@@ -138,7 +138,7 @@ resource "digitalocean_droplet" "mailmask-mta" {
 
 resource "digitalocean_project" "mailmask" {
     name        = "mailmask"
-    description = "Camomail services"
+    description = "Mailmask services"
     resources = [
         "${digitalocean_droplet.mailmask-mta.urn}"
     ]
