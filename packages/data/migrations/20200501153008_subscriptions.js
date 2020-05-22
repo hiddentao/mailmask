@@ -79,8 +79,8 @@ exports.up = async function (knex) {
   // give everyone a BASIC subscription
   ;({ rows } = await schema(knex).raw('select id, created_at from public."user"'))
   await Promise.all(rows.map(async row => {
-    await knex.raw(`INSERT INTO public.sub (user_id, plan, status, expires) VALUES (?, ?, ?, ?)`, [
-      row.id, SUB.PLAN.BASIC, SUB.STATUS.ACTIVE, formatISO(addDays(row.created_at, 30))
+    await knex.raw(`INSERT INTO public.sub (user_id, plan, schedule, status) VALUES (?, ?, ?, ?)`, [
+      row.id, SUB.PLAN.BASIC, SUB.SCHEDULE.MONTHLY, SUB.STATUS.ACTIVE
     ])
   }))
 
