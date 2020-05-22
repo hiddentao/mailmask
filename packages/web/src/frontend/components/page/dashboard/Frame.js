@@ -1,10 +1,11 @@
 import React, { useMemo, useState, useCallback } from 'react'
 import styled from '@emotion/styled'
-import { flex } from 'emotion-styled-utils'
+import { flex, font } from 'emotion-styled-utils'
 import MobileSidebar from 'react-sidebar'
-import { SUB, _ } from '@mailmask/utils'
+import { SUB, _, buildMaskAddress } from '@mailmask/utils'
 
 import { withApollo } from '../../../hoc'
+import { getAppConfig } from '../../../appConfig'
 import Layout from '../../Layout'
 import PaymentDate from '../../PaymentDate'
 import ContentWrapper from '../../ContentWrapper'
@@ -20,6 +21,8 @@ import Account from '../../page/dashboard/Account'
 import Plan from '../../page/dashboard/Plan'
 import FinalizePlan from '../../page/dashboard/FinalizePlan'
 import AuthenticatedAndFullySignedUp from '../../AuthenticatedAndFullySignedUp'
+
+const { DOMAIN } = getAppConfig()
 
 const StyledContentWrapper = styled(ContentWrapper)``
 
@@ -77,6 +80,10 @@ const Main = styled.div`
   ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
     padding: 0 0 0 3rem;
   }
+
+  strong {
+    ${font('body', 'bold')};
+  }
 `
 
 const StyledMasks = styled(Masks)`
@@ -90,6 +97,7 @@ const AccountProblem = styled(ErrorBox)`
 const AliasesPanel = ({ me }) => (
   <Main>
     <h1>My aliases</h1>
+    <p>Send an email to <strong>{buildMaskAddress('test', me.usernames[0].username, DOMAIN)}</strong> to see the alias <strong>"test"</strong> show up below.</p>
     <StyledMasks me={me} />
   </Main>
 )
