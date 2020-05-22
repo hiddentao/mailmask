@@ -147,3 +147,12 @@ Destroy it all and start again:
 ```shell
 terraform destroy -var-file "secrets.tfvars.json"
 ```
+
+
+## Release checklist
+
+* Ensure monorepo packages are all published to NPM
+* Run dockerized MTA locally against dev db and check that it works
+* Use terraform to _re-deploy_ the MTA
+* Ensure everything is correct in DigitalOcean and Cloudflare
+* Test out the live server and Check https://jeager2.hiddentao.com for logs
