@@ -2,7 +2,7 @@ import { SUB } from '@mailmask/utils'
 
 import { doBootstrap } from '../../src/bootstrap'
 
-const { db, paddleApi, wrapMiddleware } = doBootstrap()
+const { db, wrapMiddleware } = doBootstrap()
 
 const reverseLookupPlanScheduleByPaddlePlanId = planId => {
   const ret = {}

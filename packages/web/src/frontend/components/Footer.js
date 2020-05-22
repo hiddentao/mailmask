@@ -20,6 +20,7 @@ import { scrollToTop } from '../utils/functions'
 const Container = styled.footer`
   color: ${({ theme }) => theme.footerTextColor};
   padding: 1.5rem;
+  font-size: 0.8rem;
 
   & > div {
     margin-bottom: 2rem;
@@ -33,12 +34,7 @@ const Container = styled.footer`
     }
   }
 
-  ${({ theme }) => childAnchors({
-    textColor: theme.footerAnchorTextColor,
-    hoverTextColor: theme.footerAnchorHoverTextColor,
-    hoverBgColor: theme.footerAnchorHoverBgColor,
-    borderBottomColor: theme.footerAnchorBorderBottomColor
-  })};
+  ${({ theme }) => childAnchors(theme.footerAnchor)};
 
   ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
     ${flex({ direction: 'row', justify: 'space-between', align: 'flex-start' })};

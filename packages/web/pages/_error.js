@@ -16,7 +16,7 @@ const ErrorStack = styled.pre`
   ${font('body')}
   font-size: 0.8rem;
   line-height: 1.2em;
-  color: ${({ theme }) => theme.errorPageStackBgColor};
+  color: ${({ theme }) => theme.errorPage.stack.bgColor};
   border-radius: 5px;
   padding: 1em;
   margin: 0 0 1rem;
@@ -26,7 +26,7 @@ const Explanation = styled.p`
   ${font('body')}
   font-size: 1rem;
   line-height: 1.3em;
-  color: ${({ theme }) => theme.errorPageExplanationTextColor};
+  color: ${({ theme }) => theme.errorPage.explanation.textColor};
   margin: 2rem 0 0;
   a {
     margin: 0 0.5em;

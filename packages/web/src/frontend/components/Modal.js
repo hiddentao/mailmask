@@ -13,12 +13,12 @@ const ModalBackground = styled.div`
   height: 100vh;
   z-index: 30;
   ${flex({ direction: 'column', justify: 'flex-start', align: 'center' })};
-  background-color: ${({ theme }) => theme.modalOverlayBgColor};
+  background-color: ${({ theme }) => theme.modal.overlay.bgColor};
 `
 
 const StyledModal = DefaultModal.styled`
-  background-color: ${({ theme }) => theme.modalBgColor};
-  color: ${({ theme }) => theme.modalTextColor};
+  background-color: ${({ theme }) => theme.modal.bgColor};
+  color: ${({ theme }) => theme.modal.textColor};
   width: ${props => props.width || '80%'};
   max-width: 80%;
   height: ${props => props.height || 'auto'};

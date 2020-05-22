@@ -46,11 +46,11 @@ const TickContainer = styled.div`
 `
 
 const YesTick = styled.span`
-  color: ${({ theme }) => theme.setUsernameYesTickColor};
+  color: ${({ theme }) => theme.completeSignup.yesTickColor};
 `
 
 const NoTick = styled.span`
-  color: ${({ theme }) => theme.setUsernameNoTickColor};
+  color: ${({ theme }) => theme.completeSignup.noTickColor};
 `
 
 const LegalContainer = styled.div`

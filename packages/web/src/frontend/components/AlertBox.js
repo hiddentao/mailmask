@@ -10,14 +10,14 @@ const Container = styled.div`
 
 const Div = styled.div`
   ${flex({ direction: 'row', justify: 'flex-start' })};
-  background-color: ${({ theme }) => theme.alertBoxBgColor};
-  color: ${({ theme }) => theme.alertBoxTextColor};
+  background-color: ${({ theme }) => theme.alertBox.bgColor};
+  color: ${({ theme }) => theme.alertBox.textColor};
   padding: 0.6em;
   border-radius: 5px;
 `
 
 const StyledIcon = styled(Icon)`
-  color: ${({ theme }) => theme.alertBoxIconColor};
+  color: ${({ theme }) => theme.alertBox.iconColor};
   margin-right: 0.6em;
   font-size: 150%;
 `

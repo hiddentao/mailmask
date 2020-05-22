@@ -24,7 +24,7 @@ const Question = styled.p`
   cursor: pointer;
   font-size: 1.1rem;
   line-height: 1.2em;
-  color: ${({ theme }) => theme.faqItemQuestionTextColor};
+  color: ${({ theme }) => theme.faqItem.question.textColor};
 
   & > span {
     margin-left: 0.5em;
@@ -33,7 +33,7 @@ const Question = styled.p`
 
 const Answer = styled.div`
   ${font('body')};
-  color: ${({ theme }) => theme.faqItemAnswerTextColor};
+  color: ${({ theme }) => theme.faqItem.answer.textColor};
   font-size: 1rem;
   line-height: 1.2em;
   margin-top: ${({ expanded }) => (expanded ? '1rem' : '0')};

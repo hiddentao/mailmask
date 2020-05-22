@@ -41,7 +41,7 @@ const Container = styled.div`
 
   img {
     max-width: 100%;
-    border: 1px solid ${({ theme }) => theme.markdownContentImageBorderColor};
+    border: 1px solid ${({ theme }) => theme.markdown.content.image.borderColor};
   }
 
   pre {

@@ -48,7 +48,7 @@ const MobileContainer = styled.div`
 
 const MobileSidebarToggleButton = styled(Button)`
   position: relative;
-  margin: -1rem 0 0 -1rem;
+  margin: -1rem 0 0 0;
   border-radius: 0;
   padding: 0.1em 0.2em;
 
@@ -59,11 +59,12 @@ const MobileSidebarToggleButton = styled(Button)`
 
 const StyledSidebar = styled(Sidebar)`
   padding: 1rem 3rem 1rem 1rem;
-  background-color: ${({ theme }) => theme.dashboardPageMobileSidebarBgColor};
+  background-color: ${({ theme }) => theme.dashboardPage.sidebar.mobile.bgColor};
   min-height: 100vh;
 
   ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
-    border-right: 1px solid ${({ theme }) => theme.dashboardPageSidebarBorderColor};
+    background-color: ${({ theme }) => theme.dashboardPage.sidebar.bgColor};
+    border-right: 1px solid ${({ theme }) => theme.dashboardPage.sidebar.borderColor};
     padding-right: 3rem;
     min-height: auto;
   }

@@ -11,8 +11,8 @@ const Container = styled.div`
 
 const ErrorDiv = styled.div`
   ${flex({ direction: 'row', justify: 'flex-start' })};
-  background-color: ${({ theme }) => theme.errorBoxBgColor};
-  color: ${({ theme }) => theme.errorBoxTextColor};
+  background-color: ${({ theme }) => theme.errorBox.bgColor};
+  color: ${({ theme }) => theme.errorBox.textColor};
   padding: 0.6em;
   border-radius: 5px;
   margin-top: 0.2rem;
@@ -21,16 +21,11 @@ const ErrorDiv = styled.div`
     margin-top: 0;
   }
 
-  ${({ theme }) => childAnchors({
-    textColor: theme.errorBoxAnchorTextColor,
-    hoverTextColor: theme.errorBoxAnchorHoverTextColor,
-    hoverBgColor: theme.errorBoxAnchorHoverBgColor,
-    borderBottomColor: theme.errorBoxAnchorBorderBottomColor,
-  })}
+  ${({ theme }) => childAnchors(theme.errorBox.anchor)};
 `
 
 const StyledIcon = styled(Icon)`
-  color: ${({ theme }) => theme.errorBoxIconColor};
+  color: ${({ theme }) => theme.errorBox.iconColor};
   margin-right: 0.6em;
   font-size: 150%;
 `

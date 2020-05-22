@@ -7,9 +7,9 @@ const Input = styled.input`
   ${font('body')};
   display: block;
   width: 100%;
-  border: 1px solid ${({ theme, hasError }) => (hasError ? theme.inputErrorBorderColor : theme.inputBorderColor)};
-  background-color: ${({ theme, hasError }) => (hasError ? theme.inputErrorBgColor : theme.inputBgColor)};
-  color: ${({ theme }) => theme.inputTextColor};
+  border: 1px solid ${({ theme, hasError }) => (hasError ? theme.input.errorBorderColor : theme.input.borderColor)};
+  background-color: ${({ theme, hasError }) => (hasError ? theme.input.errorBgColor : theme.input.bgColor)};
+  color: ${({ theme }) => theme.input.textColor};
   padding: 1em;
   font-size: 1rem;
   outline: none;
@@ -17,7 +17,7 @@ const Input = styled.input`
 
   &::placeholder {
     ${font('body', 'regular', 'italic')};
-    color: ${({ theme }) => theme.inputPlaceholderTextColor};
+    color: ${({ theme }) => theme.input.placeholderTextColor};
     font-size: 90%;
   }
  `

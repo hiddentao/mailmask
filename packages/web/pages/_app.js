@@ -37,17 +37,18 @@ export default class MyApp extends App {
     if (typeof window !== 'undefined' && !!window.document) {
       loadFonts({
         body: {
-          name: 'Roboto',
+          name: 'Open Sans',
           weights: {
-            thin: 100,
+            thin: 300,
             regular: 400,
             bold: 700,
           },
         },
         header: {
-          name: 'Poiret One',
+          name: 'Raleway',
           weights: {
-            regular: 400,
+            regular: 500,
+            extraBold: 800,
           }
         }
       }, window.document).then(

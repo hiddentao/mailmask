@@ -65,7 +65,9 @@ exports.getPossibleMask = async function (username, mask) {
     .joinRaw(`LEFT JOIN stats on (stats.mask_id = mask.id AND stats.period = ?)`, getCurrentPeriod())
     .where('username.username', username)
     .andWhere('user.deleted', false)
-    .andWhereIn('sub.status', [ SUB.STATUS.ACTIVE, SUB.STATUS.PAYMENT_FAILED ])
+    .andWhere(function () {
+      this.whereIn('sub.status', [ SUB.STATUS.ACTIVE, SUB.STATUS.PAYMENT_FAILED ])
+    })
     .orderBy('sub.created_at', 'desc')
     .limit(1)
 

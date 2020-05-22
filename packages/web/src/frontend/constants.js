@@ -254,13 +254,8 @@ This equates to ${bandwidthStr(SUB.BANDWIDTH.PREMIUM)}, as opposed to ${bandwidt
 
 * **Advanced dashboard statistics.**
 
-For each alias see stats for the current month such as how many email were received and how much bandwidth was used. On
+For each alias see stats for the current month such as how many emails were received and how much bandwidth was used. On
 the _Basic_ plan we do not display per-alias statistics.
-
-* **Private replies.**
-
-Reply to emails received via your aliases without revealing your real email address. Unlike the _Basic_ plan your privacy
-is assured even when replying.
 `,
     ],
 
@@ -272,19 +267,17 @@ is assured even when replying.
 
 This equates to ${bandwidthStr(SUB.BANDWIDTH.PRO)}, as opposed to ${bandwidthStr(SUB.BANDWIDTH.PREMIUM, false)} on the _Premium_ plan.
 
-* **Register upto 2 additional email addresses.
+* **Private replies.**
+
+Reply to emails received via your aliases without revealing your real email address. Unlike the _Basic_ plan your privacy
+is assured even when replying.
+
+* **Manage multiple inboxes in one account.**
 
 What if you want to use Mailmask with your other email addresses, such as your work address? Instead of registering
 a new Mailmask account and new subscription for them you can add them to your existing account and manage everything in one.
 `,
     ],
-  ],
-
-
-  PRO_PLAN: [
-    [
-      'What does Advanced statistics'
-    ]
   ],
 
 

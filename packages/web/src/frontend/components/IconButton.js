@@ -8,18 +8,9 @@ import Tooltip from './Tooltip'
 
 const StyledButton = styled.button`
   ${({ theme, disabled }) => buttonStyles({
-    disabled,
-    buttonDisabledBgColor: theme.iconButtonDisabledBgColor,
-    buttonDisabledTextColor: theme.iconButtonDisabledTextColor,
-    buttonDisabledBorderColor: theme.iconButtonDisabledBorderColor,
-    buttonBgColor: theme.iconButtonBgColor,
-    buttonTextColor: theme.iconButtonTextColor,
-    buttonBorderColor: theme.iconButtonBorderColor,
-    buttonHoverBgColor: theme.iconButtonHoverBgColor,
-    buttonHoverTextColor: theme.iconButtonHoverTextColor,
-    buttonHoverBorderColor: theme.iconButtonHoverBorderColor,
-    buttonShadowColor: theme.iconButtonShadowColor,
-  })}
+    ...theme.iconButton,
+    inDisabledMode: disabled
+  })};
   cursor: ${({ onClick }) => (onClick ? 'pointer' : 'default')};
   padding: 0.2em 0.6em;
   font-size: 0.9rem;

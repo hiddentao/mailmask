@@ -29,7 +29,7 @@ const List = styled.ul`
 const Item = styled.li`
   display: block;
   border-radius: 5px;
-  border: 1px solid ${({ theme }) => theme.helpPageContactItemBorderColor};
+  border: 1px solid ${({ theme }) => theme.helpPage.contactItem.borderColor};
   margin: 0 2rem 2rem 0;
 
   a {

@@ -32,7 +32,7 @@ const Table = styled.table`
 `
 
 const HeaderCell = styled.th`
-  ${font('header')};
+  ${font('header', 'extraBold')};
   padding: 1rem 0;
   text-align: left;
   min-width: 100px;
@@ -57,12 +57,12 @@ const DataRow = styled.tr`
 
 const ToggleButton = styled(Icon)`
   border: none;
-  color: ${({ isOn, theme }) => (isOn ? theme.dashboardPageMasksTableMaskOnIconColor : theme.dashboardPageMasksTableMaskOffIconColor)};
+  color: ${({ isOn, theme }) => (isOn ? theme.dashboardPage.masksTable.maskOnIconColor : theme.dashboardPage.masksTable.maskOffIconColor)};
 `
 
 const MaskStatusText = styled.span`
   ${font('header', 'normal', 'italic')};
-  color: ${({ theme }) => theme.dashboardPageMasksTableMaskStatusTextColor};
+  color: ${({ theme }) => theme.dashboardPage.masksTable.maskStatusTextColor};
 `
 
 const MaskPrefix = styled.span`
@@ -71,11 +71,11 @@ const MaskPrefix = styled.span`
 
 const MaskSuffix = styled.span`
   font-size: 80%;
-  color: ${({ theme }) => theme.dashboardPageMasksTableMaskSuffixTextColor};
+  color: ${({ theme }) => theme.dashboardPage.masksTable.maskSuffixTextColor};
 `
 
 const MetaData = styled.span`
-  color: ${({ theme }) => theme.dashboardPageMasksTableMetaDataTextColor};
+  color: ${({ theme }) => theme.dashboardPage.masksTable.metaDataTextColor};
 `
 
 const CellContent = styled.div`
@@ -120,7 +120,7 @@ const PremiumCellContent = ({ children, me }) => {
     return (
       <CellContent>
         <UpgradeText>
-          <DashboardLink panel='plan'>upgrade</DashboardLink>
+          <DashboardLink panel='plan'>upgrade to view</DashboardLink>
         </UpgradeText>
       </CellContent>
     )

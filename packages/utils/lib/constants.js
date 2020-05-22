@@ -47,3 +47,11 @@ exports.LEGAL = makeConstants([
   'PRIVACY_POLICY',
   'MARKETING_EMAILS',
 ])
+
+
+exports.isPaidSub = sub => (sub.plan !== exports.SUB.STATUS.BASIC)
+
+exports.isActiveSub = sub =>
+  (sub.status === exports.SUB.STATUS.SELECTED || sub.status === exports.SUB.STATUS.CANCELLED)
+
+

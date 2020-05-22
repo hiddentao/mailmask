@@ -1,24 +1,19 @@
 import React, { forwardRef } from 'react'
 import styled from '@emotion/styled'
-import { buttonStyles } from 'emotion-styled-utils'
+import { buttonStyles, font } from 'emotion-styled-utils'
 
 import LoadingIcon from './LoadingIcon'
 
 const StyledButton = styled.button`
+  ${font('body', 'bold')};
+  font-size: 1rem;
+  padding: 1em 2em;
   white-space: nowrap;
   border-radius: 5px;
+
   ${({ theme, disabled }) => buttonStyles({
-    disabled,
-    buttonDisabledBgColor: theme.buttonDisabledBgColor,
-    buttonDisabledTextColor: theme.buttonDisabledTextColor,
-    buttonDisabledBorderColor: theme.buttonDisabledBorderColor,
-    buttonBgColor: theme.buttonBgColor,
-    buttonTextColor: theme.buttonTextColor,
-    buttonBorderColor: theme.buttonBorderColor,
-    buttonHoverBgColor: theme.buttonHoverBgColor,
-    buttonHoverTextColor: theme.buttonHoverTextColor,
-    buttonHoverBorderColor: theme.buttonHoverBorderColor,
-    buttonShadowColor: theme.buttonShadowColor,
+    ...theme.button,
+    inDisabledState: disabled,
   })};
 `
 
@@ -41,3 +36,7 @@ const Button = forwardRef(({ loading, children, onClick, ...props }, ref) => (
 ))
 
 export default Button
+
+
+
+

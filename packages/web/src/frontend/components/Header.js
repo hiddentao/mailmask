@@ -4,13 +4,12 @@ import { flex, font, childAnchors } from 'emotion-styled-utils'
 
 import { HomeLink, DashboardLink, PricingLink, FaqLink, LoginLink } from './Link'
 import Authenticated from './Authenticated'
+import Logo from './Logo'
 
 export const headerHeight = '75px'
 
 const Container = styled.header`
   height: ${headerHeight};
-  background: ${({ theme }) => theme.headerBgColor};
-  color: ${({ theme }) => theme.headerTextColor};
   ${flex({ direction: 'row', justify: 'space-between', align: 'center' })};
   padding: 0 1rem;
   overflow: visible;
@@ -18,26 +17,35 @@ const Container = styled.header`
 
 const Brand = styled.div`
   display: block;
-  ${font('header', 'thin')};
-  color: ${({ theme }) => theme.headerTextColor};
   font-size: 1.5rem;
   cursor: pointer;
 `
 
+const navLinkStyles = ({ theme, inFloatingHeader }) => childAnchors({
+  ...(inFloatingHeader ? theme.header.floating.navAnchor : theme.header.navAnchor),
+  borderType: 'border',
+  extraStyles: `
+    border-radius: 5px;
+    border-width: 2px;
+  `
+})
+
+
 const DesktopNav = styled.ul`
   display: none;
-
-  ${({ theme }) => childAnchors({
-    textColor: theme.navAnchorTextColor,
-    hoverTextColor: theme.navAnchorHoverTextColor,
-    hoverBgColor: theme.navAnchorHoverBgColor,
-    borderBottomColor: theme.navAnchorBorderBottomColor
-  })};
+  ${({ theme, inFloatingHeader }) => navLinkStyles({ theme, inFloatingHeader })};
 
   ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
     display: block;
     list-style: none;
     ${flex({ direction: 'row', basis: 0 })};
+  }
+`
+
+
+const MobileNavContainer = styled.div`
+  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+    display: none;
   }
 `
 
@@ -57,8 +65,15 @@ const NavLi = styled.li`
 
 const DashboardLi = styled.li`
   display: block;
-  border: 2px solid ${({ theme }) => theme.navSpecialAnchorBorderColor};
-  border-radius: 5px;
+
+  ${({ theme, inFloatingHeader }) => childAnchors({
+    ...(inFloatingHeader ? theme.header.floating.specialNavAnchor : theme.header.specialNavAnchor),
+    borderType: 'border',
+    extraStyles: `
+      border-radius: 5px;
+      border-width: 2px;
+    `,
+  })};
 
   a {
     display: block;
@@ -76,26 +91,15 @@ const DashboardLi = styled.li`
   }
 `
 
-const MobileNavContainer = styled.div`
-  ${flex({ direction: 'row', justify: 'flex-end', align: 'center', wrap: 'no-wrap', basis: 0 })};
-
-  ${({ theme }) => childAnchors({
-    textColor: theme.navAnchorTextColor,
-    hoverTextColor: theme.navAnchorHoverTextColor,
-    hoverBgColor: theme.navAnchorHoverBgColor,
-    borderBottomColor: theme.navAnchorBorderBottomColor
-  })};
-
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
-    display: none;
-  }
+const StyledLogo = styled(Logo)`
+  fill: ${({ theme, inFloatingHeader }) => (inFloatingHeader ? theme.header.floating.logoColor : theme.header.logoColor)};
 `
 
-const Header = ({ className, onClickHome }) => {
+const Header = ({ className, floating, onClickHome }) => {
   const loginLink = <LoginLink>Login</LoginLink>
 
   const dashboardLink = (
-    <DashboardLi key='dashboard'>
+    <DashboardLi key='dashboard' inFloatingHeader={floating}>
       <Authenticated renderNotAuthenticated={loginLink} renderError={loginLink}>
         <DashboardLink>My dashboard</DashboardLink>
       </Authenticated>
@@ -105,14 +109,16 @@ const Header = ({ className, onClickHome }) => {
   return (
     <Container className={className}>
       <HomeLink>
-        <Brand onClick={onClickHome}>Mailmask</Brand>
+        <Brand onClick={onClickHome}>
+          <StyledLogo inFloatingHeader={floating} />
+        </Brand>
       </HomeLink>
-      <DesktopNav>
+      <DesktopNav inFloatingHeader={floating}>
         <NavLi key='pricing'><PricingLink>Pricing</PricingLink></NavLi>
         <NavLi key='faq'><FaqLink>FAQ</FaqLink></NavLi>
         {dashboardLink}
       </DesktopNav>
-      <MobileNavContainer>
+      <MobileNavContainer inFloatingHeader={floating}>
         {dashboardLink}
       </MobileNavContainer>
     </Container>

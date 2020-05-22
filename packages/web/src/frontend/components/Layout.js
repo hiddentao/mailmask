@@ -14,12 +14,12 @@ export const maxContentWidth = '1024px'
 const Layout = styled.div`
   min-height: 200vh;
   ${font('body')};
-  background: ${({ theme }) => theme.layoutBgColor};
-  color: ${({ theme }) => theme.layoutTextColor};
+  background: ${({ theme }) => theme.layout.bgColor};
+  color: ${({ theme }) => theme.layout.textColor};
 `
 
 const HeaderWrapper = styled.div`
-  background: ${({ floating, theme }) => (floating ? theme.headerWrapperFloatingBgColor : theme.headerWrapperBgColor)};
+  background: ${({ floating, theme }) => (floating ? theme.header.floating.wrapper.bgColor : theme.header.wrapper.bgColor)};
   transition: all 0.3s linear;
 `
 
@@ -42,18 +42,18 @@ const PageLayout = ({ children }) => {
     <Layout>
       <ModalProvider>
         <CookieConsent>
-        This website uses cookies to enhance the user experience.
+          This website uses cookies to enhance the user experience.
         </CookieConsent>
         <Headroom onPin={onHeaderFloat} onUnfix={onHeaderUnfloat}>
-        <HeaderWrapper floating={!!floatingHeader}>
-        <MaxContentWidth width={maxContentWidth}>
-        <StyledHeader />
-        </MaxContentWidth>
-        </HeaderWrapper>
+          <HeaderWrapper floating={floatingHeader}>
+            <MaxContentWidth width={maxContentWidth}>
+              <StyledHeader floating={floatingHeader} />
+            </MaxContentWidth>
+          </HeaderWrapper>
         </Headroom>
         {children}
         <MaxContentWidth width={maxContentWidth}>
-        <Footer />
+          <Footer />
         </MaxContentWidth>
       </ModalProvider>
     </Layout>

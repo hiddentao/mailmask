@@ -1,150 +1,254 @@
 import { opacify } from 'emotion-styled-utils'
 
-// pallette
-const primary = '#6807f9'
-const secondary = '#f90798'
-const tertiary = '#5ca102'
+import {
+  primary1,
+  primary2,
+  secondary1,
+  secondary2,
+  secondary3,
+  white,
+  black,
+  darkGrey,
+  green,
+  red,
+  yellow,
+  grey,
+  lightGrey,
+  lighterGrey,
+  transparent,
+} from './colors'
 
-// standard colours
-const white = '#fff'
-const black = '#000'
-const darkGrey = '#666'
-const green = tertiary
-const red = '#f00'
-const yellow = 'yellow'
-const grey = '#999'
-const lightGrey = '#ccc'
-const lighterGrey = '#eee'
-const transparent = 'transparent'
+const bgColor = primary2
+const textColor = primary1
 
-/**
- * Default theme.
- *
- * @type {Object}
- */
 export default {
   // layout
-  layoutBgColor: 'rgba(62,0,135,1) linear-gradient(135deg, rgba(62, 0, 135, 1) 0%, rgba(100, 36, 167, 1) 44%, rgba(146, 80, 205, 1) 74%, rgba(202, 134, 252, 1) 100%)',
-  layoutTextColor: white,
+  layout: {
+    bgColor,
+    textColor,
+  },
   // header component
-  headerWrapperBgColor: transparent,
-  headerWrapperFloatingBgColor: opacify(black, 0.9),
-  headerBgColor: transparent,
-  headerTextColor: white,
-  navAnchorTextColor: white,
-  navAnchorHoverTextColor: white,
-  navAnchorHoverBgColor: primary,
-  navAnchorBorderBottomColor: transparent,
-  navSpecialAnchorBorderColor: primary,
+  header: {
+    logoColor: textColor,
+    wrapper: {
+      bgColor: transparent,
+    },
+    navAnchor: {
+      textColor,
+      borderColor: transparent,
+      bgColor: transparent,
+      hoverTextColor: textColor,
+      hoverBgColor: transparent,
+      hoverBorderColor: textColor,
+    },
+    specialNavAnchor: {
+      textColor,
+      borderColor: textColor,
+      bgColor: transparent,
+      hoverTextColor: bgColor,
+      hoverBgColor: textColor,
+      hoverBorderColor: textColor,
+    },
+    floating: {
+      logoColor: white,
+      wrapper: {
+        bgColor: opacify(black, 0.9),
+      },
+      navAnchor: {
+        textColor: white,
+        borderColor: transparent,
+        bgColor: transparent,
+        hoverTextColor: white,
+        hoverBgColor: transparent,
+        hoverBorderColor: white,
+      },
+      specialNavAnchor: {
+        textColor: white,
+        borderColor: white,
+        bgColor: transparent,
+        hoverTextColor: black,
+        hoverBgColor: white,
+        hoverBorderColor: white,
+      },
+    },
+  },
   // footer component
-  footerAnchorTextColor: white,
-  footerAnchorHoverTextColor: white,
-  footerAnchorHoverBgColor: primary,
-  footerAnchorBorderBottomColor: white,
+  footerAnchor: {
+    textColor,
+    hoverTextColor: bgColor,
+    hoverBgColor: textColor,
+    borderColor: textColor,
+  },
   // content wrapper component
-  contentWrapperBgColor: white,
-  contentWrapperTextColor: black,
-  contentWrapperAnchorTextColor: secondary,
-  contentWrapperAnchorHoverTextColor: white,
-  contentWrapperAnchorHoverBgColor: secondary,
-  contentWrapperAnchorBorderBottomColor: secondary,
+  contentWrapper: {
+    bgColor,
+    textColor,
+    shadowColor: transparent,
+    anchor: {
+      textColor: secondary1,
+      hoverTextColor: white,
+      hoverBgColor: secondary1,
+      borderBottomColor: secondary1,
+    },
+  },
   // errorBox component
-  errorBoxBgColor: red,
-  errorBoxTextColor: white,
-  errorBoxIconColor: yellow,
-  errorBoxAnchorTextColor: white,
-  errorBoxAnchorHoverTextColor: white,
-  errorBoxAnchorHoverBgColor: secondary,
-  errorBoxAnchorBorderBottomColor: white,
+  errorBox: {
+    bgColor: red,
+    textColor: white,
+    iconColor: yellow,
+    anchor: {
+      textColor: white,
+      hoverTextColor: white,
+      hoverBgColor: secondary2,
+      borderBottomColor: white,
+    },
+  },
   // alertBox component
-  alertBoxBgColor: opacify(tertiary, 0.3),
-  alertBoxTextColor: black,
-  alertBoxIconColor: tertiary,
+  alertBox: {
+    bgColor: opacify(secondary2, 0.3),
+    textColor: black,
+    iconColor: secondary2,
+  },
   // button component
-  buttonDisabledBgColor: grey,
-  buttonDisabledTextColor: darkGrey,
-  buttonDisabledBorderColor: grey,
-  buttonBgColor: secondary,
-  buttonTextColor: white,
-  buttonBorderColor: secondary,
-  buttonHoverBgColor: opacify(secondary, 0.9),
-  buttonHoverTextColor: white,
-  buttonHoverBorderColor: secondary,
-  buttonShadowColor: darkGrey,
+  button: {
+    disabledBgColor: grey,
+    disabledTextColor: darkGrey,
+    disabledBorderColor: grey,
+    bgColor: secondary1,
+    textColor: white,
+    borderColor: secondary1,
+    hoverBgColor: opacify(secondary1, 0.9),
+    hoverTextColor: white,
+    hoverBorderColor: secondary1,
+    shadowColor: darkGrey,
+  },
   // icon button component
-  iconButtonBorderColor: secondary,
-  iconButtonBgColor: transparent,
-  iconButtonTextColor: secondary,
-  iconButtonDisabledBorderColor: lightGrey,
-  iconButtonDisabledBgColor: transparent,
-  iconButtonDisabledTextColor: grey,
-  iconButtonHoverBorderColor: secondary,
-  iconButtonHoverBgColor: secondary,
-  iconButtonHoverTextColor: white,
-  iconButtonShadowColor: darkGrey,
-  // link button component
-  linkButtonBorderColor: transparent,
-  linkButtonBgColor: transparent,
-  linkButtonTextColor: secondary,
-  linkButtonDisabledBorderColor: transparent,
-  linkButtonDisabledBgColor: transparent,
-  linkButtonDisabledTextColor: grey,
-  linkButtonHoverBorderColor: transparent,
-  linkButtonHoverBgColor: secondary,
-  linkButtonHoverTextColor: white,
-  linkButtonShadowColor: transparent,
-  // input components general styles
-  inputBorderColor: darkGrey,
-  inputBgColor: white,
-  inputErrorBorderColor: red,
-  inputErrorBgColor: yellow,
-  inputPlaceholderTextColor: lightGrey,
-  // queryResult component
-  queryResultLoadingTextColor: white,
+  iconButton: {
+    borderColor: secondary1,
+    bgColor: transparent,
+    textColor: secondary1,
+    disabledBorderColor: lightGrey,
+    disabledBgColor: transparent,
+    disabledTextColor: grey,
+    hoverBorderColor: secondary1,
+    hoverBgColor: secondary1,
+    hoverTextColor: white,
+    shadowColor: darkGrey,
+  },
+  // input component
+  input: {
+    borderColor: darkGrey,
+    bgColor: white,
+    errorBorderColor: red,
+    errorBgColor: yellow,
+    placeholderTextColor: lightGrey,
+  },
   // setUsername component
-  setUsernameYesTickColor: green,
-  setUsernameNoTickColor: red,
+  completeSignup: {
+    yesTickColor: green,
+    noTickColor: red,
+  },
   // faqItem component
-  faqItemQuestionTextColor: black,
-  faqItemAnswerTextColor: darkGrey,
+  faqItem: {
+    question: {
+      textColor: black,
+    },
+    answer: {
+      textColor: darkGrey,
+    },
+  },
   // markdown component
-  markdownContentImageBorderColor: grey,
+  markdown: {
+    content: {
+      image: {
+        borderColor: grey,
+      },
+    },
+  },
   // modal component
-  modalOverlayBgColor: 'rgba(0, 0, 0, 0.8)',
-  modalBgColor: white,
-  modalTextColor: black,
+  modal: {
+    overlay: {
+      bgColor: 'rgba(0, 0, 0, 0.8)',
+    },
+    bgColor: white,
+    textColor: black,
+  },
   // tooltip component
-  tooltipBgColor: black,
-  tooltipTextColor: white,
+  tooltip: {
+    bgColor: black,
+    textColor: white,
+  },
   // error page
-  errorPageExplanationTextColor: darkGrey,
-  errorPageStackBgColor: lightGrey,
+  errorPage: {
+    explanation: {
+      textColor: darkGrey,
+    },
+    stack: {
+      bgColor: lightGrey,
+    },
+  },
   // home page: top block
-  homePageTopBlockTextColor: white,
-  homePageHowItWorksNumberBorderColor: black,
-  homePageHowItWorksExampleBgColor: lighterGrey,
-  homePageHowItWorksExampleTextColor: grey,
-  homePageBenefitBorderColor: grey,
+  homePage: {
+    howItWorks: {
+      number: {
+        borderColor: black,
+      },
+      example: {
+        bgColor: lighterGrey,
+        textColor: grey,
+      },
+    },
+    benefit: {
+      borderColor: grey,
+    },
+  },
   // dashboard page
-  dashboardPageSidebarBorderColor: grey,
-  dashboardPageBottomBlockBorderColor: grey,
-  dashboardPageMasksTableMaskSuffixTextColor: lightGrey,
-  dashboardPageMasksTableMetaDataTextColor: grey,
-  dashboardPageMasksTableMaskStatusTextColor: grey,
-  dashboardPageMasksTableMaskOnIconColor: green,
-  dashboardPageMasksTableMaskOffIconColor: red,
-  dashboardPageMobileSidebarBgColor: white,
+  dashboardPage: {
+    sidebar: {
+      borderColor: grey,
+      bgColor,
+      mobile: {
+        bgColor: white,
+      }
+    },
+    masksTable: {
+      maskSuffixTextColor: lightGrey,
+      metaDataTextColor: grey,
+      maskStatusTextColor: grey,
+      maskOnIconColor: green,
+      maskOffIconColor: red,
+    },
+  },
   // pricing page
-  pricingPageScheduleBgColor: white,
-  pricingPageScheduleTextColor: darkGrey,
-  pricingPageScheduleBorderColor: darkGrey,
-  pricingPageSelectedScheduleBgColor: primary,
-  pricingPageSelectedScheduleTextColor: white,
-  pricingPagePackageBorderColor: grey,
-  pricingPageOriginalPriceTextColor: red,
-  pricingPageBenefitBorderColor: grey,
-  pricingPagePriceScheduleTextColor: grey,
+  pricingPage: {
+    schedule: {
+      bgColor: white,
+      textColor: darkGrey,
+      borderColor: darkGrey,
+    },
+    selectedSchedule: {
+      bgColor: secondary1,
+      textColor: white,
+    },
+    plan: {
+      bgColor: white,
+      borderColor: grey,
+    },
+    originalPrice: {
+      textColor: red,
+    },
+    benefit: {
+      borderColor: grey,
+    },
+    priceSchedule: {
+      textColor: grey,
+    },
+  },
   // help page
-  helpPageContactItemBorderColor: lightGrey,
+  helpPage: {
+    contactItem: {
+      borderColor: lightGrey,
+    },
+  },
 }
 

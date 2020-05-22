@@ -1,8 +1,9 @@
-import React, { useState, useCallback } from 'react'
+import React, { useRef, useState, useCallback } from 'react'
 import styled from '@emotion/styled'
 import { _, isValidEmail } from '@mailmask/utils'
 import { flex } from 'emotion-styled-utils'
 import { useRouter } from 'next/router'
+import { toast } from 'react-toastify'
 
 import { trackEvent } from '../analytics'
 import { withApollo } from '../hoc'
@@ -33,6 +34,8 @@ const GetStartedForm = ({ className, buttonText = 'Sign up', plan, schedule }) =
   const [ isValid, setIsValid ] = useState(false)
   const [ doRequest, result ] = useSafeMutation(RequestLoginLinkMutation)
 
+  const inputRef = useRef(null)
+
   const updateEmail = useCallback(newEmail => {
     if (newEmail !== email) {
       setEmail(newEmail)
@@ -44,6 +47,8 @@ const GetStartedForm = ({ className, buttonText = 'Sign up', plan, schedule }) =
     e.preventDefault()
 
     if (!isValid) {
+      inputRef.current.focus()
+      toast.error(`Please enter a valid email address`)
       return
     }
 
@@ -68,6 +73,7 @@ const GetStartedForm = ({ className, buttonText = 'Sign up', plan, schedule }) =
     <Container className={className}>
       <Form onSubmit={submitEmail}>
         <TextInput
+          ref={inputRef}
           type="email"
           value={email}
           onChange={updateEmail}
@@ -75,7 +81,6 @@ const GetStartedForm = ({ className, buttonText = 'Sign up', plan, schedule }) =
         />
         <SubmitButton
           loading={result.loading}
-          disabled={!isValid}
           onClick={submitEmail}
         >
           {buttonText}

@@ -25,6 +25,17 @@ export default class MyDocument extends Document {
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=no"
           />
+
+          <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png" />
+          <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png" />
+          <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png" />
+          <link rel="manifest" href="/static/site.webmanifest" />
+          <link rel="mask-icon" href="/static/safari-pinned-tab.svg" color="#000000" />
+          <meta name="apple-mobile-web-app-title" content="Mailmask" />
+          <meta name="application-name" content="Mailmask" />
+          <meta name="msapplication-TileColor" content="#f7fff7" />
+          <meta name="theme-color" content="#f7fff7" />
+
           <link rel='stylesheet' href='https://unpkg.com/@fortawesome/fontawesome-svg-core@1.2.28/styles.css' crossOrigin='anonymous'></link>
           <script type="text/javascript" dangerouslySetInnerHTML={{ __html: `
             var _paq = window._paq || [];

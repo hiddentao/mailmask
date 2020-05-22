@@ -12,7 +12,7 @@ const Number = styled.div`
   font-size: 2rem;
   width: 60px;
   line-height: 60px;
-  border: 1px solid ${({ theme }) => theme.homePageHowItWorksNumberBorderColor};
+  border: 1px solid ${({ theme }) => theme.homePage.howItWorks.number.borderColor};
   border-radius: 50%;
 `
 
@@ -26,8 +26,8 @@ const Details = styled.div`
 const Example = styled.div`
   ${font('body')};
   padding: 1rem;
-  background-color: ${({ theme }) => theme.homePageHowItWorksExampleBgColor};
-  color: ${({ theme }) => theme.homePageHowItWorksExampleTextColor};
+  background-color: ${({ theme }) => theme.homePage.howItWorks.example.bgColor};
+  color: ${({ theme }) => theme.homePage.howItWorks.example.textColor};
   font-size: 1rem;
   line-height: 1.5em;
   margin-top: 1rem;

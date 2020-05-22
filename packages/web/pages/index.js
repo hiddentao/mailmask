@@ -99,7 +99,7 @@ const InterimBlockInner = styled.div`
 
 const Benefit = styled.div`
   width: 80%;
-  border: 1px solid ${({ theme }) => theme.homePageBenefitBorderColor};
+  border: 1px solid ${({ theme }) => theme.homePage.benefit.borderColor};
   border-radius: 5px;
   padding: 2rem;
   text-align: center;

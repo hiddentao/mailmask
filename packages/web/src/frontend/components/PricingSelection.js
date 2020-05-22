@@ -11,16 +11,16 @@ const Container = styled.div`
 
 const ScheduleBar = styled.div`
   ${flex({ direction: 'row', justify: 'center', align: 'stretch' })};
-  background-color: ${({ theme }) => theme.pricingPageScheduleBgColor};
-  border: 1px solid ${({ theme }) => theme.pricingPageScheduleBorderColor};
+  background-color: ${({ theme }) => theme.pricingPage.schedule.bgColor};
+  border: 1px solid ${({ theme }) => theme.pricingPage.schedule.borderColor};
   border-radius: 5px;
 `
 
 const Schedule = styled.div`
   font-size: 1.5em;
   padding: 0.6em 1em;
-  color: ${({ theme, selected }) => (selected ? theme.pricingPageSelectedScheduleTextColor : theme.pricingPageScheduleTextColor)};
-  background-color: ${({ theme, selected }) => (selected ? theme.pricingPageSelectedScheduleBgColor : theme.pricingPageScheduleBgColor)};
+  color: ${({ theme, selected }) => (selected ? theme.pricingPage.selectedSchedule.textColor : theme.pricingPage.schedule.textColor)};
+  background-color: ${({ theme, selected }) => (selected ? theme.pricingPage.selectedSchedule.bgColor : theme.pricingPage.schedule.bgColor)};
   text-align: center;
   cursor: pointer;
 
@@ -37,6 +37,7 @@ const PlanList = styled.div`
 
 const Plan = styled.div`
   margin: 0 2em 4em 0;
+  background-color: ${({ theme }) => theme.pricingPage.plan.bgColor};
 
   &:last-child {
     margin-bottom: 0;
@@ -45,7 +46,7 @@ const Plan = styled.div`
 
 const PlanDetails = styled.div`
   ${flex({ direction: 'column', justify: 'center', align: 'stretch' })};
-  border: 1px solid ${({ theme }) => theme.pricingPagePlanBorderColor};
+  border: 1px solid ${({ theme }) => theme.pricingPage.plan.borderColor};
   border-radius: 5px;
   margin-bottom: 1em;
 `
@@ -55,7 +56,7 @@ const PlanName = styled.div`
   font-size: 2em;
   text-align: center;
   padding: 0.5em 0;
-  border-bottom: 1px solid ${({ theme }) => theme.pricingPagePlanBorderColor};
+  border-bottom: 1px solid ${({ theme }) => theme.pricingPage.plan.borderColor};
 `
 
 const PriceContainer = styled.div`
@@ -66,7 +67,7 @@ const PriceContainer = styled.div`
 `
 
 const PriceOriginal = styled.span`
-  color: ${({ theme }) => theme.pricingPageOriginalPriceTextColor};
+  color: ${({ theme }) => theme.pricingPage.originalPrice.textColor};
   font-size: 80%;
   ${font('body', 'thin')};
   background: linear-gradient(155deg,#ffffff 46%,#f00 47%, #f00 53%, #ffffff 54%);
@@ -87,7 +88,7 @@ const PriceCurrency = styled.span`
 const PriceSchedule = styled.div`
   ${flex({ direction: 'row', justify: 'center', align: 'center' })};
   ${font('body', 'regular', 'italic')};
-  color: ${({ theme }) => theme.pricingPagePriceScheduleTextColor};
+  color: ${({ theme }) => theme.pricingPage.priceSchedule.textColor};
 `
 
 const BenefitList = styled.ul`
@@ -97,7 +98,7 @@ const Benefit = styled.li`
   ${flex({ direction: 'row', justify: 'center', align: 'center' })};
   text-align: center;
   padding: 1em;
-  border-top: 1px solid ${({ theme }) => theme.pricingPageBenefitBorderColor};
+  border-top: 1px solid ${({ theme }) => theme.pricingPage.benefit.borderColor};
 
   em {
     ${font('body', 'bold')};
@@ -136,7 +137,7 @@ const UnlimitedAliasesBenefit = () => (
   <Benefit>
     <span><em>Unlimited</em> email aliases</span>
     <BenefitHint>
-      Create as many email aliases. No limits!
+      Create as many email aliases as you want. No limits!
     </BenefitHint>
   </Benefit>
 )
@@ -260,7 +261,11 @@ const PricingSelection = ({
                     </PriceNumber>
                     <PriceSchedule>
                       <span>per {selectedSchedule === SUB.SCHEDULE.MONTHLY ? 'month' : 'year'}</span>
-                      <ToggleScheduleButton icon={{ name: 'exchange-alt' }} onClick={toggleSchedule} />
+                      <ToggleScheduleButton
+                        icon={{ name: 'exchange-alt' }}
+                        onClick={toggleSchedule}
+                        tooltip='Change payment frequency'
+                      />
                     </PriceSchedule>
                   </div>
                 )}

@@ -64,5 +64,8 @@
         "hidden": true
       }
     ]
+  },
+  "dependencies": {
+    "emotion-styled-utils": "^2.0.0"
   }
 }
