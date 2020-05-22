@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.1](https://github.com/hiddentao/mailmask/compare/v1.6.0...v1.6.1) (2020-05-22)
+
+
+### Bug Fixes
+
+* **data:** updated dependency ([5555aad](https://github.com/hiddentao/mailmask/commit/5555aadcf52ff2500c85b27d0b11bfb01eb07e43))
+* paddle_auth_code for web deploy ([b3f6724](https://github.com/hiddentao/mailmask/commit/b3f6724cb9ab4bf0847274385f1ce9866be2cbff))
+
+
+
+
+
 # [1.6.0](https://github.com/hiddentao/mailmask/compare/v1.5.0...v1.6.0) (2020-05-22)
 
 
