@@ -124,7 +124,7 @@ const PlanPanel = ({ me }) => (
   </Main>
 )
 
-const Dash = ({ me, panel = 'aliases' }) => {
+const Dash = ({ me, panel }) => {
   const subscriptionStatus = useMemo(() => _.get(me, 'sub.status'), [ me ])
 
   const subscriptionInactive = useMemo(() => {

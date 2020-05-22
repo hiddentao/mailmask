@@ -62,7 +62,7 @@ const SignUpDone = ({ className }) => {
         </p>
         <p>
           You can stop receiving email through a mask at any time by turning it off in
-          the aliases dashboard.
+          your dashboard.
         </p>
       </Sub>
     </div>

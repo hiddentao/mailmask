@@ -99,7 +99,7 @@ class Span {
   finishWithError (error) {
     if (!this.finished) {
       console.error(error)
-      this.recordEvent('error', { error: error.message })
+      this.recordEvent('error', { error: error.toString() })
       this.span.setStatus(opentelemetry.CanonicalCode.INTERNAL)
       this.finish()
     }

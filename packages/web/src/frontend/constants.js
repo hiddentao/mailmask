@@ -12,7 +12,7 @@ const bandwidthStr = (val, inclStr = true) => {
 
 export const DASHBOARD = {
   PANELS: {
-    aliases: 'My aliases',
+    main: 'My aliases',
     plan: 'My plan',
     account: 'My account',
   }
