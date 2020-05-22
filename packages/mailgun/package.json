@@ -1,6 +1,6 @@
 {
   "name": "@mailmask/mailgun",
-  "version": "1.4.0",
+  "version": "1.6.0",
   "description": "Mailgun wrapper",
   "keywords": [
     "mailgun"
@@ -20,7 +20,7 @@
     "url": "https://github.com/hiddentao/mailmask/issues"
   },
   "dependencies": {
-    "@mailmask/utils": "^1.4.0",
+    "@mailmask/utils": "^1.6.0",
     "@sendgrid/mail": "^7.0.1"
   },
   "gitHead": "139e31f4278cba700c5f4dcb4ee9ba5d13f95532"

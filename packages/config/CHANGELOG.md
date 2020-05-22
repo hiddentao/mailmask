@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/hiddentao/mailmask/compare/v1.5.0...v1.6.0) (2020-05-22)
+
+
+### Features
+
+* subscription payments ([d4c08fe](https://github.com/hiddentao/mailmask/commit/d4c08fe04e8630565e6227c30f3694a8e18ba47d))
+
+
+
+
+
 # [1.5.0](https://github.com/hiddentao/mailmask/compare/v1.4.0...v1.5.0) (2020-04-28)
 
 

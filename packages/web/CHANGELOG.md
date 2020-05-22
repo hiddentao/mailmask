@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/hiddentao/mailmask/compare/v1.5.0...v1.6.0) (2020-05-22)
+
+
+### Bug Fixes
+
+* **web:** login button should say Login ([94e5f96](https://github.com/hiddentao/mailmask/commit/94e5f96cf896b8ba7a8492ce5451342ba93c10cd))
+
+
+### Features
+
+* **web:** new theme ([aa82249](https://github.com/hiddentao/mailmask/commit/aa82249495804fa9f932cc899ccf70aa11c15f46))
+* subscription payments ([d4c08fe](https://github.com/hiddentao/mailmask/commit/d4c08fe04e8630565e6227c30f3694a8e18ba47d))
+* **web:** added about page ([da3f0d2](https://github.com/hiddentao/mailmask/commit/da3f0d2ee1760c3ca0ff5f8ae0dab20d68ecfc2e))
+* **web:** added analytics integration ([21891fd](https://github.com/hiddentao/mailmask/commit/21891fdd3c7329b44a878977a0c352d54d36c41b))
+* **web:** open instant chat box from help page ([15a3c52](https://github.com/hiddentao/mailmask/commit/15a3c52c1912048ffd153592d0d78f77d64a111a))
+
+
+
+
+
 # [1.5.0](https://github.com/hiddentao/mailmask/compare/v1.4.0...v1.5.0) (2020-04-28)
 
 
