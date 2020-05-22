@@ -3,6 +3,7 @@ import App from 'next/app'
 import Router from 'next/router'
 import { ThemeProvider } from 'emotion-theming'
 import { loadFonts } from 'emotion-styled-utils'
+import { toast } from 'react-toastify'
 
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -56,6 +57,12 @@ export default class MyApp extends App {
         err => console.error(err)
       )
     }
+  }
+
+  componentDidCatch (error, info) {
+    toast.error(`Sorry, there was unexpected page rendering error!`)
+    console.error(error, info)
+    this.setState({ error }) // trigger the error page
   }
 
   render () {

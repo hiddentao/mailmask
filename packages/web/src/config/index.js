@@ -6,5 +6,6 @@ module.exports = getConfig({
     PADDLE_AUTH_CODE: str(),
     ENCRYPTION_KEY: str(),
     ENCRYPTION_IV: str(),
-  }
+  },
+  dotEnvPath: (process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development')
 })

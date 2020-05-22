@@ -14,13 +14,12 @@
   "scripts": {
     "gen-favicon": "real-favicon generate faviconDescription.json faviconData.json public",
     "build": "next build && npm run gen-favicon",
-    "start": "next start --port 3002",
+    "start": "next start --port $PORT",
     "dev": "next dev --port 3002",
     "lint": "eslint .",
-    "now-cli": "now --token $NOW_TOKEN --scope mailmask",
-    "deploy-to-zeit": "npm run now-cli -- --prod -f --public",
-    "deploy": "npm run build && npm run deploy-to-zeit",
-    "clean-old-deploys": "npm run now-cli -- rm mailmask-web --safe --yes"
+    "gcp-build": "next build",
+    "deploy:appengine": "gcloud secrets versions access latest --secret='mailmask-web-production' > .env.production && echo \"//registry.npmjs.org/:_authToken=$NPM_TOKEN\" > .npmrc && gcloud app deploy",
+    "deploy": "npm run build && npm run deploy:appengine"
   },
   "scarfSettings": {
     "enabled": false

@@ -1,5 +1,5 @@
 import React from 'react'
-import { SUB, LEGAL } from '@mailmask/utils'
+import { LEGAL } from '@mailmask/utils'
 import { useRouter } from 'next/router'
 
 import { renderChildWithArgs } from '../utils/functions'
@@ -12,7 +12,7 @@ const AuthenticatedAndFullySignedUp = ({ children }) => {
   return (
     <Authenticated>
       {ret => {
-        const termsAgreed = ret.legal.find(({ type }) => type === LEGAL.TERMS_AND_CONDITIONS)
+        const termsAgreed = (ret.legal || []).find(({ type }) => type === LEGAL.TERMS_AND_CONDITIONS)
 
         if (termsAgreed) {
           return renderChildWithArgs(children, ret)
