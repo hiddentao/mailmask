@@ -13,13 +13,16 @@
   },
   "scripts": {
     "gen-favicon": "real-favicon generate faviconDescription.json faviconData.json public",
-    "build": "next build && npm run gen-favicon",
+    "gen-sitemap": "node ./scripts/genSitemap.js",
+    "gen-robots-txt": "cp ./public-src/robots.txt ./public",
+    "build": "next build && npm run gen-favicon && npm run gen-sitemap && npm run gen-robots-txt",
     "start": "next start --port $PORT",
     "dev": "next dev --port 3002",
     "lint": "eslint .",
     "gcp-build": "next build",
     "deploy:appengine": "gcloud secrets versions access latest --secret='mailmask-web-production' > .env.production && echo \"//registry.npmjs.org/:_authToken=$NPM_TOKEN\" > .npmrc && gcloud app deploy",
-    "deploy": "npm run build && npm run deploy:appengine"
+    "ping-google": "curl http://www.google.com/ping?sitemap=https://msk.sh/sitemap.xml",
+    "deploy": "npm run build && npm run deploy:appengine && npm run ping-google"
   },
   "scarfSettings": {
     "enabled": false
@@ -44,6 +47,7 @@
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^2.3.0",
     "eslint-plugin-standard": "^4.0.1",
+    "nextjs-sitemap-generator": "^1.0.0",
     "now": "^18.0.0",
     "react-svg-loader": "^3.0.3",
     "webpack": "^4.42.1"
