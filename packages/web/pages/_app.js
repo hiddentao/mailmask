@@ -8,11 +8,13 @@ import { toast } from 'react-toastify'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
+import { initErrorReporter } from '../src/frontend/errorReports'
 import { trackPageChange, initSessionRecording } from '../src/frontend/analytics'
 import GlobalStyles from '../src/frontend/components/GlobalStyles'
 import { setupThemes } from '../src/frontend/theme'
 
-// session recording
+// cloud utilities
+initErrorReporter()
 initSessionRecording()
 
 // when page changes

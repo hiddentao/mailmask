@@ -37,6 +37,7 @@ export default class MyDocument extends Document {
           <meta name="theme-color" content="#f7fff7" />
 
           <link rel='stylesheet' href='https://unpkg.com/@fortawesome/fontawesome-svg-core@1.2.28/styles.css' crossOrigin='anonymous'></link>
+
           <script type="text/javascript" dangerouslySetInnerHTML={{ __html: `
             var _paq = window._paq || [];
             /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
