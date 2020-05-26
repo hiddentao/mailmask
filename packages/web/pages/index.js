@@ -125,10 +125,10 @@ const Benefit = styled.div`
 const HomePage = () => {
   return (
     <Layout>
-      <Seo title='Home' />
+      <Seo />
       <TopBlock>
         <TagLine>
-          Beat Spam. Protect Your Privacy.
+          Unlimited disposable email addresses.
         </TagLine>
         <TypingExample username='you' />
         <FirstGetStartedForm />
@@ -164,7 +164,7 @@ const HomePage = () => {
       </ContentBlock>
       <InterimBlock>
         <InterimBlockInner>
-          <h2>Get started</h2>
+          <h2>Beat Spam. Protect your Privacy.</h2>
           <StyledGetStartedForm />
         </InterimBlockInner>
       </InterimBlock>
