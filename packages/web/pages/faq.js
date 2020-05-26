@@ -32,7 +32,7 @@ const FaqColumn = styled.div`
 `
 
 const StyledFaqBlock = styled(FaqBlock)`
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
 `
 
 const FaqPage = () => {

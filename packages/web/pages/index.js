@@ -11,6 +11,7 @@ import Typing from '../src/frontend/components/Typing'
 import GetStartedForm from '../src/frontend/components/GetStartedForm'
 import ContentWrapper from '../src/frontend/components/ContentWrapper'
 import MaxContentWidth from '../src/frontend/components/MaxContentWidth'
+import { DashboardLink } from '../src/frontend/components/Link'
 import HowItWorks from '../src/frontend/components/page/home/HowItWorks'
 
 const { DOMAIN } = getAppConfig()
@@ -143,15 +144,15 @@ const HomePage = () => {
       <Seo />
       <TopBlock>
         <TagLine>
-          Unlimited, free disposable email addresses.
+          Unlimited, free temporary email addresses.
         </TagLine>
         <SubTagLine>
-          Hide your personal email address, control who can email you, and generate new disposable addresses on-the-fly.
+          Hide your personal email address, control who can email you, and generate new temporary addresses on-the-fly.
         </SubTagLine>
         <FirstGetStartedForm />
       </TopBlock>
-      <ContentBlock id="how-it-works">
-        <h2>How it works</h2>
+      <ContentBlock>
+        <h2 id="how-it-works">How it works</h2>
         <ItemList>
           <StyledHowItWorks
             number={1}
@@ -165,7 +166,7 @@ const HomePage = () => {
             details={
               <DetailsDiv>
                 <div>Next time you need to give someone your email address just make one up on-the-fly (we call this an "alias").</div>
-                <TypingExample username='you' />
+                <TypingExample username='username' />
               </DetailsDiv>
             }
             example={(
@@ -175,8 +176,11 @@ const HomePage = () => {
           />
           <StyledHowItWorks
             number={3}
-            details='Whenever you want to stop receiving email through an alias
-          you can turn it off through the dashboard without having to inform the sender.'
+            details={
+              <span>
+                Whenever you want to stop receiving email through an alias
+                you can simply turn that alias off through <DashboardLink>your Mailmask dashboard</DashboardLink>.
+              </span>}
             example={(
               <span>If you turn off <strong>acme@jim.{DOMAIN}</strong> you will no longer receive emails
           sent to it. Goodbye spam, hello privacy!</span>

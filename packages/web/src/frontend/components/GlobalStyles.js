@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import { css, Global } from '@emotion/core'
+import { useTheme } from 'emotion-theming'
 import { resetStyles, font, smoothTransitions } from 'emotion-styled-utils'
 
 /**
@@ -7,6 +8,8 @@ import { resetStyles, font, smoothTransitions } from 'emotion-styled-utils'
  * @return {ReactElement}
  */
 const GlobalStyles = () => {
+  const theme = useTheme()
+
   return (
     <Fragment>
       {/* <link rel='stylesheet' href='https://unpkg.com/@fortawesome/fontawesome-svg-core@1.2.17/styles.css' integrity='sha384-bM49M0p1PhqzW3LfkRUPZncLHInFknBRbB7S0jPGePYM+u7mLTBbwL0Pj/dQ7WqR' crossOrigin='anonymous' /> */}
@@ -19,10 +22,10 @@ const GlobalStyles = () => {
 
         html {
           ${font('body')};
-          font-size: 16px;
+          font-size: 14px;
 
-          ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
-            font-size: 14px;
+          ${theme.media.when({ minW: 'mobile' })} {
+            font-size: 16px;
           }
         }
 

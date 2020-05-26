@@ -23,95 +23,117 @@ export const FAQ = {
   BASIC: [
     [
       'What is Mailmask?',
-      `Mailmask is a service which helps you block email spam and keep your real email address private.`,
+      `Mailmask is a service which lets you create an unlimited no. of temporary email addresses, all of which automatically foward emails to your real email address.
+
+Mailmask additionally lets you to turn each of these temporary email adresss on or off whenever you like.`,
+    ],
+    [
+      'Why would I want to use Mailmask?',
+      `Temporary email addresses are a great way to:
+
+1. Protect your real email address by keeping it private.
+2. Stop spam from entering your inbox.
+
+By allowing you to create unlimited temporary email addresses, Mailmask allows you to provide a unique email address for every person or online service you interact with.
+
+Later on, if you wish to stop receiving email from a particular individual, company or online service you can simply disable the dispoable email address you created for them, leaving all the others intact.
+
+In effect you now have fine-grained control over who gets to send you email, all without ever having to reveal your real email address!`
     ],
     [
       'How does Mailmask work?',
-      `When you sign up for Mailmask you will set yourself a username. From then onwards, emails sent to _(anything)_\`@(your username).${DOMAIN}\` will be forwarded to your real email address.
+      `When you sign up for Mailmask you will set yourself a username. From then onwards, emails sent to **\`(anything)@(your username).${DOMAIN}\`** will be forwarded to your real email address.
 
-For example, if your username is \`jim\` then emails sent to \`test@jim.${DOMAIN}\`, \`fire@jim.${DOMAIN}\`, etc will all be forwarded to your real email address.
+For example, if your username is **\`jim\`** then emails sent to **\`test@jim.${DOMAIN}\`**, **\`fire@jim.${DOMAIN}\`**, etc will all be forwarded to your real email address.
 
 Any time you need to give your email address to someone (e.g. when registering on a new website) you can instead give them an _alias_ address created on-the-fly, thus keeping your actual email address private.
 
-For example, if your username is \`jim\` and you are registering on \`nytimes.com\` then you could use the alias \`nytimes@jim.${DOMAIN}\` to register. An email received at \`nytimes@jim.${DOMAIN}\` will be transparently forwarded to your email address with the sender knowing.
+For example, if your username is **\`jim\`** and you are registering on **\`nytimes.com\`** then you could use the alias **\`nytimes@jim.${DOMAIN}\`** to register. An email received at **\`nytimes@jim.${DOMAIN}\`** will be transparently forwarded to your email address with the sender knowing.
 
 When you wish to stop receiving email from a particular sender you can go to your [Mailmask dashboard](/dashboard) and simply turn off that specific email alias, leaving the others enabled. Thus you can block spam or unwanted messages on a per-alias basis.`,
     ],
     [
-      'How is Mailmask better than other similar services?',
-      `Most virtual email address and alias services require you to pre-create the alias virtual email address prior to use. Mailmask's _killer_ usability point is that you can create aliases on-the-fly.
+      'How is Mailmask better than other temporary/disposable email services?',
+      `Most other similar services require you to pre-create the alias address prior to use.
 
-No matter the scenario - whethering registering on a new website, giving your email address to a promising lead, etc. - you can simply make up an alias on-the-fly and know that all received email will arrive in your real inbox.
+They often provide browser extensions to automate this process, though can never be as flexible as Mailmask which lets you create aliases without needing any additional sofware.
 
-And when you need to turn an alias off (or back on) you can easily do so via [your Mailmask dashboard](/dashboard).
+And indeed, this is Mailmask's _killer_ usability point - that **you can create aliases on-the-fly**.
 
-Overall, using Mailmask requires minimal effort on your part.`,
+Because Mailmask fowards all received email to your real email address you can keep using your existing mail client to read your email, unlike other services which require you to use their website.
+
+When you need to turn an alias off (or back on) you can easily do so via [your Mailmask dashboard](/dashboard). Most other services do not offer this feature since their aliases are very short-lived in the first place.
+`,
     ],
     [
       'Can I use Mailmask for my personal and/or professional email?',
-      `Yes, you can use it for both types!
+      `Yes, you can use it for any type of email.
 
-Our system does not discriminate against different types of email, and we don't store or scan any of your content on our servers.`,
+Our system is engineered to handle any type of email (including large attachments) so there are no limitations to the kinds of email communcation you can use it with.
+
+We also don't store or scan any of your content on our servers so confidentiality is assured.`,
     ]
   ],
 
   ALIASES: [
     [
-      'What are aliases?',
-      `An email _alias_ is a "virtual" email address which transparently forwards all received email to your real email address.
+      'What is an alias?',
+      `In Mailmask, an _alias_ is another name for a temporary email address which transparently forwards all received email to your real email address.
 
-For example, if your username is \`jim\` then all email received at \`test@jim.${DOMAIN}\` will transparently be forwarded to your email address.
+For example, if your username is **\`jim\`** then all email received at **\`test@jim.${DOMAIN}\`** will transparently be forwarded to your real email address.
 
-Mailmask lets you create an _unlimited_ no. of aliases by simply changing the prefix (the bit before the \`@\`).
+Mailmask lets you create an _unlimited_ no. of aliases by simply changing the prefix (the bit before the **\`@**).
 
-For example, if your username is \`jim\` then \`an_alias@jim.${DOMAIN}\`, \`something_random@jim.${DOMAIN}\`, etc wil all transparently foward received email to your real email address.`
+For example, if your username is **\`jim\`** then **\`an_alias@jim.${DOMAIN}\`**, **\`something_random@jim.${DOMAIN}\`**, etc wil all transparently foward received email to your real email address.`
     ],
     [
       'How do I create a new alias?',
-      `Once you have registered with Mailmask and chosen your username, you can create a new email alias on-the-fly by sending an email to it. The alias will then show up in [your dashboard](/dashboard).
+      `Once you have registered with Mailmask and chosen your username, you can create a new email alias on-the-fly when you need to give someone your email address.
 
-For example, if your username is \`jim\` and you wish to create \`test@jim.${DOMAIN}\` then just have an email sent to \`test@jim.${DOMAIN}\`.`,
+For example, if your username is **\`jim\`** and you are registering on **\`nytimes.com\`** then you could use the alias **\`nytimes@jim.${DOMAIN}\`** to register. An email received at **\`nytimes@jim.${DOMAIN}\`** will be transparently forwarded to your email address with the sender knowing.
+
+If/when they send you an email Mailmask will automatically forward the messages to your real email address and the alias used will show up in [your dashboard](/dashboard).
+
+To test this process out simply send an email to **\`test@(your username).${DOMAIN}\`** and then check that the **\`test\`** alias appears in the dashboard.`
     ],
     [
       'Where can I see all my created aliases?',
-      `All aliases can be seen and managed via [your dashboard](/dashboard).`,
+      `All aliases can be seen and managed in [your dashboard](/dashboard).`,
     ],
     [
-      'How do turn off an alias, i.e. stop receiving email through it?',
+      'How long are aliases valid for?',
+      `All created aliases are valid forever.
+
+To disable an alias, simply turn it off via [your dashboard](/dashboard) - any subsequent email received through that alias will be silently discarded.`
+    ],
+    [
+      'How do delete an alias, i.e. stop receiving email through it?',
       `You can turn an alias off via [your dashboard](/dashboard).
 
-Please note that once an alias is turned off we thereafter silently discard all email received through it. So please be sure that you want to turn an alias off.`,
+Please note that once an alias is turned off we thereafter silently discard all email received through it without notifying you any further. So please be sure that you want to turn an alias off.`,
     ],
     [
-      'Will senders know that I\'ve turned off an alias that they are currently sending to?',
-      `When an alias is turned off Mailmask will silently drop all the emails received at that alias **without notifying the senders**. Thus the senders will not know that the alias is turned off.
-
-This is by design and is intended as a security measure for your benefit.`
-    ],
-    [
-      'How do I turn an alias back on, i.e. resume receiving email through it?',
+      'How do I restore an alias, i.e. resume receiving email through it?',
       `You can turn an alias back on via [your dashboard](/dashboard).
 
-Please note that once an alias is turned off we thereafter silently discard all email received through it.
-
-Thus, when you turn the alias back on you will not be able to catch up on the emails you missed in the intervening period. You will just receive new emails from now onwards.`
+Please note that once an alias is turned off we thereafter silently discard all email received through it. Thus, when you turn it back on you will not be able to catch up on the emails you missed in the intervening period.`
     ]
   ],
 
   PRIVACY: [
     [
-      'Will a sender know that I am using Mailmask?',
-      `Unless a sender already knows that the \`${DOMAIN}\` domain represents the Mailmask service there is no other way for them to know that you are using Mailmask. From their point of view, the alias address you give them is no different to a normal email address.
+      'Does my real email address truly remain private?',
+      `Yes! It is not possible for a sender to find out your real email address from your Mailmask address without guessing.
 
-When you _reply_ to an email received via Mailmask the reply will come from your real email address, not the Mailmask alias that they sent to.
+When you _reply_ to an email received via Mailmask the reply will come from your real email address, which the sender would then be able to see.
 
 To keep your real email address private even when replying, please sign up for one of our [paid plans](/pricing).`,
     ],
     [
-      'Will senders be able to find out my real email address?',
-      `It is not possible for a sender to find out your real email address from your Mailmask address without guessing.
+      'Will a sender know that I am using Mailmask?',
+      `Unless a sender already knows that the **\`${DOMAIN}\`** domain represents the Mailmask service there is no other way for them to know that you are using Mailmask. From their point of view, the alias address you give them is the same as any other email address.
 
-When you _reply_ to an email received via Mailmask the reply will come from your real email address, which the sender would then be able to see.
+Note however, that when you _reply_ to an email received via Mailmask the reply will come from your real email address, not the Mailmask alias that they sent to.
 
 To keep your real email address private even when replying, please sign up for one of our [paid plans](/pricing).`,
     ],
@@ -120,6 +142,12 @@ To keep your real email address private even when replying, please sign up for o
       `When you reply to a sender the reply will come from your real email address, not the Mailmask alias.
 
 To keep your real email address private even when replying, please sign up for one of our [paid plans](/pricing).`,
+    ],
+    [
+      'Will senders know that I\'ve turned off an alias that they are currently sending to?',
+      `When an alias is turned off Mailmask will silently drop all the emails received at that alias **without notifying the senders**. Thus the senders will not know that the alias is turned off.
+
+This is by design and is intended as a security measure for your benefit.`
     ],
     [
       'Does Mailmask scan or store my email?',
@@ -226,7 +254,7 @@ If you wish to completely delete your Mailmask account this can be done from you
     ],
     [
       'How will payments appear in my credit card statement?',
-      `Since we use [paddle.com](https://paddle.com) to process payments, so transactions might show up on your statement as **PADDLE.NEXT *MAILMASK**. If you paid using Paypal the transaction may appear to be for **Paddle.com Market Limited**.`,
+      `Since we use [paddle.com](https://paddle.com) to process payments, so transactions might show up on your statement as **\`PADDLE.NEXT *MAILMASK**. If you paid using Paypal the transaction may appear to be for **\`Paddle.com Market Limited**.`,
     ],
     [
       'If I fail to make a subscription payment what will happen?',
@@ -295,11 +323,11 @@ Please note, we are unable to restore your account to its previous state once de
   TROUBLESHOOTING: [
     [
       'I did not get the signup or login email :/',
-      `Please check your spam folder for any messages sent from the **${DOMAIN}** domain. We recommend that you setup your spam filter to allow any and all messages from **${DOMAIN}** through.`,
+      `Please check your spam folder for any messages sent from the **\`${DOMAIN}\`** domain. We recommend that you setup your spam filter to allow any and all messages from **\`${DOMAIN}\`** through.`,
     ],
     [
       'I did not receiving an email that was sent to one of my alias addresses :/',
-      `Please check your spam folder for any messages sent from the **${DOMAIN}** domain. We recommend that you setup your spam filter to allow any and all messages from **${DOMAIN}** through.`,
+      `Please check your spam folder for any messages sent from the **\`${DOMAIN}\`** domain. We recommend that you setup your spam filter to allow any and all messages from **\`${DOMAIN}\`** through.`,
     ],
     [
       'I couldn\'t find an answer to my question, please help!',

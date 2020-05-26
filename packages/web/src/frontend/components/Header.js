@@ -95,6 +95,10 @@ const DashboardLi = styled.li`
 
 const StyledLogo = styled(Logo)`
   fill: ${({ theme, inFloatingHeader }) => (inFloatingHeader ? theme.header.floating.logoColor : theme.header.logoColor)};
+
+  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+    margin-left: -16px;
+  }
 `
 
 const Header = ({ className, floating, onClickHome }) => {

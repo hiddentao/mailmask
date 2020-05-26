@@ -33,6 +33,11 @@ const TypingCursor = styled(Typing.Cursor)`
 const TYPING_PREFIXES = [
   'trial',
   'nytimes',
+  'xbox',
+  'discord',
+  'github',
+  'facebook',
+  'instagram',
   'tinder',
   'ifttt',
   'temporary',

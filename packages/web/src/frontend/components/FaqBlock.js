@@ -31,7 +31,7 @@ const QuestionText = styled.div`
   margin-left: 0.8rem;
 `
 
-const Question = styled.p`
+const Question = styled.div`
   ${flex({ direction: 'row', justify: 'flex-start', align: 'center' })};
   ${font('body', 'bold')};
   cursor: pointer;
