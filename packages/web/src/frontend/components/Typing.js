@@ -31,12 +31,10 @@ const TypingCursor = styled(Typing.Cursor)`
 `
 
 const TYPING_PREFIXES = [
-  'facebook',
-  'twitter',
+  'trial',
   'nytimes',
-  'anything',
-  'wifi',
-  'recruiter',
+  'tinder',
+  'ifttt',
   'temporary',
 ]
 

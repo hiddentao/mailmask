@@ -59,6 +59,12 @@ export const LogoutLink = ({ children, anchorProps }) => (
   wrapInAnchor(children, { ...anchorProps, href: '/api/logout' })
 )
 
+export const HowItWorksLink = ({ children, anchorProps }) => (
+  <DefaultLink href='/#how-it-works'>
+    {wrapInAnchor(children, anchorProps)}
+  </DefaultLink>
+)
+
 export const PricingLink = ({ children, anchorProps }) => (
   <DefaultLink href='/pricing' scroll={true}>
     {wrapInAnchor(children, anchorProps)}

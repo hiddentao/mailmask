@@ -36,16 +36,20 @@ const PlanList = styled.div`
 `
 
 const Plan = styled.div`
-  margin: 0 2em 4em 0;
-  background-color: ${({ theme }) => theme.pricingPage.plan.bgColor};
+  margin: 0 0 4em 0;
 
   &:last-child {
     margin-bottom: 0;
+  }
+
+  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+    margin: 0 2em 4em 0;
   }
 `
 
 const PlanDetails = styled.div`
   ${flex({ direction: 'column', justify: 'center', align: 'stretch' })};
+  background-color: ${({ theme }) => theme.pricingPage.plan.details.bgColor};
   border: 1px solid ${({ theme }) => theme.pricingPage.plan.borderColor};
   border-radius: 5px;
   margin-bottom: 1em;
@@ -239,7 +243,7 @@ const PricingSelection = ({
           selected={selectedSchedule === SUB.SCHEDULE.YEARLY}
           onClick={setYearlySchedule}
         >
-          Yearly <small>(2 months FREE)</small>
+          Yearly <small>(-17%)</small>
         </Schedule>
       </ScheduleBar>
       <PlanList>
@@ -264,7 +268,7 @@ const PricingSelection = ({
                       <ToggleScheduleButton
                         icon={{ name: 'exchange-alt' }}
                         onClick={toggleSchedule}
-                        tooltip='Change payment frequency'
+                        tooltip='Change how often you pay'
                       />
                     </PriceSchedule>
                   </div>

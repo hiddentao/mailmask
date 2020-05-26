@@ -4,6 +4,7 @@ import { flex, font, childAnchors } from 'emotion-styled-utils'
 
 import {
   HomeLink,
+  HowItWorksLink,
   PricingLink,
   FaqLink,
   AboutLink,
@@ -47,19 +48,12 @@ const Container = styled.footer`
 `
 
 const Menu = styled.div`
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
-    ${flex({ direction: 'row', justify: 'flex-start', align: 'flex-start' })};
-  }
+  ${flex({ direction: 'row', justify: 'flex-start', align: 'flex-start' })};
 `
 
 const MenuColumn = styled.ul`
   display: block;
-  padding-bottom: 2rem;
-
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
-    padding-right: 3rem;
-    padding-bottom: 0;
-  }
+  padding: 0 3rem 0 0;
 `
 
 const MenuNavLink = styled.li`
@@ -80,6 +74,7 @@ const Footer = ({ className }) => {
       <Menu>
         <MenuColumn>
           <MenuNavLink><HomeLink>Home</HomeLink></MenuNavLink>
+          <MenuNavLink><HowItWorksLink>How it works</HowItWorksLink></MenuNavLink>
           <MenuNavLink><PricingLink>Pricing</PricingLink></MenuNavLink>
           <MenuNavLink><FaqLink>FAQ</FaqLink></MenuNavLink>
           <MenuNavLink><HelpLink>Help & support</HelpLink></MenuNavLink>

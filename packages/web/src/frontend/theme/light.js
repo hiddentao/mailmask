@@ -231,7 +231,9 @@ export default {
       textColor: white,
     },
     plan: {
-      bgColor: white,
+      details: {
+        bgColor: white,
+      },
       borderColor: grey,
     },
     originalPrice: {

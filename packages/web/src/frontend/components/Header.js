@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { flex, font, childAnchors } from 'emotion-styled-utils'
+import { flex, childAnchors } from 'emotion-styled-utils'
 
-import { HomeLink, DashboardLink, PricingLink, FaqLink, LoginLink } from './Link'
+import { HomeLink, DashboardLink, HowItWorksLink, PricingLink, FaqLink, LoginLink } from './Link'
 import Authenticated from './Authenticated'
 import Logo from './Logo'
 
@@ -11,7 +11,6 @@ export const headerHeight = '75px'
 const Container = styled.header`
   height: ${headerHeight};
   ${flex({ direction: 'row', justify: 'space-between', align: 'center' })};
-  padding: 0 1rem;
   overflow: visible;
 `
 
@@ -44,8 +43,11 @@ const DesktopNav = styled.ul`
 
 
 const MobileNavContainer = styled.div`
+  padding-right: 1rem;
+
   ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
     display: none;
+    padding-right: 0;
   }
 `
 
@@ -114,6 +116,7 @@ const Header = ({ className, floating, onClickHome }) => {
         </Brand>
       </HomeLink>
       <DesktopNav inFloatingHeader={floating}>
+        <NavLi key='how-it-works'><HowItWorksLink>How it works</HowItWorksLink></NavLi>
         <NavLi key='pricing'><PricingLink>Pricing</PricingLink></NavLi>
         <NavLi key='faq'><FaqLink>FAQ</FaqLink></NavLi>
         {dashboardLink}

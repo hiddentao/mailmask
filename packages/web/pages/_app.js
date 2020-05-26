@@ -20,8 +20,10 @@ initSessionRecording()
 // when page changes
 Router.events.on('routeChangeComplete', () => {
   trackPageChange()
-  // always scroll to top on route change
-  window.scrollTo(0, 0)
+
+  if (window.location.hash) {
+    window.location = window.location // eslint-disable-line no-self-assign
+  }
 })
 
 const themes = setupThemes({

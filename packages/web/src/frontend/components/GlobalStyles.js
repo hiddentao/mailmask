@@ -20,6 +20,10 @@ const GlobalStyles = () => {
         html {
           ${font('body')};
           font-size: 16px;
+
+          ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+            font-size: 14px;
+          }
         }
 
         a {

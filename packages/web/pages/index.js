@@ -22,25 +22,36 @@ const TopBlock = styled.div`
 `
 
 const TagLine = styled.p`
-  font-size: 3.5rem;
+  font-size: 3rem;
   text-align: center;
   line-height: 1.2em;
 
   ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
     font-size: 4rem;
+    max-width: 80%;
   }
 `
 
-
-const TypingExample = styled(Typing)`
-  ${font('body')};
-  font-size: 1.8rem;
-  margin-top: 4rem;
+const SubTagLine = styled.div`
+  font-size: 1.5rem;
   text-align: center;
+  line-height: 1.2em;
+  margin: 2rem 0 0;
 
   ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
-    font-size: 4rem;
+    font-size: 1.5rem;
+    max-width: 60%;
   }
+`
+
+const DetailsDiv = styled.div`
+  ${flex({ direction: 'column', justify: 'center', align: 'center' })};
+`
+
+const TypingExample = styled(Typing)`
+  ${font('body', 'bold')};
+  font-size: 80%;
+  margin: 1rem auto 0;
 `
 
 const StyledGetStartedForm = styled(GetStartedForm)`
@@ -48,8 +59,12 @@ const StyledGetStartedForm = styled(GetStartedForm)`
 `
 
 const FirstGetStartedForm = styled(StyledGetStartedForm)`
-  width: 80%;
+  width: 90%;
   margin: 4rem auto 0;
+
+  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+    width: 80%;
+  }
 `
 
 const ContentBlock = styled(ContentWrapper)`
@@ -128,24 +143,31 @@ const HomePage = () => {
       <Seo />
       <TopBlock>
         <TagLine>
-          Unlimited disposable email addresses.
+          Unlimited, free disposable email addresses.
         </TagLine>
-        <TypingExample username='you' />
+        <SubTagLine>
+          Hide your personal email address, control who can email you, and generate new disposable addresses on-the-fly.
+        </SubTagLine>
         <FirstGetStartedForm />
       </TopBlock>
-      <ContentBlock>
+      <ContentBlock id="how-it-works">
         <h2>How it works</h2>
         <ItemList>
           <StyledHowItWorks
             number={1}
-            details='Provide us your real email address and choose an easy-to-remember username.'
+            details='Register on Mailmask with your real email address and choose an easy-to-remember username.'
             example={(
               <span>If your real email address is <strong>jim@gmail.com</strong> then you might choose <strong>jim</strong> as your username.</span>
             )}
           />
           <StyledHowItWorks
             number={2}
-            details='Next time you need to give someone your email address just make one up on-the-fly (we cal this an "alias").'
+            details={
+              <DetailsDiv>
+                <div>Next time you need to give someone your email address just make one up on-the-fly (we call this an "alias").</div>
+                <TypingExample username='you' />
+              </DetailsDiv>
+            }
             example={(
               <span>If your username is <strong>jim</strong> then you could sign up for <strong>acme.com</strong> using <strong>acme@jim.{DOMAIN}</strong>. We will forward
               all email received here to your real email address.</span>

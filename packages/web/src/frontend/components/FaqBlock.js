@@ -18,6 +18,19 @@ const ItemContainer = styled.div`
   overflow: hidden;
 `
 
+const StyledIconButton = styled(IconButton)`
+  display: block;
+  font-size: 0.7rem;
+  transform: rotate(${({ expanded }) => (expanded ? '90deg' : '0deg')});
+  width: 24px;
+  height: 24px;
+`
+
+const QuestionText = styled.div`
+  flex: 1;
+  margin-left: 0.8rem;
+`
+
 const Question = styled.p`
   ${flex({ direction: 'row', justify: 'flex-start', align: 'center' })};
   ${font('body', 'bold')};
@@ -51,8 +64,8 @@ const FaqItem = ({ initiallyExpanded, question, answer }) => {
   return (
     <ItemContainer>
       <Question onClick={toggle}>
-        <IconButton icon={{ name: expanded ? 'chevron-down' : 'chevron-right' }} />
-        <span>{question}</span>
+        <StyledIconButton icon={{ name: 'chevron-right' }} expanded={expanded} />
+        <QuestionText>{question}</QuestionText>
       </Question>
       <Answer expanded={expanded}>
         <Markdown>{answer}</Markdown>
