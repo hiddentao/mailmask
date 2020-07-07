@@ -1,0 +1,25 @@
+{
+  "name": "@mailmask/config",
+  "version": "1.12.1",
+  "description": "Config",
+  "author": "Ramesh Nair <ram@hiddentao.com>",
+  "homepage": "https://msk.sh",
+  "license": "AGPL-3.0-or-later",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiddentao/mailmask.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/hiddentao/mailmask/issues"
+  },
+  "dependencies": {
+    "envalid": "^6.0.1"
+  }
+}

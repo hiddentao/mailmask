@@ -1,0 +1,76 @@
+{
+  "name": "mailmask",
+  "private": true,
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.2.0",
+    "core-js": "^3.2.1",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^7.1.0",
+    "eslint-plugin-react-hooks": "^1.5.1",
+    "eslint-plugin-standard": "^3.0.1",
+    "husky": "^3.1.0",
+    "lerna": "^3.16.4",
+    "standard-version": "^7.0.0"
+  },
+  "license": "AGPL-3.0-or-later",
+  "scripts": {
+    "bootstrap": "lerna bootstrap --hoist",
+    "commitmsg": "commitlint -e $GIT_PARAMS",
+    "pre-release": "lerna version --conventional-commits",
+    "release": "lerna publish from-git"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "standard-version": {
+    "types": [
+      {
+        "type": "feat",
+        "section": "Features"
+      },
+      {
+        "type": "fix",
+        "section": "Bug Fixes"
+      },
+      {
+        "type": "chore",
+        "hidden": true
+      },
+      {
+        "type": "docs",
+        "section": "Documentation"
+      },
+      {
+        "type": "style",
+        "hidden": true
+      },
+      {
+        "type": "refactor",
+        "hidden": true
+      },
+      {
+        "type": "perf",
+        "hidden": true
+      },
+      {
+        "type": "test",
+        "hidden": true
+      }
+    ]
+  },
+  "dependencies": {
+    "emotion-styled-utils": "^2.0.0"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "@mailmask/mailgun",
+  "version": "1.12.1",
+  "description": "Mailgun wrapper",
+  "keywords": [
+    "mailgun"
+  ],
+  "author": "Ramesh Nair <ram@hiddentao.com>",
+  "homepage": "https://msk.sh",
+  "license": "AGPL-3.0-or-later",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiddentao/mailmask.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hiddentao/mailmask/issues"
+  },
+  "dependencies": {
+    "@mailmask/utils": "^1.12.1",
+    "@sendgrid/mail": "^7.0.1"
+  },
+  "gitHead": "139e31f4278cba700c5f4dcb4ee9ba5d13f95532"
+}

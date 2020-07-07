@@ -1,0 +1,7 @@
+.next
+.now
+static/
+public/
+faviconData.json
+.env.*
+.npmrc

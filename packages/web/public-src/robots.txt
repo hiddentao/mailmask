@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /await-email
+Noindex: /await-email
+Disallow: /dashboard/*
+Noindex: /dashboard/*
+Disallow: /logged-in
+Noindex: /logged-in
+
+Sitemap: https://msk.sh/sitemap.xml

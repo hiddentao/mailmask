@@ -1,0 +1,44 @@
+{
+  "name": "@mailmask/mta",
+  "private": true,
+  "version": "1.12.1",
+  "description": "MailMask MTA",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon node_modules/.bin/haraka -c .",
+    "start": "node_modules/.bin/haraka -c ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiddentao/mailmask.git"
+  },
+  "author": "Ramesh Nair <ram@hiddentao.com>",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/hiddentao/mailmask/issues"
+  },
+  "homepage": "https://github.com/hiddentao/mailmask#readme",
+  "dependencies": {
+    "@mailmask/config": "^1.12.1",
+    "@mailmask/data": "^1.12.1",
+    "@mailmask/log": "^1.12.1",
+    "@mailmask/mailgun": "^1.12.1",
+    "@mailmask/nodejs-utils": "^1.12.1",
+    "@mailmask/utils": "^1.12.1",
+    "Haraka": "^2.8.25",
+    "lodash": "^4.17.15",
+    "mailgun-js": "^0.22.0",
+    "mailparser": "^2.7.7",
+    "mailparser-mit": "^1.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "nodemon": "^2.0.2",
+    "shelljs": "^0.8.3"
+  }
+}

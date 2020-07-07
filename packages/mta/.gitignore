@@ -1,0 +1,7 @@
+*.tar
+*.tgz
+*.gz
+*.tar.gz
+*.docker_*
+.env
+mailmask-terraform/

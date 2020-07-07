@@ -1,0 +1,29 @@
+{
+  "name": "@mailmask/nodejs-utils",
+  "version": "1.12.1",
+  "description": "Node.js utilities",
+  "keywords": [
+    "nodejs"
+  ],
+  "author": "Ramesh Nair <ram@hiddentao.com>",
+  "homepage": "https://msk.sh",
+  "license": "AGPL-3.0-or-later",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiddentao/mailmask.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/hiddentao/mailmask/issues"
+  }
+}

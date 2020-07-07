@@ -1,0 +1,4 @@
+cron:
+- description: "Update Sendgrid contacts list"
+  url: /api/cronSendgrid
+  schedule: every 60 minutes

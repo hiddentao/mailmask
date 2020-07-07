@@ -1,0 +1,11 @@
+{
+  "packages": [
+    "packages/*"
+  ],
+  "version": "1.12.1",
+  "command": {
+    "publish": {
+      "conventionalCommits": true
+    }
+  }
+}

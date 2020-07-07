@@ -1,0 +1,35 @@
+{
+  "name": "@mailmask/utils",
+  "version": "1.12.1",
+  "description": "Utilities.",
+  "author": "Ramesh Nair <ram@hiddentao.com>",
+  "homepage": "https://msk.sh",
+  "license": "AGPL-3.0-or-later",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiddentao/mailmask.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hiddentao/mailmask/issues"
+  },
+  "dependencies": {
+    "date-fns": "^2.12.0",
+    "deepmerge": "^4.2.2",
+    "email-addresses": "^3.1.0",
+    "lodash.camelcase": "^4.3.0",
+    "lodash.capitalize": "^4.2.1",
+    "lodash.compose": "^2.4.1",
+    "lodash.get": "^4.4.2",
+    "lodash.mapkeys": "^4.6.0",
+    "lodash.mapvalues": "^4.6.0",
+    "lodash.pick": "^4.4.0",
+    "lodash.snakecase": "^4.1.1",
+    "lodash.trunc": "^3.0.4",
+    "slugify": "^1.4.0",
+    "uuidv4": "^6.0.7"
+  }
+}
