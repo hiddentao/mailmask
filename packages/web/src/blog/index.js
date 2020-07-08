@@ -7,6 +7,7 @@ const slugger = new GithubSlugger()
 const srcPosts = [
   require('./1.md').default,
   require('./2.md').default,
+  require('./3.md').default,
 ].map(post => {
   const { content, data: { summary, title, date } } = matter(post)
   return {

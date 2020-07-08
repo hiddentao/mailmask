@@ -169,8 +169,8 @@ Please see our [privacy policy](/privacy) for more details.`,
 We also have a [self-hosting guide](${SELF_HOSTING_GUIDE_URL}) if you wish to host Mailmask on your own server.`
     ],
     [
-      'Can I host Mailmask on my own server?',
-      `Yes, please follow our [self-hosting guide](${SELF_HOSTING_GUIDE_URL}) for instructions.`
+      'How can I keep it more private? Can I self-host Mailmask?',
+      `Yes indeed! Please follow our [self-hosting guide](${SELF_HOSTING_GUIDE_URL}) for instructions.`
     ]
   ],
 
