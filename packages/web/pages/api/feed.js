@@ -32,21 +32,27 @@ const endpoint = async (req, res) => {
 
       const publishedDate = new Date(posts[posts.length - 1].date)
 
-      const items = posts.map(({ content, title, date, slug }) => `<item>
-  <title>${title}</title>
-  <description><![CDATA[${md2html(content)}]]></description>
-  <link>${buildBackendUrl(`/blog/${slug}`)}</link>
-  <pubDate>${new Date(date).toISOString()}</pubDate>
-</item>
-`
-      )
+      const items = posts.map(({ content, title, date, slug }) => {
+        const link = buildBackendUrl(`/blog/${slug}`)
+
+        return `
+          <item>
+            <title>${title}</title>
+            <description><![CDATA[${md2html(content)}]]></description>
+            <link>${link}</link>
+            <guid>${link}</
+            <pubDate>${new Date(date).toUTCString()}</pubDate>
+          </item>
+        `
+      })
 
       const str = `<?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Mailmask Blog</title>
     <description>Blog for Mailmask - Easily stop unwanted email. Unlimited, free temporary email addresses, all forwarding to your real email address. Beat spam, protect your privacy.</description>
     <link>https://msk.sh/blog</link>
+    <atom:link href="https://feedpress.me/mailmask" rel="self" type="application/rss+xml" />
     <lastBuildDate>${publishedDate.toUTCString()}</lastBuildDate>
     <pubDate>${publishedDate.toUTCString()}</pubDate>
     ${items.join(`\n`)}
