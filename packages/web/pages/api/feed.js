@@ -34,7 +34,7 @@ const endpoint = async (req, res) => {
 
       const items = posts.map(({ content, title, date, slug }) => `<item>
   <title>${title}</title>
-  <description><![CDATA[${md2html(content)}]]</description>
+  <description><![CDATA[${md2html(content)}]]></description>
   <link>${buildBackendUrl(`/blog/${slug}`)}</link>
   <pubDate>${new Date(date).toISOString()}</pubDate>
 </item>
