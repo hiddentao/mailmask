@@ -25,7 +25,7 @@ export const Link = ({ href, as: asHref, query = {}, children, title, scroll }) 
   const isApiRoute = useMemo(() => href.startsWith('/api'), [ href ])
 
   const finalHref = useMemo(() => (
-    (isApiRoute || isExternal) ? href : url.format({ pathname: href, query })
+    (isApiRoute || isExternal || href.includes('#')) ? href : url.format({ pathname: href, query })
   ), [ isApiRoute, isExternal, href, query ])
 
   const content = useMemo(() => wrapInAnchor(
