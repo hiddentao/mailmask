@@ -20,7 +20,7 @@ Additionally, I will assume that you will be hosting the mail server (MTA) and w
 
 I will also assume that your chosen domain name is `yourdomain.com`.
 
-## Setup domain name
+## Setup domain name
 
 Register a domain name to use. _(I recommend [Namecheap](https://namecheap.com) for domains)_.
 
@@ -257,7 +257,7 @@ If you visit http://localhost:3002 you should now be able to sign up just as you
 If the website is running on the same machine as the mail server and you mapped the DNS records as shown earlier then you
 should be able to see the website when visting `mail.yourdomain.com:3002`
 
-## Security
+## Security
 
 It is important to secure your server when self-hosting. However the exact measures you may wish to take will depend on how you're
 hosting Mailmask (e.g. on a server at home or in the cloud) as well as the operating system running it.
@@ -271,7 +271,6 @@ At minimum we recommend:
 * Protecting access to the website
   * Use an SSL certificate - the easy way is to use [CloudFlare](https://www.cloudflare.com/) as your DNS host since SSL comes for free.
 
-## Help and troubleshooting
+## Help and troubleshooting
 
 If you need further help with your self-hosting setup then please get in touch via the [Mailmask help](https://msk.sy/help) page.
-
