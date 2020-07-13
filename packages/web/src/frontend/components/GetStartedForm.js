@@ -10,6 +10,8 @@ import { withApollo } from '../hoc'
 import { useSafeMutation } from '../hooks'
 import { RequestLoginLinkMutation } from '../../graphql/mutations'
 import Button from './Button'
+import { DashboardLink } from './Link'
+import Authenticated from './Authenticated'
 import QueryResult from './QueryResult'
 import TextInput from './TextInput'
 
@@ -28,7 +30,7 @@ const SubmitButton = styled(Button)`
   margin-left: 0.5rem;
 `
 
-const GetStartedForm = ({ className, buttonText = 'Start', plan, schedule }) => {
+const GetStartedForm = ({ buttonText = 'Start', plan, schedule }) => {
   const router = useRouter()
   const [ email, setEmail ] = useState('')
   const [ isValid, setIsValid ] = useState(false)
@@ -75,7 +77,7 @@ const GetStartedForm = ({ className, buttonText = 'Start', plan, schedule }) => 
   }, [ plan, email, isValid, doRequest, router, schedule ])
 
   return (
-    <Container className={className}>
+    <React.Fragment>
       <Form onSubmit={submitEmail}>
         <TextInput
           ref={inputRef}
@@ -92,8 +94,22 @@ const GetStartedForm = ({ className, buttonText = 'Start', plan, schedule }) => 
         </SubmitButton>
       </Form>
       <QueryResult {...result} hideLoading={true} />
+    </React.Fragment>
+  )
+}
+
+const GetStartedWrapper = ({ className, ...props }) => {
+  return (
+    <Container className={className}>
+      <Authenticated renderNotAuthenticated={() => (
+        <GetStartedForm {...props} />
+      )}>
+        <DashboardLink><Button>View my dashboard</Button></DashboardLink>
+      </Authenticated>
     </Container>
   )
 }
 
-export default withApollo(GetStartedForm)
+
+
+export default withApollo(GetStartedWrapper)
