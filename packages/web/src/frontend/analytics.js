@@ -1,10 +1,15 @@
 import LogRocket from 'logrocket'
 
-import { isProduction } from './appConfig'
+import { isProduction, getAppConfig } from './appConfig'
+
+const { LOGROCKET_ACCESS_TOKEN, ROLLBAR_CLIENT_ACCESS_TOKEN } = getAppConfig()
+
+let isLogRocketEnabled = false
+let isRollbarEnabled = false
 
 let logRocketUid
 export const setLogRocketUid = uid => {
-  if (isProduction() && logRocketUid !== uid) {
+  if (isLogRocketEnabled && logRocketUid !== uid) {
     logRocketUid = uid
     LogRocket.identify(uid)
   }
@@ -51,8 +56,12 @@ export const trackEvent = (category, action, ...args) => {
 
 export const trackUser = id => {
   _paq().push([ 'setUserId', id ])
-  setLogRocketUid(id)
-  if (window.Rollbar) {
+
+  if (isLogRocketEnabled) {
+    setLogRocketUid(id)
+  }
+
+  if (isRollbarEnabled) {
     window.Rollbar.configure({
       payload: {
         person: {
@@ -65,9 +74,9 @@ export const trackUser = id => {
 
 
 export const initErrorReporter = () => {
-  if (isProduction() && typeof window !== 'undefined') {
+  if (ROLLBAR_CLIENT_ACCESS_TOKEN && typeof window !== 'undefined') {
     let _rollbarConfig = {
-      accessToken: 'd3dde6da8b864b07b6bfc81a7e1ae806',
+      accessToken: ROLLBAR_CLIENT_ACCESS_TOKEN,
       captureUncaught: true,
       captureUnhandledRejections: true,
       payload: {
@@ -80,12 +89,14 @@ export const initErrorReporter = () => {
     /* eslint-enable */
 
     console.log('Rollbar error reporting enabled.')
+
+    isRollbarEnabled = true
   }
 }
 
 export const initSessionRecording = () => {
-  if (isProduction()) {
-    LogRocket.init('xiw3fx/mailmask')
+  if (LOGROCKET_ACCESS_TOKEN && typeof window !== 'undefined') {
+    LogRocket.init(LOGROCKET_ACCESS_TOKEN)
 
     console.log('LogRocket recording initialized')
 
@@ -96,5 +107,7 @@ export const initSessionRecording = () => {
         _paq().push([ 'setCustomVariable', 2, 'logRocketSessionUrl', sessionURL, 'visit' ])
       }
     })
+
+    isLogRocketEnabled = true
   }
 }

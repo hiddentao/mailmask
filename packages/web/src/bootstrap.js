@@ -1,4 +1,4 @@
-import { createTracer } from '@mailmask/log'
+import Rollbar from 'rollbar'
 import { DB } from '@mailmask/data'
 
 import config from './config'
@@ -6,21 +6,24 @@ import { createNotifier } from './notifier'
 import { createMiddlewareWrapper } from './middleware'
 import { PaddleApi, SendGridApi } from './api'
 
+let rollbar
+if (config.ROLLBAR_SERVER_ACCESS_TOKEN) {
+  rollbar = new Rollbar({
+    accessToken: config.ROLLBAR_SERVER_ACCESS_TOKEN,
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+    payload: {
+      environment: (config.APP_MODE === 'live') ? 'production' : 'development'
+    }
+  })
+}
+
 export const doBootstrap = () => {
-  const tracer = createTracer('mailmask-api', { config })
   const db = DB.create({ config })
   const sendGridApi = new SendGridApi({ config })
   const notifier = createNotifier({ config, sendGridApi, db })
   const paddleApi = new PaddleApi({ config })
-  const wrapMiddleware = createMiddlewareWrapper({ config, tracer, db, notifier, paddleApi })
+  const wrapMiddleware = createMiddlewareWrapper({ config, db, notifier, paddleApi })
 
-  process.on('uncaughtExceptions', error => {
-    tracer.recordGlobalError('Uncaught exception', { error })
-  })
-
-  process.on('unhandledRejection', (reason, location) => {
-    tracer.recordGlobalError(`Unhandled Rejection`, { reason, location })
-  })
-
-  return { config, tracer, notifier, db, sendGridApi, paddleApi, wrapMiddleware }
+  return { config, notifier, db, sendGridApi, paddleApi, wrapMiddleware }
 }

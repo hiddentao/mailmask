@@ -21,13 +21,9 @@ Ram @ Mailmask
 
 export function getTokenDecodeErrorMessage () { return 'Please try logging in again' }
 
-export async function handlePayload ({ span, setSessionUser, redirectTo }, { email, loginToken }) {
+export async function handlePayload ({ setSessionUser, redirectTo }, { email, loginToken }) {
   // record the login
-  const id = await span.withAsyncSpan(
-    'save login to db',
-    { email: obfuscate(email) },
-    () => this._db.saveUserLogin({ email, loginToken })
-  )
+  const id = await this._db.saveUserLogin({ email, loginToken })
 
   // set auth cookie
   await setSessionUser({ id })

@@ -113,6 +113,7 @@
     "remark-html": "^11.0.2",
     "remark-parse": "^8.0.2",
     "remark-react": "^7.0.1",
+    "rollbar": "^2.18.0",
     "styled-components": "^5.1.0",
     "styled-react-modal": "^2.0.0",
     "svg-inline-loader": "^0.8.2",

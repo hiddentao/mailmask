@@ -22,15 +22,11 @@ Ram @ Mailmask
 export function getTokenDecodeErrorMessage () { return 'Please try signing up again' }
 
 export async function handlePayload (
-  { span, setSessionUser, redirectTo },
+  { setSessionUser, redirectTo },
   { email, plan, schedule, loginToken }
 ) {
   // record the login
-  const id = await span.withAsyncSpan(
-    'save new sign up to db',
-    { email: obfuscate(email) },
-    () => this._db.saveUserLogin({ email, loginToken, chosenPlan: plan, chosenSchedule: schedule })
-  )
+  const id = await this._db.saveUserLogin({ email, loginToken, chosenPlan: plan, chosenSchedule: schedule })
 
   // set auth cookie
   await setSessionUser({ id })

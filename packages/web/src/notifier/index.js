@@ -46,28 +46,20 @@ class Notifier {
   }
 
   async handleVerification (ctx, { token, code }) {
-    return ctx.span.withAsyncSpan(
-      'notifier.handleVerification', {
-        token,
-        code,
-      },
-      async ({ span: innerSpan }) => {
-        const sepPos = token.indexOf(TYPE_TOKEN_SEPERATOR)
-        const type = token.substr(0, sepPos)
-        token = token.substr(sepPos + 1)
+    const sepPos = token.indexOf(TYPE_TOKEN_SEPERATOR)
+    const type = token.substr(0, sepPos)
+    token = token.substr(sepPos + 1)
 
-        const handler = this._getHandler(type)
-        const retryMsg = handler.getTokenDecodeErrorMessage()
+    const handler = this._getHandler(type)
+    const retryMsg = handler.getTokenDecodeErrorMessage()
 
-        const { code: realCode, ...payload } = await this._decodePayload(token, { retryMsg })
+    const { code: realCode, ...payload } = await this._decodePayload(token, { retryMsg })
 
-        if (realCode !== code) {
-          throw new Error(`Invalid code.`)
-        }
+    if (realCode !== code) {
+      throw new Error(`Invalid code.`)
+    }
 
-        return handler.handlePayload.call(this, { ...ctx, span: innerSpan }, payload)
-      }
-    )
+    return handler.handlePayload.call(this, { ...ctx }, payload)
   }
 
   async sendNotification (type, params) {

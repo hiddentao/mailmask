@@ -6,10 +6,7 @@ import { redirectToPage } from '../../utils/functions'
 export const middleware = () => next => async (req, res) => {
   try {
     await next(req, res)
-    req.span.finish()
   } catch (err) {
-    req.span.finishWithError(err)
-
     const contentTypeHeader = _.get(req, 'headers.content-type', '')
 
     if (contentTypeHeader && contentTypeHeader.includes('application/json')) {
