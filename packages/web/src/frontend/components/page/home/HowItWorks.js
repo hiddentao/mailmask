@@ -8,7 +8,7 @@ const Container = styled.div`
   ${flex({ direction: 'column-reverse', justify: 'center', align: 'center' })};
   text-align: center;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     ${({ isOdd }) => flex({ direction: isOdd ? 'row' : 'row-reverse', justify: 'center', align: 'center' })};
     text-align: initial;
   }
@@ -18,7 +18,7 @@ const TextBlock = styled.div`
   margin: 0;
   max-width: 300px;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     margin: 0 1rem;
   }
 `
@@ -26,7 +26,7 @@ const TextBlock = styled.div`
 const ImageBlock = styled.div`
   margin: 0;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     margin: 0 1rem;
   }
 `

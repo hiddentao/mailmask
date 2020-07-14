@@ -16,7 +16,7 @@ import QueryResult from './QueryResult'
 import TextInput from './TextInput'
 
 const Container = styled.div`
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     max-width: 500px;
   }
 `
@@ -24,6 +24,10 @@ const Container = styled.div`
 const Form = styled.form`
   ${flex({ direction: 'row', justify: 'center', align: 'center' })};
   margin-bottom: 0.5rem;
+`
+
+const StyledTextInput = styled(TextInput)`
+  max-width: 60%;
 `
 
 const SubmitButton = styled(Button)`
@@ -79,7 +83,7 @@ const GetStartedForm = ({ buttonText = 'Start', plan, schedule }) => {
   return (
     <React.Fragment>
       <Form onSubmit={submitEmail}>
-        <TextInput
+        <StyledTextInput
           ref={inputRef}
           type="email"
           value={email}
@@ -104,7 +108,7 @@ const GetStartedWrapper = ({ className, ...props }) => {
       <Authenticated renderNotAuthenticated={() => (
         <GetStartedForm {...props} />
       )}>
-        <DashboardLink><Button>View my dashboard</Button></DashboardLink>
+        <DashboardLink><Button>Goto dashboard</Button></DashboardLink>
       </Authenticated>
     </Container>
   )

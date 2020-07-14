@@ -41,7 +41,7 @@ const Container = styled.footer`
 
   ${({ theme }) => childAnchors(theme.footer.anchor)};
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     ${flex({ direction: 'row', justify: 'space-between', align: 'flex-start' })};
     padding: 3rem 1.5rem 2rem;
 
@@ -52,12 +52,20 @@ const Container = styled.footer`
 `
 
 const Menu = styled.div`
-  ${flex({ direction: 'row', justify: 'flex-start', align: 'flex-start' })};
+  ${flex({ direction: 'column-reverse', justify: 'flex-start', align: 'flex-start' })};
+
+  ${({ theme }) => theme.media.when({ minW: 'tablet' })} {
+    ${flex({ direction: 'row', justify: 'flex-start', align: 'flex-start' })};
+  }
 `
 
 const MenuColumn = styled.ul`
   display: block;
-  padding: 0 3rem 0 0;
+  padding: 0 0 2rem 0;
+
+  ${({ theme }) => theme.media.when({ minW: 'tablet' })} {
+    padding: 0 3rem 0 0;
+  }
 `
 
 const MenuNavLink = styled.li`
@@ -88,13 +96,13 @@ const Footer = ({ className }) => {
               <MenuNavLink><PricingLink>Pricing</PricingLink></MenuNavLink>
               <MenuNavLink><FaqLink>FAQ</FaqLink></MenuNavLink>
               <MenuNavLink><HelpLink>Help & Support</HelpLink></MenuNavLink>
-              <MenuNavLink><BlogLink>Blog</BlogLink></MenuNavLink>
               <MenuNavLink><AboutLink>About</AboutLink></MenuNavLink>
               <MenuTermsNavLink><TermsLink>Terms</TermsLink> & <PrivacyLink>Privacy</PrivacyLink></MenuTermsNavLink>
             </React.Fragment>
           )}
         </MenuColumn>
         <MenuColumn>
+          <MenuNavLink><BlogLink>Blog</BlogLink></MenuNavLink>
           <MenuNavLink><TwitterLink>Twitter</TwitterLink></MenuNavLink>
           <MenuNavLink><GithubLink>Github</GithubLink></MenuNavLink>
         </MenuColumn>

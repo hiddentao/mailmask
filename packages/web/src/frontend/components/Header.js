@@ -17,7 +17,7 @@ const Container = styled.header`
   overflow: visible;
   padding: 0;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     padding: 0 0.5rem;
   }
 `
@@ -47,7 +47,7 @@ const DesktopNav = styled.ul`
   display: none;
   ${({ theme, inFloatingHeader }) => navLinkStyles({ theme, inFloatingHeader })};
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     display: block;
     list-style: none;
     ${flex({ direction: 'row', basis: 0 })};
@@ -58,7 +58,7 @@ const DesktopNav = styled.ul`
 const MobileNavContainer = styled.div`
   padding-right: 1rem;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     display: none;
     padding-right: 0;
   }
@@ -68,7 +68,7 @@ const MobileNavContainer = styled.div`
 const NavLi = styled.li`
   display: block;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     a {
       display: block;
       font-size: 1rem;
@@ -97,7 +97,7 @@ const DashboardLi = styled.li`
     white-space: nowrap;
   }
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     margin-left: 1.2rem;
 
     a {
@@ -108,9 +108,11 @@ const DashboardLi = styled.li`
 
 const StyledLogoLong = styled(LogoLong)`
   fill: ${({ theme, inFloatingHeader }) => (inFloatingHeader ? theme.header.floating.logoColor : theme.header.logoColor)};
+  width: 148px;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     margin-left: -16px;
+    width: 192px;
   }
 `
 

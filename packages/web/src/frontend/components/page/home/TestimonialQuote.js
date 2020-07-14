@@ -15,7 +15,7 @@ const Text = styled.div`
   font-size: 2rem;
   line-height: 1.3em;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     max-width: 70%;
   }
 

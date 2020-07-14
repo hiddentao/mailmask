@@ -62,13 +62,13 @@ const FaqBlocks = styled.div`
   ${flex({ direction: 'column', justify: 'flex-start', align: 'stretch' })};
   margin-top: 4rem;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     ${flex({ direction: 'row', justify: 'space-around', align: 'flex-start' })};
   }
 `
 
 const StyledFaqBlock = styled(FaqBlock)`
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     width: 40%;
   }
 `

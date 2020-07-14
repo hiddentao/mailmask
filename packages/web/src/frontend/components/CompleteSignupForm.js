@@ -23,7 +23,7 @@ const Form = styled.form`
   margin-bottom: 2rem;
   width: 90%;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     max-width: 400px;
   }
 `

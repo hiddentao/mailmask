@@ -15,7 +15,11 @@ const Container = styled.div`
   position: relative;
   height: auto;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'tablet' })} {
+    ${flex({ direction: 'row', justify: 'space-around', align: 'center', wrap: 'wrap' })};
+  }
+
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     height: ${2 * BENEFIT_CIRCLE_RADIUS + BENEFIT_SIZE}px;
   }
 `
@@ -23,7 +27,7 @@ const Container = styled.div`
 const BenefitsCentreLogo = styled.section`
   display: none;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     ${flex({ direction: 'column', justify: 'center', align: 'center' })};
     width: ${BENEFIT_SIZE / 2}px;
     height: ${BENEFIT_SIZE / 2}px;
@@ -42,7 +46,7 @@ const BenefitsCentreLogo = styled.section`
 const BenefitLine = styled.span`
   display: none;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     display: block;
     width: ${BENEFIT_CIRCLE_RADIUS / 2}px;
     height: 1px;
@@ -68,7 +72,11 @@ const Benefit = styled.div`
     fill: ${({ theme }) => theme.homePage.benefit.block.textColor};
   }
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'tablet' })} {
+    width: 35%;
+  }
+
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     position: absolute;
     transform: translateX(-50%) translateY(-50%);
     margin: 0;

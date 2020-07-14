@@ -19,7 +19,7 @@ const Container = styled.div`
 const FaqColumns = styled.div`
   ${flex({ direction: 'column', justify: 'flex-start', align: 'stretch' })};
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     ${flex({ direction: 'row', justify: 'space-between', align: 'flex-start' })};
   }
 `
@@ -27,7 +27,7 @@ const FaqColumns = styled.div`
 const FaqColumn = styled.div`
   width: 100%;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     width: 40%;
   }
 `

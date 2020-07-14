@@ -35,8 +35,8 @@ const SplashSvg = ({ className }) => {
   }, [])
 
   const content = useMemo(() => {
-    return <Container key={active}><SvgImage src={`splash${active}`} /></Container>
-  }, [ active ])
+    return <Container className={className} key={active}><SvgImage src={`splash${active}`} /></Container>
+  }, [ active, className ])
 
   return (
     <ClassNames>

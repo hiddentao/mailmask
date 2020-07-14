@@ -24,7 +24,7 @@ const GlobalStyles = () => {
           ${theme.font('body')};
           font-size: 16px;
 
-          ${theme.media.when({ minW: 'mobile' })} {
+          ${theme.media.when({ minW: 'desktop' })} {
             font-size: 18px;
           }
         }

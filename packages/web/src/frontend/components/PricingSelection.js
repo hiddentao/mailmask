@@ -51,7 +51,7 @@ const Plan = styled.div`
     margin-bottom: 0;
   }
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'tablet' })} {
     margin: 0 2em 0 0;
   }
 `

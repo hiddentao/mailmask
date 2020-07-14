@@ -31,7 +31,7 @@ const SelfHostedBlock = styled(ContentWrapper)`
     margin: 0 0 3rem;
   }
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     min-height: auto;
   }
 `
@@ -42,9 +42,19 @@ const TopBlock = styled.div`
   padding: 1rem;
   text-align: center;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minH: 'tall' })} {
+    height: auto;
+    min-height: 600px;
+  }
+
+  ${({ theme }) => theme.media.when({ minW: 'tablet' })} {
     ${flex({ direction: 'row', justify: 'center', align: 'center' })};
     text-align: initial;
+    padding-left: 2rem;
+  }
+
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
+    padding-left: 1rem;
   }
 `
 
@@ -52,7 +62,7 @@ const TopBlockForm = styled.div`
   ${flex({ direction: 'column', justify: 'center', align: 'flex-start' })};
   margin: 0 auto;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     max-width: 600px;
     margin: 0 2rem 0 0;
   }
@@ -61,8 +71,18 @@ const TopBlockForm = styled.div`
 const TopBlockSplash = styled.div`
   display: none;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'tablet' })} {
     display: block;
+  }
+`
+
+const StyledSplashImage = styled(SplashImage)`
+  ${({ theme }) => theme.media.when({ minW: 'tablet' })} {
+    transform: scale(0.8);
+  }
+
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
+    transform: scale(1);
   }
 `
 
@@ -71,18 +91,22 @@ const TagLine = styled.p`
   font-size: 3.5rem;
   line-height: 1em;
   margin: 0 auto;
+  max-width: 90%;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'tablet' })} {
     font-size: 4rem;
+    margin: 0;
   }
 `
 
 const SubTagLine = styled.div`
   font-size: 1.3rem;
   line-height: 1.2em;
-  margin: 1rem 0 0;
+  margin: 1rem auto 0;
+  max-width: 90%;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'tablet' })} {
+    margin: 1rem 0 0;
     font-size: 1.5rem;
   }
 
@@ -103,7 +127,7 @@ const StyledGetStartedForm = styled(GetStartedForm)`
 const FirstGetStartedForm = styled(GetStartedForm)`
   margin: 3rem auto 0;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'tablet' })} {
     margin: 3rem 0 0;
   }
 `
@@ -119,7 +143,7 @@ const Stats = styled.div`
     ${({ theme }) => theme.font('body', 'bold', 'italic')};
   }
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'tablet' })} {
     max-width: auto;
     margin: 2rem 0 0;
   }
@@ -142,7 +166,7 @@ const ContentBlock = styled(ContentWrapper)`
     font-size: 2.6rem;
   }
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'tablet' })} {
     min-height: auto;
   }
 `
@@ -181,7 +205,7 @@ const InterimBlockInner = styled.div`
     margin-top: 0;
   }
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'tablet' })} {
     max-width: 80%;
   }
 `
@@ -226,7 +250,7 @@ const HomePage = () => {
               </Stats>
             </TopBlockForm>
             <TopBlockSplash>
-              <SplashImage />
+              <StyledSplashImage />
             </TopBlockSplash>
           </TopBlock>
           <ContentBlock type='alt1' prevType='normal'>

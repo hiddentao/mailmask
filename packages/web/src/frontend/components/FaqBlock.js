@@ -48,7 +48,7 @@ const Answer = styled.div`
   color: ${({ theme }) => theme.faqItem.answer.textColor};
   line-height: 1.2em;
   margin-top: ${({ expanded }) => (expanded ? '1rem' : '0')};
-  max-height: ${({ expanded }) => (expanded ? 'auto' : '0')};
+  height: ${({ expanded }) => (expanded ? 'auto' : '0')};
 `
 
 

@@ -41,7 +41,7 @@ const Form = styled.form`
   ${flex({ direction: 'row', justify: 'center', align: 'center' })};
   margin-bottom: 0.5rem;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     max-width: 400px;
   }
 `
@@ -51,6 +51,11 @@ const SubmitButton = styled(Button)`
 `
 
 const StyledTextInput = styled(TextInput)`
+  max-width: 60%;
+
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
+    max-width: auto;
+  }
 `
 
 const AwaitEmailPage = () => {

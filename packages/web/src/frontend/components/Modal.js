@@ -26,7 +26,7 @@ const StyledModal = DefaultModal.styled`
   border-radius: 10px;
   margin-top: 50px;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     width: ${props => props.width || '400px'};
     height: ${props => props.height || 'auto'};
   }

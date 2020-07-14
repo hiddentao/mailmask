@@ -25,7 +25,7 @@ const LoggedInPage = () => {
           {({ sub: { status } }) => (status !== SUB.STATUS.SELECTED ? (
             <div>
               <Heading>Welcome back! you are now logged in.</Heading>
-              <DashboardLink><Button>View my dashboard</Button></DashboardLink>
+              <DashboardLink><Button>Goto dashboard</Button></DashboardLink>
             </div>
           ) : (
             <div>

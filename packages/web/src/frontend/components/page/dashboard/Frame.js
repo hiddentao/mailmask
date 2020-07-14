@@ -35,7 +35,7 @@ const DashContainer = styled.div`
 const DesktopContainer = styled.div`
   display: none;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     display: block;
     ${flex({ direction: 'row', justify: 'flex-start', align: 'flex-start' })};
   }
@@ -44,7 +44,7 @@ const DesktopContainer = styled.div`
 const MobileContainer = styled.div`
   display: block;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     display: none;
   }
 `
@@ -55,7 +55,7 @@ const MobileSidebarToggleButton = styled(Button)`
   border-radius: 0;
   padding: 0.1em 0.2em;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     display: none;
   }
 `
@@ -65,7 +65,7 @@ const StyledSidebar = styled(Sidebar)`
   background-color: ${({ theme }) => theme.dashboardPage.sidebar.mobile.bgColor};
   min-height: 100vh;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     background-color: ${({ theme }) => theme.dashboardPage.sidebar.bgColor};
     border-right: 1px solid ${({ theme }) => theme.dashboardPage.sidebar.borderColor};
     padding-right: 3rem;
@@ -77,7 +77,7 @@ const Main = styled.div`
   width: 100%;
   padding: 1rem 0 0;
 
-  ${({ theme }) => theme.media.when({ minW: 'mobile' })} {
+  ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
     padding: 0 0 0 3rem;
   }
 

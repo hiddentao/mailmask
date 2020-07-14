@@ -28,8 +28,8 @@ Router.events.on('routeChangeComplete', () => {
 
 const themes = setupThemes({
   width: {
-    mobile: '950px',
-    desktop: '1280px',
+    tablet: '800px',
+    desktop: '950px',
   },
   height: {
     tall: '800px',
