@@ -6,8 +6,6 @@ const { wrapMiddleware } = doBootstrap()
 const endpoint = async (req, res) => {
   switch (req.method) {
     case 'GET': {
-      req.span.recordEvent('logout')
-
       await res.setUser({})
 
       redirectToPage({ res }, '/')

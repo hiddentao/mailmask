@@ -29,9 +29,10 @@ const Authenticated = ({
   children,
   renderNotAuthenticated,
   renderError,
+  fetchPolicy = 'cache-and-network',
 }) => {
   const { data, loading, error } = useSafeQuery(GetMyProfileQuery, {
-    fetchPolicy: 'cache-and-network'
+    fetchPolicy
   })
 
   if (loading) {

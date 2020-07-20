@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useCallback } from 'react'
+import { useRouter } from 'next/router'
 import styled from '@emotion/styled'
-import { _, SUB } from '@mailmask/utils'
+import { _ } from '@mailmask/utils'
 
 import { withApollo } from '../src/frontend/hoc'
 import Layout from '../src/frontend/components/Layout'
@@ -17,12 +18,18 @@ const Heading = styled.h1`
 `
 
 const LoggedInPage = () => {
+  const router = useRouter()
+
+  const allDone = useCallback(() => {
+    router.replace('/post-signup')
+  }, [ router ])
+
   return (
     <Layout>
       <Seo title='Logged-in' />
       <ContentWrapper>
         <Authenticated>
-          {({ sub: { status } }) => (status !== SUB.STATUS.SELECTED ? (
+          {({ usernames }) => (_.get(usernames, '0.username') ? (
             <div>
               <Heading>Welcome back! you are now logged in.</Heading>
               <DashboardLink><Button>Goto dashboard</Button></DashboardLink>
@@ -30,7 +37,7 @@ const LoggedInPage = () => {
           ) : (
             <div>
               <Heading>Please set your username to finish signing up.</Heading>
-              <CompleteSignupForm />
+              <CompleteSignupForm onComplete={allDone} />
             </div>
           ))}
         </Authenticated>

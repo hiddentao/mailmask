@@ -38,7 +38,7 @@ const Sub = styled.div`
 `
 
 const Form = styled.form`
-  ${flex({ direction: 'row', justify: 'center', align: 'center' })};
+  ${flex({ direction: 'row', justify: 'flex-start', align: 'center' })};
   margin-bottom: 0.5rem;
 
   ${({ theme }) => theme.media.when({ minW: 'desktop' })} {

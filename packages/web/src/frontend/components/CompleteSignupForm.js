@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
-import { useRouter } from 'next/router'
 import { useApolloClient } from '@apollo/react-hooks'
 import styled from '@emotion/styled'
 import { _, isValidUsername } from '@mailmask/utils'
@@ -69,13 +68,12 @@ const LegalContainer = styled.div`
 
 let usernameCheckTimer
 
-const CompleteSignupForm = ({ className }) => {
+const CompleteSignupForm = ({ className, onComplete }) => {
   useEffect(() => {
     trackEvent('signup', 'ViewFinalizeSignUpForm')
   }, [])
 
   const apolloClient = useApolloClient()
-  const router = useRouter()
   const [ termsAgreed, setTermsAgreed ] = useState(false)
   const [ username, setUsername ] = useState('')
   const [ isValid, setIsValid ] = useState(false)
@@ -149,9 +147,9 @@ const CompleteSignupForm = ({ className }) => {
     if (_.get(ret, 'data.result.success')) {
       trackEvent('signup', 'SubmittedFinalizeSignUpForm')
 
-      router.replace(`/dashboard`)
+      onComplete(username)
     }
-  }, [ router, username, canSubmit, doRequest ])
+  }, [ onComplete, username, canSubmit, doRequest ])
 
   let tickContent
   if (isValid) {
