@@ -1,7 +1,7 @@
 {
   "name": "@mailmask/web",
   "private": true,
-  "version": "1.14.1",
+  "version": "1.14.2",
   "description": "Mailmask web interface",
   "author": "Ramesh Nair <ram@hiddentao.com>",
   "homepage": "https://msk.sh",
@@ -68,7 +68,7 @@
     "@mailmask/data": "^1.13.0",
     "@mailmask/log": "^1.13.0",
     "@mailmask/mailgun": "^1.13.0",
-    "@mailmask/nodejs-utils": "^1.14.1",
+    "@mailmask/nodejs-utils": "^1.14.2",
     "@mailmask/utils": "^1.13.0",
     "@sendgrid/client": "^7.2.1",
     "@tippyjs/react": "^4.0.2",

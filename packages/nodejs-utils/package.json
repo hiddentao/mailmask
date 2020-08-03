@@ -1,6 +1,6 @@
 {
   "name": "@mailmask/nodejs-utils",
-  "version": "1.14.1",
+  "version": "1.14.2",
   "description": "Node.js utilities",
   "keywords": [
     "nodejs"
