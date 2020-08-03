@@ -7,8 +7,6 @@ const { db, sendGridApi, wrapMiddleware } = doBootstrap()
 const endpoint = async (req, res) => {
   switch (req.method) {
     case 'GET': {
-      req.span.recordEvent('cron:sendGrid')
-
       const users = await db.getUserDataForSendGrid()
 
       const data = users.reduce((m, { email, deleted, plan, status }) => {

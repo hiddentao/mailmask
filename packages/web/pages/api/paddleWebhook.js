@@ -22,8 +22,6 @@ const reverseLookupPlanScheduleByPaddlePlanId = planId => {
 const endpoint = async (req, res) => {
   switch (req.method) {
     case 'POST': {
-      req.span.recordEvent('paddle-webhook')
-
       try {
         const {
           alert_name: alertName,
@@ -106,7 +104,6 @@ const endpoint = async (req, res) => {
         res.status(200)
         res.end()
       } catch (err) {
-        req.span.finishWithError(err)
         res.status(500)
         res.end()
       }

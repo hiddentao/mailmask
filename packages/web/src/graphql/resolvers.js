@@ -136,10 +136,9 @@ export default ({ db, notifier, paddleApi }) => {
 
         return { token }
       }),
-      verifyCode: _call(async (_ignore, { verifyCodeRequest: { token, code } }, { span, setUser }) => {
+      verifyCode: _call(async (_ignore, { verifyCodeRequest: { token, code } }, { setUser }) => {
         try {
           await notifier.handleVerification({
-            span,
             setSessionUser: setUser,
             redirectTo: () => { }
           }, {
