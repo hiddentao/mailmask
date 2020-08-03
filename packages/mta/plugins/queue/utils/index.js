@@ -87,6 +87,7 @@ exports.resolveMasks = async ({ span: rootSpan, db, config }, senderAddress, rec
               // if this is a reply from original sender back to user
               if (!ret.fromUser) {
                 isReplyToUser = true
+                replyTo = senderAddress // to stop someone else from spoofing the sender
               }
               // else this is a reply from user to original sender
               else {
@@ -167,24 +168,31 @@ exports.resolveMasks = async ({ span: rootSpan, db, config }, senderAddress, rec
 
             // if mask is enabled OR is new OR it's a reply to the sender
             if (isReplyToSender || maskStatus && (!maskStatus.mask || maskStatus.enabled)) {
-              final[username] = final[username] || {
-                mask,
-                username,
-                userId: maskStatus.userId,
-                usernameId: maskStatus.usernameId,
-                maskEmail,
-                destinationAddress: destinationAddress || maskStatus.email,
-                replyAddress,
-                isReplyToSender,
-                isReplyToUser,
-                // to keep track of all ENABLED masks which are encountered
-                masksToUpdate: [],
+              // if it's a reply to sender ensure it was sent from the user's registered address
+              if (isReplyToSender && maskStatus.email.toLowerCase() !== senderAddress) {
+                innerSpan.addFields({
+                  senderForbidden: true
+                })
+              } else {
+                final[username] = final[username] || {
+                  mask,
+                  username,
+                  userId: maskStatus.userId,
+                  usernameId: maskStatus.usernameId,
+                  maskEmail,
+                  destinationAddress: destinationAddress || maskStatus.email,
+                  replyAddress,
+                  isReplyToSender,
+                  isReplyToUser,
+                  // to keep track of all ENABLED masks which are encountered
+                  masksToUpdate: [],
+                }
+                // add to mask list for this username
+                final[username].masksToUpdate.push({
+                  mask,
+                  isNew: !maskStatus.mask,
+                })
               }
-              // add to mask list for this username
-              final[username].masksToUpdate.push({
-                mask,
-                isNew: !maskStatus.mask,
-              })
             } else {
               innerSpan.addFields({
                 noMasks: true
