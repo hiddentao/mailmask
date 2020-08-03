@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.13.0 (2020-08-03)
+
+
+### Features
+
+* initial commit ([4dd9568](https://github.com/hiddentao/mailmask/commit/4dd9568eb700620ca3910ed741aec68b5edb144e))
+
+
+
+
+
 ## 1.12.1 (2020-07-07)
 
 **Note:** Version bump only for package @mailmask/utils
