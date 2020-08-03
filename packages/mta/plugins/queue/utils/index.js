@@ -72,6 +72,8 @@ exports.resolveMasks = async ({ span: rootSpan, db, config }, senderAddress, rec
 
             const ret = await decodeReplyAddressPrefix(mask, cryptoConfig)
 
+            innerSpan.addFields({ ret: JSON.stringify(ret) })
+
             // if successfully decoded
             if (ret.username) {
               innerSpan.addFields({
@@ -79,8 +81,6 @@ exports.resolveMasks = async ({ span: rootSpan, db, config }, senderAddress, rec
               })
 
               ;({ username, mask, replyTo } = ret)
-
-              innerSpan.addFields({ ret: JSON.stringify(ret) })
 
               maskEmail = buildMaskAddress(mask, username, config.DOMAIN)
 
