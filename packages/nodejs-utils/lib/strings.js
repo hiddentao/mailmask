@@ -1,7 +1,7 @@
 const { /* encrypt, */ decrypt } = require('./crypto')
 const { REPLY_USERNAME } = require('./constants')
 
-const AT_REPLACEMENT = '__AT__'
+const AT_REPLACEMENT = '__at__'
 
 exports.createReplyAddressPrefix = async ({ mask, username, replyTo, fromUser }) => {
   const replyToSanitized = replyTo.replace('@', AT_REPLACEMENT)
