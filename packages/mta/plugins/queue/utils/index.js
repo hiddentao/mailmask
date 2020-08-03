@@ -169,7 +169,7 @@ exports.resolveMasks = async ({ span: rootSpan, db, config }, senderAddress, rec
             // if mask is enabled OR is new OR it's a reply to the sender
             if (isReplyToSender || maskStatus && (!maskStatus.mask || maskStatus.enabled)) {
               // if it's a reply to sender ensure it was sent from the user's registered address
-              if (isReplyToSender && maskStatus.email.toLowerCase() !== senderAddress) {
+              if (isReplyToSender && _.get(maskStatus, 'email', '').toLowerCase() !== senderAddress) {
                 innerSpan.addFields({
                   senderForbidden: true
                 })
