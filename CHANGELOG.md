@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.1](https://github.com/hiddentao/mailmask/compare/v1.14.0...v1.14.1) (2020-08-03)
+
+
+### Bug Fixes
+
+* better @ replacement ([9405d97](https://github.com/hiddentao/mailmask/commit/9405d9799efa43eac7d482a8bf302c9cf88a4405))
+
+
+
+
+
 # [1.14.0](https://github.com/hiddentao/mailmask/compare/v1.13.0...v1.14.0) (2020-08-03)
 
 
