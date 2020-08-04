@@ -126,6 +126,10 @@ Please note that once an alias is turned off we thereafter silently discard all 
       `You can turn an alias back on via [your dashboard](/dashboard).
 
 Please note that once an alias is turned off we thereafter silently discard all email received through it. Thus, when you turn it back on you will not be able to catch up on the emails you missed in the intervening period.`
+    ],
+    [
+      'Can I send an email to someone through Mailmask without replying to an email?',
+      `Yes! Please read [our blog post](blog/new-reply-address-format-and-anonymous-sending) on this.`
     ]
   ],
 
