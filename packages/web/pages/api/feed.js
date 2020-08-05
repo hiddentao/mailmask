@@ -40,7 +40,7 @@ const endpoint = async (req, res) => {
             <title>${title}</title>
             <description><![CDATA[${md2html(content)}]]></description>
             <link>${link}</link>
-            <guid>${link}</
+            <guid>${link}</guid>
             <pubDate>${new Date(date).toUTCString()}</pubDate>
           </item>
         `
