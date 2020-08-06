@@ -40,6 +40,7 @@ export default class MyDocument extends Document {
           <meta name="theme-color" content="#f7fff7" />
 
           <link rel='stylesheet' href='https://unpkg.com/@fortawesome/fontawesome-svg-core@1.2.28/styles.css' crossOrigin='anonymous'></link>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,500,800,300,500i,800i|Open+Sans:300,400,700,300i,400i,700i" />
 
           {APP_MODE === 'live' ? (
             <React.Fragment>

@@ -2,7 +2,7 @@ import React from 'react'
 import App from 'next/app'
 import Router from 'next/router'
 import { ThemeProvider } from 'emotion-theming'
-import { loadFonts } from 'emotion-styled-utils'
+import { setFonts } from 'emotion-styled-utils'
 import { toast } from 'react-toastify'
 
 import { ToastContainer } from 'react-toastify'
@@ -36,6 +36,27 @@ const themes = setupThemes({
   }
 })
 
+if (typeof window !== 'undefined' && !!window.document) {
+  setFonts({
+    body: {
+      name: 'Open Sans',
+      weights: {
+        thin: 300,
+        regular: 400,
+        bold: 700,
+      },
+    },
+    header: {
+      name: 'Raleway',
+      weights: {
+        thin: 300,
+        regular: 500,
+        extraBold: 800,
+      }
+    }
+  })
+}
+
 const Bootstrap = props => {
   const { Component, pageProps } = props
 
@@ -61,35 +82,6 @@ const Bootstrap = props => {
 }
 
 export default class MyApp extends App {
-  componentDidMount () {
-    // if client-side then load custom fonts
-    if (typeof window !== 'undefined' && !!window.document) {
-      setTimeout(() => {
-        loadFonts({
-          body: {
-            name: 'Open Sans',
-            weights: {
-              thin: 300,
-              regular: 400,
-              bold: 700,
-            },
-          },
-          header: {
-            name: 'Raleway',
-            weights: {
-              thin: 300,
-              regular: 500,
-              extraBold: 800,
-            }
-          }
-        }, window.document).then(
-          () => this.forceUpdate(),
-          err => console.error(err)
-        )
-      }, 5000)
-    }
-  }
-
   componentDidCatch (error, info) {
     toast.error(`Sorry, there was unexpected page rendering error!`)
     console.error(error, info)

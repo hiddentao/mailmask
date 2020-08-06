@@ -1,5 +1,5 @@
 /* eslint-disable func-names */
-const { _, LEGAL, SUB } = require('@mailmask/utils')
+const { _, LEGAL, SUB, randStr } = require('@mailmask/utils')
 
 exports._createUserOrFetchExisting = async function ({ email, chosenPlan, chosenSchedule }, trx) {
   email = email.toLowerCase()
@@ -440,8 +440,20 @@ exports.deleteUser = async function (userId) {
       .transacting(trx)
 
     // finally, update the user table
+    const ret = await this._db()
+      .select('email')
+      .from('user')
+      .where('id', userId)
+      .limit(1)
+      .transacting(trx)
+
+    const { email } = ret[0]
+
+    const deletedEmailAddr = `${email.replace('@', '__at__')}-${randStr()}@deleted.com`
+
     await this._db().table('user')
       .update({
+        email: deletedEmailAddr,
         deleted: true,
       })
       .where('id', userId)
