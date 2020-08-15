@@ -68,14 +68,14 @@ const GetStartedForm = ({ buttonText = 'Start', plan, schedule }) => {
       }
     })
 
-    const token = _.get(ret, 'data.result.token')
+    const { isSignup, token } = _.get(ret, 'data.result', {})
 
     if (token) {
       trackEvent('signup', 'RequestedLoginEmail')
 
       router.replace({
         pathname: `/await-email`,
-        query: { token }
+        query: { token, isSignup: isSignup ? '1' : '0' }
       })
     }
   }, [ plan, email, isValid, doRequest, router, schedule ])

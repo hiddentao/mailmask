@@ -1,20 +1,18 @@
-import { obfuscate, randStr } from '@mailmask/utils'
+import { randStr } from '@mailmask/utils'
 
 import { LOGIN } from '../types'
 
-export function render ({ code, url, urlValidTo }) {
+export function render ({ code, validTo }) {
   return {
-    subject: 'Please follow the link to login',
-    body: `Hi there,
+    subject: `Please enter the code ${code} to finish logging in`,
+    body: `Hi 👋,
 
-Please enter the code ${code} on the webpage, or follow the link below to finish logging in to Mailmask:
+Please enter the code ${code} on the webpage to finish logging in to Mailmask.
 
-${url}
-
-(Note that this link will be only be valid until ${urlValidTo})
+(Note that this code will be only be valid until ${validTo}).
 
 thanks,
-Ram @ Mailmask
+The Mailmask team
 `
   }
 }

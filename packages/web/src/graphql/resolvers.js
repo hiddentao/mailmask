@@ -119,12 +119,15 @@ export default ({ db, notifier, paddleApi }) => {
         const user = await db.getUserByEmail(email)
 
         let token
+        let isSignup = false
 
         if (user) {
           token = await notifier.sendNotification(notifier.TYPES.LOGIN, {
             email,
           })
         } else {
+          isSignup = true
+
           plan = plan || SUB.PLAN.BASIC /* sign up to basic plan by default */
 
           token = await notifier.sendNotification(notifier.TYPES.SIGNUP, {
@@ -134,7 +137,7 @@ export default ({ db, notifier, paddleApi }) => {
           })
         }
 
-        return { token }
+        return { token, isSignup }
       }),
       verifyCode: _call(async (_ignore, { verifyCodeRequest: { token, code } }, { setUser }) => {
         try {

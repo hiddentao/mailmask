@@ -60,7 +60,7 @@ const StyledTextInput = styled(TextInput)`
 
 const AwaitEmailPage = () => {
   const router = useRouter()
-  const { token } = useMemo(() => router.query, [ router ])
+  const { token, isSignup } = useMemo(() => router.query, [ router ])
 
   const [ code, setCode ] = useState('')
   const [ doRequest, result ] = useSafeMutation(VerifyCodeMutation)
@@ -90,10 +90,10 @@ const AwaitEmailPage = () => {
       <ContentWrapper>
         <Intro>
           <p>
-            We have sent a verification code to the email address you provided.
-          </p>
-          <p>
-            Please enter it below:
+            {(isSignup === '1')
+              ? 'To finish signing up, please enter the verification code we just sent to your email address:'
+              : 'To finish logging in, please enter the verification code we just sent to your email address:'
+            }
           </p>
           <div>
             <Form onSubmit={verifyCode}>

@@ -36,6 +36,7 @@ export const SubscriptionFragment = gql`
 export const LoginLinkRequestStateFragment = gql`
   fragment LoginLinkRequestStateFragment on LoginLinkRequestState {
     token
+    isSignup
   }
 `
 

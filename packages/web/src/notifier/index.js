@@ -103,7 +103,7 @@ class Notifier {
 
     const { subject, body: text } = this._handlers[type].render({
       url: absUrl,
-      urlValidTo: formatDate(expires, 'PPppp'),
+      validTo: formatDate(expires, 'PPppp'),
       code: payload.code,
       ...templateVars
     })

@@ -101,6 +101,7 @@ export const getTypeDefs = () => gql`
 
   type LoginLinkRequestState {
     token: String!
+    isSignup: Boolean!
   }
 
   input SignUpInput {
