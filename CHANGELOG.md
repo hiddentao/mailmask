@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.15.0](https://github.com/hiddentao/mailmask/compare/v1.14.2...v1.15.0) (2021-05-03)
+
+
+### Bug Fixes
+
+* enable deleted user to sign up again ([47663b4](https://github.com/hiddentao/mailmask/commit/47663b456aaae006e8252a786c0b78f24f41ab63))
+* feed output ([8fff9cf](https://github.com/hiddentao/mailmask/commit/8fff9cf0a1b9eaaa4c1df0edcc81557ba49e870d))
+* typo ([0c41654](https://github.com/hiddentao/mailmask/commit/0c416549b135a9ea8750b536359b229ae43d8550))
+
+
+### Features
+
+* shutting down mailmask ([2076fa4](https://github.com/hiddentao/mailmask/commit/2076fa416841e551f966c75bacd1c30d4f201867))
+
+
+
+
+
 ## [1.14.2](https://github.com/hiddentao/mailmask/compare/v1.14.1...v1.14.2) (2020-08-03)
 
 
