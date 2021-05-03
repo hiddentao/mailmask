@@ -20,6 +20,7 @@ import {
   faStar,
   faTimesCircle,
   faUser,
+  faExclamationTriangle,
 } from '@fortawesome/free-solid-svg-icons'
 
 config.autoAddCss = false
@@ -31,6 +32,7 @@ const ICONS = {
   'chevron-right': faChevronRight,
   'exchange-alt': faExchangeAlt,
   exclamation: faExclamation,
+  'exclamation-triangle': faExclamationTriangle,
   info: faInfo,
   moon: faMoon,
   question: faQuestion,

@@ -9,6 +9,7 @@ const srcPosts = [
   require('./2.md').default,
   require('./3.md').default,
   require('./4.md').default,
+  require('./5.md').default,
 ].map(post => {
   const { content, data: { summary, title, date } } = matter(post)
   return {

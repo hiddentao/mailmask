@@ -36,8 +36,8 @@ export default ({ db, notifier, paddleApi }) => {
         const daysSince = ~~((Date.now() - new Date(2020, 5, 5).getTime()) / (24 * 60 * 60 * 1000))
 
         return {
-          numBlocked: 345 + daysSince * 23,
-          numUsers: 21 + daysSince * 2,
+          numBlocked: 345 + daysSince * 87,
+          numUsers: 926,
         }
       }),
       getMyProfile: _authCall((_ignore, __ignore, { user }) => {

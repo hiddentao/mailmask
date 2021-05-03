@@ -14,6 +14,8 @@ import { DashboardLink } from './Link'
 import Authenticated from './Authenticated'
 import QueryResult from './QueryResult'
 import TextInput from './TextInput'
+import WarnBox from './WarnBox'
+import { BlogPostLink } from './Link'
 
 const Container = styled.div`
   ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
@@ -34,7 +36,12 @@ const SubmitButton = styled(Button)`
   margin-left: 0.5rem;
 `
 
-const GetStartedForm = ({ buttonText = 'Start', plan, schedule }) => {
+const Note = styled(WarnBox)`
+  font-size: 0.8rem;
+  text-align: left;
+`
+
+const GetStartedForm = ({ buttonText = 'Login', plan, schedule }) => {
   const router = useRouter()
   const [ email, setEmail ] = useState('')
   const [ isValid, setIsValid ] = useState(false)
@@ -97,6 +104,7 @@ const GetStartedForm = ({ buttonText = 'Start', plan, schedule }) => {
           {buttonText}
         </SubmitButton>
       </Form>
+      <Note>Signups are currently disabled (<BlogPostLink postSlug='mailmask-shutting-down-time-to-say-goodbye'>why?</BlogPostLink>)</Note>
       <QueryResult {...result} hideLoading={true} />
     </React.Fragment>
   )
