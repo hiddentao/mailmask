@@ -11,6 +11,7 @@ import {
   white,
   black,
   darkGrey,
+  orange,
   darkestGrey,
   green,
   red,
@@ -136,6 +137,12 @@ export default Object.freeze(_.deepMerge(baseTheme, {
     bgColor: lighten(secondary2, 70),
     textColor: black,
     iconColor: secondary2,
+  },
+  // warnBox component
+  warnBox: {
+    bgColor: lighten(orange, 80),
+    textColor: black,
+    iconColor: orange,
   },
   // button component
   button: {

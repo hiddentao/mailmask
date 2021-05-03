@@ -1,4 +1,4 @@
-import { opacify } from './utils'
+import { opacify, lighten } from './utils'
 
 import {
   primary1,
@@ -9,6 +9,7 @@ import {
   white,
   black,
   darkGrey,
+  orange,
   green,
   red,
   yellow,
@@ -132,6 +133,12 @@ export default Object.freeze({
     bgColor: opacify(secondary2, 0.3),
     textColor: black,
     iconColor: secondary2,
+  },
+  // warnBox component
+  warnBox: {
+    bgColor: lighten(orange, 80),
+    textColor: black,
+    iconColor: orange,
   },
   // button component
   button: {

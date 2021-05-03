@@ -28,7 +28,7 @@ const _authCall = fn => async (root, params, ctx) => {
 
 
 
-export default ({ db, notifier, paddleApi }) => {
+export default ({ config, db, notifier, paddleApi }) => {
   return {
     Query: {
       getGlobalStats: _call(async () => {
@@ -36,8 +36,8 @@ export default ({ db, notifier, paddleApi }) => {
         const daysSince = ~~((Date.now() - new Date(2020, 5, 5).getTime()) / (24 * 60 * 60 * 1000))
 
         return {
-          numBlocked: 345 + daysSince * 23,
-          numUsers: 21 + daysSince * 2,
+          numBlocked: 345 + daysSince * 34,
+          numUsers: 926,
         }
       }),
       getMyProfile: _authCall((_ignore, __ignore, { user }) => {
@@ -79,6 +79,10 @@ export default ({ db, notifier, paddleApi }) => {
           schedule
         }
       }, { user }) => {
+        if (config.SHUTTING_DOWN) {
+          return createErrorResponse(INVALID_INPUT, 'Plan changes are currently disabled.')
+        }
+
         // if plan or schedule has changed
         if (plan !== user.sub.plan || schedule !== user.sub.schedule) {
           // if user is currently on a paid plan
@@ -126,6 +130,10 @@ export default ({ db, notifier, paddleApi }) => {
             email,
           })
         } else {
+          if (config.SHUTTING_DOWN) {
+            return createErrorResponse(INVALID_INPUT, 'Sign-ups are currently disabled.')
+          }
+
           isSignup = true
 
           plan = plan || SUB.PLAN.BASIC /* sign up to basic plan by default */
@@ -155,6 +163,10 @@ export default ({ db, notifier, paddleApi }) => {
         }
       }),
       completeSignup: _authCall(async (_ignore, { signUp: { username } }, { user }) => {
+        if (config.SHUTTING_DOWN) {
+          return createErrorResponse(INVALID_INPUT, 'Sign-ups are currently disabled.')
+        }
+
         if (user.sub.status !== SUB.STATUS.SELECTED) {
           return createErrorResponse(INVALID_INPUT, 'Already completed signup')
         }

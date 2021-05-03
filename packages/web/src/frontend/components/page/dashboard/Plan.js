@@ -6,15 +6,18 @@ import { SUB } from '@mailmask/utils'
 import { preparePlanAndTakePayment } from '../../../utils/payment'
 import { PreparePlanMutation } from '../../../../graphql/mutations'
 import { useSafeMutation } from '../../../hooks/apollo'
-import { isSelfHosted } from '../../../appConfig'
+import { getAppConfig, isSelfHosted } from '../../../appConfig'
 import Button from '../../Button'
 import PaymentDate from '../../PaymentDate'
 import QueryResult from '../../QueryResult'
 import BandwidthStatsThisMonth from '../../BandwidthStatsThisMonth'
 import PricingSelection from '../../PricingSelection'
+import WarnBox from '../../WarnBox'
 import PaymentProcessorInfo from '../../PaymentProcessorInfo'
 import ProcessingPaymentAlert from '../../ProcessingPaymentAlert'
 import { Modal } from '../../Modal'
+
+const { SHUTTING_DOWN } = getAppConfig()
 
 const Container = styled.div`
   p {
@@ -129,45 +132,50 @@ const Plan = ({ className, me }) => {
       {isSelfHosted() ? null : (
         <ChangePlanContainer>
           <h2>Change plan</h2>
+          {SHUTTING_DOWN ? (
+            <WarnBox>Plan upgrades are currently disabled.</WarnBox>
+          ) : (
+            <React.Fragment>
+              <StyledPricingSelection initialSchedule={me.sub.schedule} renderPlanFooter={(plan, schedule) =>
+                <PricingButtonContainer>
+                  {/* eslint-disable-next-line no-nested-ternary */}
+                  {plan !== SUB.PLAN.PRO ? (
+                    (plan === me.sub.plan && (plan === SUB.PLAN.BASIC || schedule === me.sub.schedule)) ? (
+                      <CurrentPlan>Current plan</CurrentPlan>
+                    ) : (
+                      <Button onClick={() => openSwitchModal(plan, schedule)}>Switch to this plan</Button>
+                    )
+                  ) : (
+                    <Button disabled={true}>Coming soon...</Button>
+                  )}
+                </PricingButtonContainer>
+              } />
 
-          <StyledPricingSelection initialSchedule={me.sub.schedule} renderPlanFooter={(plan, schedule) =>
-            <PricingButtonContainer>
-              {/* eslint-disable-next-line no-nested-ternary */}
-              {plan !== SUB.PLAN.PRO ? (
-                (plan === me.sub.plan && (plan === SUB.PLAN.BASIC || schedule === me.sub.schedule)) ? (
-                  <CurrentPlan>Current plan</CurrentPlan>
-                ) : (
-                    <Button onClick={() => openSwitchModal(plan, schedule)}>Switch to this plan</Button>
-                  )
-              ) : (
-                  <Button disabled={true}>Coming soon...</Button>
-                )}
-            </PricingButtonContainer>
-          } />
-
-          <Modal isOpen={switchModalOpen} onBackgroundClick={closeSwitchModal}>
-            <SwitchModalContainer>
-              <ModalSelectedPlan>Plan: {selectedPlan}{selectedPlanIsPaid ? <span> - {selectedSchedule}</span> : null}</ModalSelectedPlan>
-              <p>
-                {currentPlanIsPaid ? <span>Your current subscription will be cancelled.</span> : null}
-                {selectedPlanIsPaid ? <span>You will be billed immediately for the new subscription.</span> : null}
-              </p>
-              {processing ? (
-                <ProcessingPaymentAlert />
-              ) : (
-                  <React.Fragment>
-                    <SwitchButton
-                      loading={loading}
-                      onClick={() => switchToPlan(selectedPlan, selectedSchedule)}
-                    >
-                      Confirm new plan
-              </SwitchButton>
-                    <ModalQueryResult {...preparePlanResult} hideLoading={true} />
-                    {selectedPlanIsPaid ? <PaymentProcessorInfo /> : null}
-                  </React.Fragment>
-                )}
-            </SwitchModalContainer>
-          </Modal>
+              <Modal isOpen={switchModalOpen} onBackgroundClick={closeSwitchModal}>
+                <SwitchModalContainer>
+                  <ModalSelectedPlan>Plan: {selectedPlan}{selectedPlanIsPaid ? <span> - {selectedSchedule}</span> : null}</ModalSelectedPlan>
+                  <p>
+                    {currentPlanIsPaid ? <span>Your current subscription will be cancelled.</span> : null}
+                    {selectedPlanIsPaid ? <span>You will be billed immediately for the new subscription.</span> : null}
+                  </p>
+                  {processing ? (
+                    <ProcessingPaymentAlert />
+                  ) : (
+                    <React.Fragment>
+                      <SwitchButton
+                        loading={loading}
+                        onClick={() => switchToPlan(selectedPlan, selectedSchedule)}
+                      >
+                        Confirm new plan
+                        </SwitchButton>
+                      <ModalQueryResult {...preparePlanResult} hideLoading={true} />
+                      {selectedPlanIsPaid ? <PaymentProcessorInfo /> : null}
+                    </React.Fragment>
+                  )}
+                </SwitchModalContainer>
+              </Modal>
+            </React.Fragment>
+          )}
         </ChangePlanContainer>
       )}
     </Container>

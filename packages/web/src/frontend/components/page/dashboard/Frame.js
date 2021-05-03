@@ -10,7 +10,7 @@ import Layout from '../../Layout'
 import PaymentDate from '../../PaymentDate'
 import ContentWrapper from '../../ContentWrapper'
 import Seo from '../../Seo'
-import { DashboardLink } from '../../Link'
+import { DashboardLink, BlogPostLink } from '../../Link'
 import ErrorBox from '../../ErrorBox'
 import Button from '../../Button'
 import SubStatus from '../../SubStatus'
@@ -21,8 +21,9 @@ import Account from '../../page/dashboard/Account'
 import Plan from '../../page/dashboard/Plan'
 import FinalizePlan from '../../page/dashboard/FinalizePlan'
 import AuthenticatedAndFullySignedUp from '../../AuthenticatedAndFullySignedUp'
+import WarnBox from '../../WarnBox'
 
-const { DOMAIN } = getAppConfig()
+const { DOMAIN, SHUTTING_DOWN } = getAppConfig()
 
 const StyledContentWrapper = styled(ContentWrapper)``
 
@@ -88,6 +89,10 @@ const Main = styled.div`
 
 const StyledMasks = styled(Masks)`
   margin: 2rem 0;
+`
+
+const ShutdownNotice = styled(WarnBox)`
+  margin-bottom: 2rem;
 `
 
 const AccountProblem = styled(ErrorBox)`
@@ -169,6 +174,11 @@ const Dash = ({ me, panel = 'main' }) => {
 
   return (
     <DashContainer>
+      {SHUTTING_DOWN ? (
+        <ShutdownNotice>
+          Mailmask will shut down on May 1st, 2022. <BlogPostLink postSlug='mailmask-shutting-down'>Find out more</BlogPostLink>.
+        </ShutdownNotice>
+      ) : null}
       {(subscriptionInactive && panel !== 'plan') ? (
         <AccountProblem>
           Your subscription is currently inactive (<SubStatus status={subscriptionStatus} />)!

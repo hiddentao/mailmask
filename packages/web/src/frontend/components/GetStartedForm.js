@@ -5,6 +5,7 @@ import { flex } from 'emotion-styled-utils'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
 
+import { getAppConfig } from '../appConfig'
 import { trackEvent } from '../analytics'
 import { withApollo } from '../hoc'
 import { useSafeMutation } from '../hooks'
@@ -14,6 +15,10 @@ import { DashboardLink } from './Link'
 import Authenticated from './Authenticated'
 import QueryResult from './QueryResult'
 import TextInput from './TextInput'
+import WarnBox from './WarnBox'
+import { BlogPostLink } from './Link'
+
+const { SHUTTING_DOWN } = getAppConfig()
 
 const Container = styled.div`
   ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
@@ -34,7 +39,12 @@ const SubmitButton = styled(Button)`
   margin-left: 0.5rem;
 `
 
-const GetStartedForm = ({ buttonText = 'Start', plan, schedule }) => {
+const Note = styled(WarnBox)`
+  font-size: 0.8rem;
+  text-align: left;
+`
+
+const GetStartedForm = ({ buttonText = 'Login', plan, schedule }) => {
   const router = useRouter()
   const [ email, setEmail ] = useState('')
   const [ isValid, setIsValid ] = useState(false)
@@ -97,6 +107,9 @@ const GetStartedForm = ({ buttonText = 'Start', plan, schedule }) => {
           {buttonText}
         </SubmitButton>
       </Form>
+      {SHUTTING_DOWN ? (
+        <Note>New user signups are disabled (<BlogPostLink postSlug='mailmask-shutting-down'>why?</BlogPostLink>)</Note>
+      ) : null}
       <QueryResult {...result} hideLoading={true} />
     </React.Fragment>
   )
