@@ -1,7 +1,7 @@
 {
   "name": "@mailmask/web",
   "private": true,
-  "version": "1.15.1",
+  "version": "1.15.2",
   "description": "Mailmask web interface",
   "author": "Ramesh Nair <ram@hiddentao.com>",
   "homepage": "https://msk.sh",
@@ -65,7 +65,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
     "@mailmask/config": "^1.15.0",
-    "@mailmask/data": "^1.15.0",
+    "@mailmask/data": "^1.15.2",
     "@mailmask/log": "^1.13.0",
     "@mailmask/mailgun": "^1.13.0",
     "@mailmask/nodejs-utils": "^1.14.2",

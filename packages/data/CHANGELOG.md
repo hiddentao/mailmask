@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.15.2](https://github.com/hiddentao/mailmask/compare/v1.15.1...v1.15.2) (2021-05-03)
+
+
+### Bug Fixes
+
+* pg error on app engine ([467cc5b](https://github.com/hiddentao/mailmask/commit/467cc5b1ff068c7dd661b35154a38c23ef661db6))
+
+
+
+
+
 # [1.15.0](https://github.com/hiddentao/mailmask/compare/v1.14.2...v1.15.0) (2021-05-03)
 
 
