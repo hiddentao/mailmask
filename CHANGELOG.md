@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.15.3](https://github.com/hiddentao/mailmask/compare/v1.15.2...v1.15.3) (2021-05-03)
+
+
+### Bug Fixes
+
+* remove leaked data ([63a73be](https://github.com/hiddentao/mailmask/commit/63a73be2e69627dd49d400feb79b67dfde313606))
+
+
+
+
+
 ## [1.15.2](https://github.com/hiddentao/mailmask/compare/v1.15.1...v1.15.2) (2021-05-03)
 
 

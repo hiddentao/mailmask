@@ -1,7 +1,7 @@
 {
   "name": "@mailmask/web",
   "private": true,
-  "version": "1.15.2",
+  "version": "1.15.3",
   "description": "Mailmask web interface",
   "author": "Ramesh Nair <ram@hiddentao.com>",
   "homepage": "https://msk.sh",
