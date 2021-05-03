@@ -5,6 +5,7 @@ import { flex } from 'emotion-styled-utils'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
 
+import { getAppConfig } from '../appConfig'
 import { trackEvent } from '../analytics'
 import { withApollo } from '../hoc'
 import { useSafeMutation } from '../hooks'
@@ -16,6 +17,8 @@ import QueryResult from './QueryResult'
 import TextInput from './TextInput'
 import WarnBox from './WarnBox'
 import { BlogPostLink } from './Link'
+
+const { SIGNUPS_DISABLED } = getAppConfig()
 
 const Container = styled.div`
   ${({ theme }) => theme.media.when({ minW: 'desktop' })} {
@@ -104,7 +107,9 @@ const GetStartedForm = ({ buttonText = 'Login', plan, schedule }) => {
           {buttonText}
         </SubmitButton>
       </Form>
-      <Note>Signups are currently disabled (<BlogPostLink postSlug='mailmask-shutting-down-time-to-say-goodbye'>why?</BlogPostLink>)</Note>
+      {SIGNUPS_DISABLED ? (
+        <Note>New user signups are disabled (<BlogPostLink postSlug='mailmask-shutting-down'>why?</BlogPostLink>)</Note>
+      ) : null}
       <QueryResult {...result} hideLoading={true} />
     </React.Fragment>
   )

@@ -4,6 +4,7 @@ const { str, num, bool } = envalid
 
 const VARS = {
   DOMAIN: str({ default: 'msk.sh' }),
+  SIGNUPS_DISABLED: bool({ default: false }),
   SUPPORT_EMAIL: str({ default: 'hello@msk.sh' }),
   APP_MODE: str({ default: 'development' }),
   SMTP_TESTMODE: bool({ default: false }),

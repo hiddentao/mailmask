@@ -28,7 +28,7 @@ const _authCall = fn => async (root, params, ctx) => {
 
 
 
-export default ({ db, notifier, paddleApi }) => {
+export default ({ config, db, notifier, paddleApi }) => {
   return {
     Query: {
       getGlobalStats: _call(async () => {
@@ -36,7 +36,7 @@ export default ({ db, notifier, paddleApi }) => {
         const daysSince = ~~((Date.now() - new Date(2020, 5, 5).getTime()) / (24 * 60 * 60 * 1000))
 
         return {
-          numBlocked: 345 + daysSince * 87,
+          numBlocked: 345 + daysSince * 34,
           numUsers: 926,
         }
       }),
@@ -126,6 +126,10 @@ export default ({ db, notifier, paddleApi }) => {
             email,
           })
         } else {
+          if (config.SIGNUPS_DISABLED) {
+            return createErrorResponse(INVALID_INPUT, 'Email not found. Sign-ups are currently disabled.')
+          }
+
           isSignup = true
 
           plan = plan || SUB.PLAN.BASIC /* sign up to basic plan by default */
@@ -155,6 +159,10 @@ export default ({ db, notifier, paddleApi }) => {
         }
       }),
       completeSignup: _authCall(async (_ignore, { signUp: { username } }, { user }) => {
+        if (config.SIGNUPS_DISABLED) {
+          return createErrorResponse(INVALID_INPUT, 'Sign-ups are currently disabled.')
+        }
+
         if (user.sub.status !== SUB.STATUS.SELECTED) {
           return createErrorResponse(INVALID_INPUT, 'Already completed signup')
         }
