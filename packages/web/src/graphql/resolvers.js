@@ -79,10 +79,6 @@ export default ({ config, db, notifier, paddleApi }) => {
           schedule
         }
       }, { user }) => {
-        if (config.SHUTTING_DOWN) {
-          return createErrorResponse(INVALID_INPUT, 'Plan changes are currently disabled.')
-        }
-
         // if plan or schedule has changed
         if (plan !== user.sub.plan || schedule !== user.sub.schedule) {
           // if user is currently on a paid plan
