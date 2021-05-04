@@ -96,7 +96,7 @@
     "next-images": "^1.4.0",
     "next-seo": "^4.4.0",
     "next-with-apollo": "^5.0.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "nookies": "^2.2.2",
     "query-string": "^6.12.1",
     "raw-loader": "^4.0.1",
