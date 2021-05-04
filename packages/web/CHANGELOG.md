@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.15.5](https://github.com/hiddentao/mailmask/compare/v1.15.4...v1.15.5) (2021-05-04)
+
+
+### Bug Fixes
+
+* allow for sub selection ([d6fad64](https://github.com/hiddentao/mailmask/commit/d6fad64a79d693c1b6522d1b56e32fc2798c669e))
+
+
+
+
+
 ## [1.15.4](https://github.com/hiddentao/mailmask/compare/v1.15.3...v1.15.4) (2021-05-04)
 
 
