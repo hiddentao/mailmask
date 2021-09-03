@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.15.6](https://github.com/hiddentao/mailmask/compare/v1.15.5...v1.15.6) (2021-09-03)
+
+**Note:** Version bump only for package @mailmask/mta
+
+
+
+
+
 ## [1.15.2](https://github.com/hiddentao/mailmask/compare/v1.15.1...v1.15.2) (2021-05-03)
 
 **Note:** Version bump only for package @mailmask/mta

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.15.6](https://github.com/hiddentao/mailmask/compare/v1.15.5...v1.15.6) (2021-09-03)
+
+
+### Bug Fixes
+
+* allow for db connection to use self-signed cert ([d1bda99](https://github.com/hiddentao/mailmask/commit/d1bda9918f885111c41f318e98ae3a4247148b92))
+
+
+
+
+
 ## [1.15.5](https://github.com/hiddentao/mailmask/compare/v1.15.4...v1.15.5) (2021-05-04)
 
 

@@ -1,7 +1,7 @@
 {
   "name": "@mailmask/mta",
   "private": true,
-  "version": "1.15.2",
+  "version": "1.15.6",
   "description": "MailMask MTA",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,7 @@
   "homepage": "https://github.com/hiddentao/mailmask#readme",
   "dependencies": {
     "@mailmask/config": "^1.15.0",
-    "@mailmask/data": "^1.15.2",
+    "@mailmask/data": "^1.15.6",
     "@mailmask/log": "^1.13.0",
     "@mailmask/mailgun": "^1.13.0",
     "@mailmask/nodejs-utils": "^1.14.2",
