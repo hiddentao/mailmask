@@ -55,7 +55,7 @@ const envs = {
   live: buildConfig({
     connection: {
       database: 'mailmask-live',
-      ssl: true,
+      ssl: { rejectUnauthorized: false },
       ...getConnectionVars({}, process.env)
     }
   }),
