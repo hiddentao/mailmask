@@ -110,7 +110,7 @@
     "react-tiny-crossfade": "^2.0.0",
     "react-toastify": "^5.5.0",
     "react-typing-animation": "^1.6.2",
-    "remark-html": "^11.0.2",
+    "remark-html": "^13.0.2",
     "remark-parse": "^8.0.2",
     "remark-react": "^7.0.1",
     "rollbar": "^2.18.0",
