@@ -82,7 +82,7 @@
     "emotion-theming": "^10.0.27",
     "form-urlencoded": "^4.1.3",
     "github-slugger": "^1.3.0",
-    "got": "^11.1.3",
+    "got": "^11.8.5",
     "graphql": "^15.0.0",
     "graphql-iso-date": "^3.6.1",
     "graphql-tag": "^2.10.3",
