@@ -8,19 +8,12 @@ import { toast } from 'react-toastify'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-import { trackPageChange, initSessionRecording, initErrorReporter } from '../src/frontend/analytics'
 import GlobalStyles from '../src/frontend/components/GlobalStyles'
 import { setupThemes } from '../src/frontend/theme'
 import { GlobalProvider, GlobalConsumer } from '../src/frontend/contexts'
 
-// cloud utilities
-initErrorReporter()
-initSessionRecording()
-
 // when page changes
 Router.events.on('routeChangeComplete', () => {
-  trackPageChange()
-
   if (window.location.hash) {
     window.location = window.location // eslint-disable-line no-self-assign
   }

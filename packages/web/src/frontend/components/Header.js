@@ -3,8 +3,7 @@ import styled from '@emotion/styled'
 import { flex, childAnchors } from 'emotion-styled-utils'
 
 import { isSelfHosted } from '../appConfig'
-import { HomeLink, DashboardLink, HowItWorksLink, PricingLink, FaqLink, LoginLink, BlogLink } from './Link'
-import Authenticated from './Authenticated'
+import { HomeLink, BlogLink } from './Link'
 import LogoLong from './LogoLong'
 import IconButton from './IconButton'
 import { GlobalConsumer } from '../contexts'
@@ -122,16 +121,6 @@ const Header = ({ className, floating, onClickHome }) => {
     setThemeName('light' === themeName ? 'dark' : 'light')
   }, [])
 
-  const loginLink = <LoginLink>Login</LoginLink>
-
-  const dashboardLink = (
-    <DashboardLi key='dashboard' inFloatingHeader={floating}>
-      <Authenticated renderNotAuthenticated={loginLink} renderError={loginLink}>
-        <DashboardLink>Dashboard</DashboardLink>
-      </Authenticated>
-    </DashboardLi>
-  )
-
   return (
     <Container className={className}>
       <HomeLink>
@@ -152,17 +141,10 @@ const Header = ({ className, floating, onClickHome }) => {
       <DesktopNav inFloatingHeader={floating}>
         {isSelfHosted() ? null : (
           <React.Fragment>
-            <NavLi key='how-it-works'><HowItWorksLink>How it works</HowItWorksLink></NavLi>
-            <NavLi key='faq'><FaqLink>FAQ</FaqLink></NavLi>
-            <NavLi key='pricing'><PricingLink>Pricing</PricingLink></NavLi>
             <NavLi key='blog'><BlogLink>Blog</BlogLink></NavLi>
           </React.Fragment>
         )}
-        {dashboardLink}
       </DesktopNav>
-      <MobileNavContainer inFloatingHeader={floating}>
-        {dashboardLink}
-      </MobileNavContainer>
     </Container>
   )
 }
