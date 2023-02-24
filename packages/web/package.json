@@ -16,6 +16,7 @@
     "gen-sitemap": "node ./scripts/genSitemap.js",
     "copy-public-assets": "cp ./public-src/* ./public",
     "build": "next build && npm run gen-sitemap && npm run copy-public-assets",
+    "vercel-build": "next build && mkdir -p ./public && npm run copy-public-assets",
     "start": "next start --port $PORT",
     "dev": "next dev --port 3002",
     "lint": "eslint .",
