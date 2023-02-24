@@ -20,11 +20,8 @@
     "start": "next start --port $PORT",
     "dev": "next dev --port 3002",
     "lint": "eslint .",
-    "gcp-build": "next build",
-    "get-production-secrets": "gcloud secrets versions access latest --secret='mailmask-web-production' > .env.production",
-    "deploy:appengine": "gcloud app deploy --quiet && gcloud app deploy --quiet cron.yaml",
     "ping-google": "curl http://www.google.com/ping?sitemap=https://msk.sh/sitemap.xml",
-    "deploy": "npm run get-production-secrets && npm run build && npm run deploy:appengine && npm run ping-google"
+    "deploy": "npm run vercel-build && npm run ping-google"
   },
   "scarfSettings": {
     "enabled": false
